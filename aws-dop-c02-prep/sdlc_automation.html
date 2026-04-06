@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SDLC Automation - AWS Professional DevOps Certificate Material</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AWS Professional DevOps Certificate Material</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="sdlc-automation"><a class="header" href="#sdlc-automation">SDLC Automation</a></h1>
+<p>A development pipeline can be generally broken down to the following stages:</p>
+<ol>
+<li>code</li>
+<li>build</li>
+<li>test</li>
+<li>deploy</li>
+</ol>
+<p>AWS provides a range of tools that support all of those stages, for eg.</p>
+<ul>
+<li>CodeCommit similar to GitHub</li>
+<li>CodeBuild which can handle the build and test processes</li>
+<li>CodeDeploy which supports code deployment within AWS</li>
+</ul>
+<p>These AWS tools are isolated but they can be configured together using AWS CodePipeline which orchestrates the development pipeline.</p>
+<p>A pipeline is linked to 1 branch in a repository eg. a <code>main</code> pipeline and a <code>dev</code> pipeline.</p>
+<h2 id="codedeploy"><a class="header" href="#codedeploy">CodeDeploy</a></h2>
+<p>Is a code deployment as-a-service product. It deploys code not resources i.e. a web application and not a fleet of EC2 instances.</p>
+<p>A CodeDeploy agent needs to be installed which communicates with the product and implements instructions.</p>
+<p>Can deploy code to:</p>
+<ul>
+<li>EC2 instances</li>
+<li>Elastic Beanstalk</li>
+<li>AWS OpsWorks</li>
+<li>Amazon ECS</li>
+</ul>
+<p>It can be used to deploy using CloudFormation.</p>
+<h3 id="the-appspec-file"><a class="header" href="#the-appspec-file">The appspec file</a></h3>
+<p>CodeDeploy is customised using <code>appspec.yml</code> or <code>appspec.json</code> files.</p>
+<p>This file contains configuration + lifecycle event hooks.</p>
+<p>Lifecycle event hooks such as ApplicationStop, DownloadBundle, BeforeInstall, Install, AfterInstall, ApplicationStart, ValidateService.</p>
+<p>The configuration section has:</p>
+<ul>
+<li>files (for EC2/on-premise): provides information to CodeDeploy about which files need to be installed on the EC2 instance during the deployment.</li>
+<li>resources (for ECS/Lambda): for Lambda it contains the information about the Lambda function used during deployment. For ECS, it contains things like task definitions or container information.</li>
+<li>permissions (for EC2/on-premise): details any special permissions that need to be applied on parts of the filesystem.</li>
+</ul>
+<h2 id="codepipeline"><a class="header" href="#codepipeline">CodePipeline</a></h2>
+<p>Is a continuous delivery tool designed to control the flow from source code through build and finally deployment. It is the glue that holds things together.</p>
+<p>Pipelines are built from Stages which contain sequential or parallel actions. The output of one action can be the input of another action.</p>
+<div align="center">
+    <img src="./images/code_pipeline.png" alt="CodePipeline" width="500" />
+</div>
+<p>CodePipeline can be triggered as follows:</p>
+<ul>
+<li>Pipeline creation: a pipeline gets triggered when created.</li>
+<li>Put action or changes on objects in the pipeline.</li>
+<li>CloudWatchEvent trigger: the source action provider here is CodeCommit.</li>
+<li>Webhook events for 3rd party sources like GitHub, BitBucket, GitLab, etc.</li>
+<li>Manually triggering the pipeline</li>
+</ul>
+<h2 id="codebuild"><a class="header" href="#codebuild">CodeBuild</a></h2>
+<p>Is a build-as-a-service product that lets you manage a build environment where you pay for the resources consumed during builds. It is also used during the test stage.</p>
+<p>It gets the source code from GitHub, CodeCommit, CodePipeline, S3, etc.</p>
+<p>Can log output to S3 and CloudWatch Logs. Can also push events to EventBridge.</p>
+<h3 id="the-build-file"><a class="header" href="#the-build-file">The build file</a></h3>
+<p>CodeBuild can be customised via the <code>buildspec.yml</code> in the root directory.</p>
+<p>This file has 4 main phases:</p>
+<ol>
+<li>install: for major environment installations</li>
+<li>pre_build: install dependencies</li>
+<li>build: source code is built into application</li>
+<li>post_build: to package things up, push to Docker or send notifications</li>
+</ol>
+<p>The build spec file also allows you to define environment variables eg. parameter store or secrets manager variables.</p>
+<p>It also contains an artifacts section.</p>
+<h2 id="practical-example"><a class="header" href="#practical-example">Practical example</a></h2>
+<h3 id="manual-codebuild-process"><a class="header" href="#manual-codebuild-process">Manual CodeBuild process</a></h3>
+<p>Steps to create a Docker image from a code repository.</p>
+<ul>
+<li>create a code repo on CodeCommit</li>
+<li>create an ECR repo on ECR</li>
+<li>create a build project in CodeBuild
+<ul>
+<li>here you can use the CodeCommit repo as the source of the Dockerfile to build</li>
+<li>specify an environment eg. OS type where the build will run</li>
+<li>specify the destination image repo i.e. where the container image built will be stored</li>
+</ul>
+</li>
+<li>you can use CloudWatch to store logs</li>
+<li>configure the right permissions
+<ul>
+<li>Permissions are required for the build project to interact with other AWS services.
+To add permissions, create an inline policy in the IAM role used by the CodeBuild project. Permissions to interact with ECR eg. PutImage.</li>
+</ul>
+</li>
+<li>configure the build spec YAML file <code>buildspec.yml</code> with the various build steps.</li>
+</ul>
+<h3 id="automated-codebuild-process"><a class="header" href="#automated-codebuild-process">Automated CodeBuild process</a></h3>
+<p>Whenever code is commited to the code repo, an automated build pipeline will run to build the image and store it on ECR. This is done using CodePipeline.</p>
+<ul>
+<li>create new CodePipeline</li>
+<li>allow CodePipeline to create a new service role</li>
+<li>select a source i.e. the CodeCommit repo</li>
+<li>select a build provider i.e. CodeBuild where the build project exists</li>
+<li>artifacts are by default stored in S3</li>
+<li>you can have a step in the <code>post_build</code> stage to create a JSON file containing information about the image created. You can store this file in S3 and use it for the deployment step.</li>
+</ul>
+<p><strong>Add a deploy step to the pipeline</strong></p>
+<ul>
+<li>create an application load balancer, configure security groups and a target group</li>
+<li>create an ECS cluster, create a task and container definition. Use the image created the during code build stage.</li>
+<li>add a deploy stage in the CodePipeline pipeline. Use the image definitions JSON file containing information about the built image in this step.</li>
+</ul>
+<div align="center">
+    <img src="./images/codepipeline_example.png" alt="CodePipeline example" width="500" />
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="cdn.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="cloudwatch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="cdn.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="cloudwatch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

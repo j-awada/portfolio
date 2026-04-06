@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cloudformation - AWS Professional DevOps Certificate Material</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AWS Professional DevOps Certificate Material</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="cloudormation-cfn"><a class="header" href="#cloudormation-cfn">Cloudormation (CFN)</a></h2>
+<ul>
+<li>
+<p>Cloudformation allows automating infrastructure provisioning</p>
+</li>
+<li>
+<p>Starts with a template written in YAML or JSON</p>
+</li>
+<li>
+<p>The template defines logical resources</p>
+</li>
+<li>
+<p>A template can create 1 or more stacks</p>
+</li>
+<li>
+<p>A template can be reusable</p>
+</li>
+<li>
+<p>The stack definition will create physical resources based on logical resources</p>
+</li>
+<li>
+<p>If the stack definition is updated, the physical resources also change</p>
+</li>
+<li>
+<p>Templates can take parameters i.e. accept input</p>
+</li>
+<li>
+<p>Parameters are defined in the template and can have a types eg. an EC2 image</p>
+</li>
+<li>
+<p>Pseudo parameters are defined by AWS. They are injected by AWS into the template eg. Region, stack ID, stack name, account ID, etc.</p>
+</li>
+<li>
+<p>Cloudformation does things in parallel so use <code>DependsOn</code> to define an order if needed</p>
+</li>
+<li>
+<p>You can configure Cloudformation to hold until a number of signals are successful before returning <code>CreateComplete</code></p>
+</li>
+<li>
+<p>You can configure a timeout for Cloudformation execution</p>
+</li>
+</ul>
+<h3 id="intrinsic-functions"><a class="header" href="#intrinsic-functions">Intrinsic functions</a></h3>
+<ul>
+<li>Allow you to gain access to data at runtime i.e. when the template is being used to create a stack eg.
+<ul>
+<li><code>Ref</code> and <code>Fn::GetAtt</code></li>
+<li><code>Fn::Join</code> and <code>Fn::Split</code></li>
+<li><code>Fn::GetAZs</code> and <code>Fn::Select</code></li>
+<li><code>Fn::</code>(IF, And, Equals, Not, Or)</li>
+<li><code>Fn::Base64</code> and <code>Fn::Sub</code></li>
+<li><code>Fn:Cidr</code></li>
+<li><code>Fn::Import Value</code></li>
+<li><code>Fn::FindInMap</code></li>
+<li><code>Fn::Transform</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="mappings"><a class="header" href="#mappings">Mappings</a></h3>
+<ul>
+<li>Is an object in the template eg. map the prod env to a specific database config</li>
+<li>Mappings use the <code>!FindInMap</code> intrinsic function</li>
+</ul>
+<h3 id="outputs"><a class="header" href="#outputs">Outputs</a></h3>
+<ul>
+<li>Provide status information or how to access services created by a stack</li>
+<li>Outputs are optional</li>
+</ul>
+<h3 id="nested-stacks"><a class="header" href="#nested-stacks">Nested stacks</a></h3>
+<ul>
+<li>There is a limit of 500 resources per stack and nested stacks can be used to overcome this resource limit</li>
+<li>Stacks are isolated and resources in them can't be referenced</li>
+<li>A root stack is the stack that gets created first</li>
+<li>A parent stack usually has nested stacks</li>
+<li>You can define a stack as a logical resource and make it refer to a YAML template</li>
+<li>Use nested stacks when resources are lifecycle-linked i.e. create and deleted together</li>
+</ul>
+<p><strong>Cross-stack references</strong></p>
+<ul>
+<li>Is used when we want to create a shared resource eg. VPC usable by other stacks</li>
+<li>Stacks are isolated meaning things in a stack can't be referenced by another i.e. the <code>!Ref</code> function can't be used, with the exception that root stacks can reference the output of a stack</li>
+<li>A use case of this is a VPC stack with a long lifecycle and app stacks that use it but have a shorter lifecycle</li>
+<li>Outputs of a stack can be exported making them visible to other stacks. You can then use <code>Fn::ImportValue</code> in another stack instead of <code>!Ref</code> in the same stack</li>
+</ul>
+<h3 id="stack-sets"><a class="header" href="#stack-sets">Stack sets</a></h3>
+<ul>
+<li>Allow you to deploy CFN stacks across many accounts and regions</li>
+<li>Stack sets are containers in an admin account. They contain stack instances that reference stacks</li>
+</ul>
+<h3 id="cfn-deletionpolicy"><a class="header" href="#cfn-deletionpolicy">CFN DeletionPolicy</a></h3>
+<ul>
+<li>Deleting a stack causes deleting a physical resource. This can cause data loss for eg. databases</li>
+<li>The deletion policy can be defined on a resource in a CFN template to specify an action for when the resource is deleted eg. Delete, Retain, Snapshot</li>
+</ul>
+<h3 id="cfn-stack-roles"><a class="header" href="#cfn-stack-roles">CFN stack roles</a></h3>
+<ul>
+<li>By default, CFN uses the permissions of the logged in identity</li>
+<li>CFN can assume another role to gain permissions</li>
+<li>We have a role attached to a stack
+<ul>
+<li>a user creates a template with a role attached</li>
+<li>this user has <code>PassRole</code> permissions but doesn't actually have permissions to create the stack</li>
+<li>the role can be created by an admin</li>
+</ul>
+</li>
+</ul>
+<h3 id="cfn-init-cfn-init-and-cfn-hup"><a class="header" href="#cfn-init-cfn-init-and-cfn-hup">CFN Init, cfn-init and cfn-hup</a></h3>
+<ul>
+<li>Is a configuration management system</li>
+<li>The CFN Init can be defined in the metadata of a logical resource in a template. <code>UserData</code> can be passed which contains <code>cfn-init</code> used to implement the config we define</li>
+<li><code>cfn-init</code> only runs once and doesn't run again when the stack is updated</li>
+<li><code>cfn-hup</code> can point at a logical resource in a stack to detect changes in its metadata. When it detects change it can run things like <code>cfn-init</code></li>
+</ul>
+<h3 id="notes-on-creating-cfn-templates"><a class="header" href="#notes-on-creating-cfn-templates">Notes on creating CFN templates</a></h3>
+<ul>
+<li>The <code>UserData</code> section serves as an init script that runs automatically when an EC2 instance launches for the first time. It executes at boot time</li>
+<li>CFN waits for a signal from the EC2 instance. As soon as the instance is launched, CFN marks Creation Complete even though the <code>UserData</code> script is still running i.e. instance bootstrapping hasn't finished.
+<ul>
+<li>here you can use <code>CreationPolicy</code> and <code>cfn-signal</code> to signal to Cloudformation when bootstrapping the instance is finished</li>
+</ul>
+</li>
+<li>The <code>UserData</code> part is only executed once when the instance launches. If the <code>UserData</code> is changed and the stack is updated, the instance won't rerun this configuration</li>
+<li>Use the <code>cfn-init</code> feature and <code>cfn-hup</code> to rerun <code>cfn-init</code> on metadata changes</li>
+</ul>
+<h3 id="cfn-change-sets"><a class="header" href="#cfn-change-sets">CFN change sets</a></h3>
+<ul>
+<li>Provides an overview of the changes that are to be applied to a stack. You can preview many change sets for a stack. The chosen change set can then be applied to the stack</li>
+</ul>
+<h3 id="cfn-custom-resources"><a class="header" href="#cfn-custom-resources">CFN custom resources</a></h3>
+<ul>
+<li>CFN doesn't support creating all AWS products</li>
+<li>Use custom resources to compensate for what CFN does not support natively
+<ul>
+<li>eg. a Lambda function used to populate or remove items from a bucket. This is because CFN can't delete buckets that have objects in them. The Lambda function receives a CREATE or DELETE event and then uploads or deletes bucket items. The custom resource references both the Lambda function and then bucket</li>
+</ul>
+</li>
+</ul>
+<h3 id="cfn-drift-detection"><a class="header" href="#cfn-drift-detection">CFN drift detection</a></h3>
+<ul>
+<li>When the logical resources and the physical resources in a stack no longer match</li>
+<li>CFN offers drift detection</li>
+<li>What can be done is:
+<ul>
+<li>removing the logical resources while keeping the physical resources in place and then importing those physical resources to bring back into sync the relationship between logical and physical resources</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="load_balancers.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="elastic_beanstalk.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="load_balancers.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="elastic_beanstalk.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

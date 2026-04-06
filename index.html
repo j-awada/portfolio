@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Jana Awada</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='terminal.css'>
+</head>
+<body>
+    <main>
+    <h1 id="headline"><kbd><a href="/" style="color: inherit;">jawada.sh</a></kbd></h1>
+    <h2>What am I working on?</h2>
+    <select id="menu-select">
+        <option value="" selected disabled>Choose option</option>
+        <option value="certification">Certification</option>
+        <option value="projects">Projects</option>
+        <option value="languages">Languages</option>
+    </select>
+    <div id="menu-content" class="terminal-content">
+    <p></p>
+    </div>
+    </main>
+
+    <footer>
+        <hr>
+        <h4><a href="https://github.com/j-awada" target="_blank">GitHub</a> | <a href="https://www.linkedin.com/in/jana-awada-448993b9/" target="_blank">LinkedIn</a></h4>
+    </footer>
+    <script>
+    const content = {
+        certification: `<p>I'm preparing to sit for those 2 certifcations in 2026: <ul><li>AWS Certified DevOps Engineer Professional DOP-C02 certificate. Preparation material can be found <a href="aws-dop-c02-prep/index.html" target="_blank">here</a>.</li><li>Certified Kubernetes Application Developer (CKAD).</li></ul>`,
+        projects: `<p>During my free time, I mostly work on Rust hobby projects. For example this <a target="_blank" href="https://happening.nu">website</a> which is written in Rust and is quite fast! I'm now learning to build a Rust CLI using Ratatui.</p>`,
+        languages: `<ul><li>Mandarin: A2 and continuing to learn.</li><li>Swedish: I'll be sitting for the Swedex B2/C1 exam towards the second half of the year.</li><li>French: Will be sitting for the DALF C1 also during the second half of the year.</li>`
+    };
+    document.getElementById('menu-select').addEventListener('change', function(e) {
+        const value = e.target.value;
+        document.getElementById('menu-content').innerHTML = content[value] || '<p></p>';
+    });
+    window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('menu-select').selectedIndex = 0;
+        document.getElementById('menu-content').innerHTML = '<p></p>';
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Content Delivery Network - AWS Professional DevOps Certificate Material</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AWS Professional DevOps Certificate Material</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="content-delivery-network"><a class="header" href="#content-delivery-network">Content Delivery Network</a></h1>
+<p>CloudFront is a content delivery network, used to improve the delivery of content to the viewers. It does so by caching and by using an efficient global network.</p>
+<p>CloudFront is for download operations only, and uploads are done directly to the origin. CloudFront does read-only caching.</p>
+<p><strong>Some terms:</strong></p>
+<ul>
+<li>
+<p>Origin: the source location of the content. Can be S3 Origin or Custom Origin. Groups of origins can improve resiliency.</p>
+</li>
+<li>
+<p>Distribution: the unit of configuration within CloudFront.</p>
+</li>
+<li>
+<p>Behaviour: is contained within a distribution and works on the principal of pattern match.</p>
+</li>
+<li>
+<p>Edge location: pieces of the global infrastructure where data is cached locally. They are mostly used for storage/caching of data for CloudFront.</p>
+</li>
+<li>
+<p>Regional edge cache: they are bigger than edge locations and they are fewer. They are designed to cache data accessed less frequently but where there is a performance benefit.</p>
+</li>
+</ul>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How it works?</a></h2>
+<ol>
+<li>
+<p>Bob uploads some content to an S3 bucket which will be the origin of the CloudFront distribution.</p>
+</li>
+<li>
+<p>Bob creates a CLoudFront distribution. The S3 bucket will be the origin in that distribution.</p>
+</li>
+</ol>
+<p>The distribution will have a unique domain name which ends in <code>.cloudfront.net</code> and/or an alternate domain name.</p>
+<p>Bob can then deploy the distribution to the CloudFront network. The configuration will be pushed to edge locations which will cache the content distributed globally as close to the customers as possible.</p>
+<p>In between the edge locations and the origin are the regional edge caches. These are bigger than the edge locations.</p>
+<ol start="3">
+<li>When customers attempt to access Bob's data, they will be directed towards the closest edge location. The following scenatrios can take place:</li>
+</ol>
+<ul>
+<li>cache hit: the data is on the edge location and is served fast with low latency.</li>
+<li>cache miss: the edge location missing the data will check the closest regional edge cache.
+<ul>
+<li>if the data is there it will be served.</li>
+<li>if the data is not there, origin fetch will take place where the data is fetched from the source. The regional edge location pushes the data to the edge location that requested it where the data be be cached there and returned to the user.</li>
+</ul>
+</li>
+</ul>
+<h2 id="cloudfront-behaviours"><a class="header" href="#cloudfront-behaviours">CloudFront Behaviours</a></h2>
+<p>The Behaviour can be configured from the Distribution. There is a default behaviour (*) which matches all patterns.</p>
+<p>Behaviour configurations include the origin source, protocol and methods, viewer access, Lambda function association, caching and TTL controls.</p>
+<h2 id="cloudfront-and-origin-failover"><a class="header" href="#cloudfront-and-origin-failover">CloudFront and origin failover</a></h2>
+<p>For high availability, CloudFront can be configured with origin failover by creating an origin group with 2 origins; a primary and a secondary. If the primary origin is unavailable, CloudFront switched to the secondary origin.</p>
+<h2 id="ttl-and-invalidation"><a class="header" href="#ttl-and-invalidation">TTL and invalidation</a></h2>
+<p>When the data on the edge location becomes stale and needs to be refreshed.</p>
+<p>The source could return a status 304 when the object is not expired and 200 status in case it needs to be refreshed along with the latest object.</p>
+<p>An object is not expired when it is within its TTL (Time To Live). The default TTL is 24 hours.</p>
+<p>Minimum TTL and Maximum TTL can be set using HTTP Headers sent from origin and they act as limiters.</p>
+<p><strong>Cache invalidation</strong>: invalidates an object independent of its TTL. It is performed on a distribution and uses pattern matching.</p>
+<h2 id="cloudfront-with-other-aws-services"><a class="header" href="#cloudfront-with-other-aws-services">CloudFront with other AWS services</a></h2>
+<p>CloudFront integrates with the AWS Certificate Manager (ACM) so SSL certificates can be used with CloudFront.</p>
+<p>ACM can generate or import certificates. Generated certificates renew automatically but imported ones need to be renewed manually.</p>
+<p>Publicly-trusted certificates and not self-signed are allowed to be used with CloudFront distributions.</p>
+<p>Not all services within AWS are supported by ACM, in general it is CloudFront and ALBs NOT EC2 which is a self-managed service. Because with EC2, you can always access the certificate which is not allowed by ACM.</p>
+<p>ACM is a regional service. Certificates are locked to the region they are generated in.</p>
+<p>For global services like CloudFront, <code>us-east-1</code> is always used for ACM certificates.</p>
+<p>There exists 2 SSL connections:</p>
+<ul>
+<li>Viewer protocol: Viewer &lt;=&gt; CloudFront</li>
+<li>Origin protocol: CloudFront &lt;=&gt; Origin</li>
+</ul>
+<p>Both need valid public certificates.</p>
+<p>If the origin is S3, S3 handles certificates natively and nothing needs to be done.</p>
+<h2 id="cloudfront-and-sni"><a class="header" href="#cloudfront-and-sni">CloudFront and SNI</a></h2>
+<p>In the past, every SSL-enabled website needed its own IP address. It is however possible to host 2 domains on the same server. The latter is achieved using a header in the request to indicate which website is requested.</p>
+<p>In 2023, SNI (Serve Name Indication) appeared which is a TLS extention that allows a client to tell the server which domain it is trying to access. This occurs within the TLS handshake before HTTP. This allows 1 server to host several websites. The issue is that older browser do not support SNI. Hence why CLoudFront supports both SNI but also IP per server at an extra cost.</p>
+<h2 id="origin-types"><a class="header" href="#origin-types">Origin types</a></h2>
+<p>Origins are where CloudFront goes to get content Origins are selected from the Behaviour section.</p>
+<p>Origins can be:</p>
+<ul>
+<li>S3 buckets</li>
+<li>AWS media package channel endpoints</li>
+<li>AWS media store container endpoints</li>
+<li>everything else i.e. web servers</li>
+</ul>
+<p>With S3 as origin, the same protocol is used on the viewer and origin sides.</p>
+<h2 id="cache-invalidation"><a class="header" href="#cache-invalidation">Cache invalidation</a></h2>
+<p>From the AWS console and in a distribution, under the invalidations tag, you can create a new invalidation. An invalidation is an operation which sends a directive to every edge location to invalidate 1 or more objects.</p>
+<h2 id="securing-the-cf-content-delivery-path"><a class="header" href="#securing-the-cf-content-delivery-path">Securing the CF content delivery path</a></h2>
+<p>How to make sure that a customer does not bypass CloudFront to access data in the origin directly.</p>
+<h3 id="oai-origin-access-identity"><a class="header" href="#oai-origin-access-identity">OAI (Origin Access Identity)</a></h3>
+<p>This is only applicable to S3 origins and not S3 static websites used as origin.</p>
+<p>Is a type of identity that can be associated with a CloudFront distribution where when the distribution is trying to access data, it becomes the OAI.</p>
+<p>The OAI can be used within bucket policy eg. DENY all except the OAI. This way a direct access to origin is denied.</p>
+<h3 id="access-identity-for-non-s3-origin"><a class="header" href="#access-identity-for-non-s3-origin">Access identity for non-S3 origin</a></h3>
+<p>There are 2 ways around this:</p>
+<ol>
+<li>Custom headers</li>
+</ol>
+<p>Configure CloudFront to send a custom header to the origin. Since this is over HTTPS, the headers are not be visible and can not be immitated.</p>
+<p>If the header is missing, the origin will refuse the request.</p>
+<ol start="2">
+<li>Firewall</li>
+</ol>
+<p>Create a firewall around the custom origin to only allow requests from the edge location IP addresses and deny everything else.</p>
+<h2 id="delivering-private-content-to-end-users"><a class="header" href="#delivering-private-content-to-end-users">Delivering private content to end users</a></h2>
+<p>CloudFront can run in public or private modes. Private mode is achieved in 2 ways:</p>
+<ol>
+<li>Signed URLs</li>
+</ol>
+<p>When a signer is added to a distribution, it becomes private. Trusted key groups are used to generate signed URLs.</p>
+<p>Signed URLS provide access to 1 object.</p>
+<ol start="2">
+<li>Signed cookies</li>
+</ol>
+<p>Cookies provide access to groups of objects and keeps the object URL intact.</p>
+<p>The signed cookie is generated via a Lambda function after authentication is done. This cookie is returned back to the user which will use it with the request sent to the CF distribution. Access to resources is then granted.</p>
+<h2 id="cloudfront-geo-restriction"><a class="header" href="#cloudfront-geo-restriction">CloudFront Geo Restriction</a></h2>
+<p>Determines which areas of the planet can access content delivered via CF.</p>
+<p>It has 2 types:</p>
+<ol>
+<li>CF Geo Restriction</li>
+</ol>
+<p>Is a built-in, whitelist or blacklist architecture. This only works with countries. Uses a GeoIP database with 99.8%+ accuracy.</p>
+<div align="center">
+    <img src="./images/georestriction.png" alt="CF Geo Restriction" width="500" />
+</div>
+<ol start="2">
+<li>Third party Geolocation</li>
+</ol>
+<p>Is customisable. You can use this to access 3rd party geolocation services, so it can be more accurate. It can also be used to restrict based on users, browsers, or other and not just geolocation.</p>
+<p>It works using signed URLs or cookies.</p>
+<h2 id="lambda-at-the-edge"><a class="header" href="#lambda-at-the-edge">Lambda at the Edge</a></h2>
+<p>Allows you to run lightweight Lambda functions at edge locations. They don't have the full Lambda feature set.</p>
+<p>Use cases include:</p>
+<ul>
+<li>A/B testing using a Viewer Request function</li>
+<li>As part of the Origin request eg. migration betweem S3 origins</li>
+<li>Customise behaviour based on the device type of a customer</li>
+<li>Vary the content displayed by country</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="efs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="sdlc_automation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="efs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="sdlc_automation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

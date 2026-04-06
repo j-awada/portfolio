@@ -1,0 +1,1858 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>AWS Professional DevOps Certificate Material</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AWS Professional DevOps Certificate Material</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="about"><a class="header" href="#about">About</a></h1>
+<p>This book contains material for preparing for the AWS DevOps Professional (DOP-C02) certificate.</p>
+<p>It is built using Rust's <a href="https://rust-lang.github.io/mdBook/">mdBook</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="background"><a class="header" href="#background">Background</a></h1>
+<ul>
+<li><a href="./devops_and_cloud.html">DevOps and cloud</a></li>
+<li><a href="./osi_model.html">OSI model</a></li>
+<li><a href="./containers.html">Containers</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><p>Here is some general information relevant to DevOps and cloud computing.</p>
+<h3 id="cloud-computing"><a class="header" href="#cloud-computing">Cloud computing</a></h3>
+<p><a href="https://nist.gov">NIST</a> defines 5 characteristics of cloud computing:</p>
+<ol>
+<li>on-demand self-service</li>
+<li>broad network access</li>
+<li>resource pooling</li>
+<li>rapid elasticity</li>
+<li>measured service</li>
+</ol>
+<p><strong>Cloud computing services</strong>:</p>
+<img src="./images/cloud_computing.png" alt="cloud services" width="500" />
+<h3 id="devops-principals"><a class="header" href="#devops-principals">DevOps principals</a></h3>
+<ul>
+<li>Collaboration</li>
+<li>Communication</li>
+<li>Transparency</li>
+</ul>
+<h3 id="continuous-integration"><a class="header" href="#continuous-integration">Continuous integration</a></h3>
+<p>When developers regularly merge their code changes into a central repository, after which automated builds and tests run.</p>
+<h3 id="continuous-delivery"><a class="header" href="#continuous-delivery">Continuous delivery</a></h3>
+<p>When code changes are automatically built, tested and prepared for a release to production.</p>
+<h3 id="infrastructure-as-code-iac"><a class="header" href="#infrastructure-as-code-iac">Infrastructure as code (IaC)</a></h3>
+<p>When infrastructure is provisioned and managed using code and software development techniques such as version control and continuous integration.</p>
+<h3 id="monitoring-and-logging"><a class="header" href="#monitoring-and-logging">Monitoring and logging</a></h3>
+<p>Enabled organisations to see how applications and infrastructure performance impact the experience of the end user.</p>
+<h3 id="deployment-strategies"><a class="header" href="#deployment-strategies">Deployment strategies</a></h3>
+<p>Defines how software is delivered.</p>
+<p><strong>In-place deployment</strong></p>
+<ul>
+<li>The previous version of software is stopped, the latest version is installed and the new version of the application is started</li>
+<li>New infrastructure does not have to be created</li>
+<li>Service outage is assumed</li>
+</ul>
+<p><strong>Blue/green deployment</strong></p>
+<ul>
+<li>A technique for releasing an application by shifting traffic between 2 identical environments running differing versions of an application</li>
+<li>Enables launching a new version (green) of an application alongside an old version (blue) to monitor and test before traffic is re-routed</li>
+<li>minimises downtime and allows rollback</li>
+</ul>
+<p><strong>Canary deployment</strong></p>
+<p>Incrementally deploying a new version in a slow fashion until eventually replacing the old with the new version entirely.</p>
+<p><strong>Linear deployment</strong></p>
+<p>Traffic is shifted in equal increments in a way where you can specify the percentage of traffic to be shifted every number of minutes.</p>
+<p><strong>All-at-once deployment</strong></p>
+<p>All traffic is shifted from original environmnet to the new one all at once.</p>
+<h3 id="forward-and-reverse-proxy"><a class="header" href="#forward-and-reverse-proxy">Forward and reverse proxy</a></h3>
+<p><strong>Forward proxy</strong></p>
+<p>A server that sits infront of the client machine and intercepts requests to the internet and communicates on behalf of the clients as a middleman.</p>
+<p>Example usage includes: blocking access to certain content, protecting online identity by using the proxy's IP address.</p>
+<p><strong>Reverse proxy</strong></p>
+<p>A server that sits infront of the web servers intercepting requests from clients such that the client does not communicate directly with the origin server.</p>
+<p>Benefits include load balancing, protection from attacks, caching, SSL encryption.</p>
+<h3 id="dns"><a class="header" href="#dns">DNS</a></h3>
+<p>A DNS zone is a database containing records. A nameserver (NS) is a DNS server that hosts 1 or more zones. (More on that in the Route53 tab).</p>
+<p><strong>DNS query flow:</strong></p>
+<ul>
+<li>A user requests a domain eg. www.netflix.com</li>
+<li>DNS is used to locate the authoritative zone which hosts the record(s), to obtain the IP address of this domain</li>
+<li>First the local cache and host file is checked</li>
+<li>Next a DNS resolver is used, usually provided by the ISP (Internet Service Provider)</li>
+<li>The resolver checks its cache and if needed, queries the root zone via 1 of the root servers. The IP of this server is maintained in the browser</li>
+<li>The root server will return details of the <code>.com</code> nameservers</li>
+<li>The resolver then queries the netflix.com DNS nameservers</li>
+<li>They will return an authoritative response</li>
+<li>This might just give a CNAME instead of an IP, in which case another query is needed</li>
+</ul>
+<h3 id="cross-origin-resource-sharing-cors"><a class="header" href="#cross-origin-resource-sharing-cors">Cross-Origin Resource Sharing (CORS)</a></h3>
+<p><strong>Origin</strong> is the site you visit.</p>
+<p>Same-origin requests are always allowed, eg. when the browser calls a domain which defines origin.</p>
+<p>Cross-origin requests are made to different domains than the origin i.e. when the AWS API is called to retrieve an image from another bucket. These requests are always restricted but are controlled by CORS. CORS are defined on the origin and provide directives to allow the cross-origin requests.</p>
+<p>CORS configuration can be defined on S3 buckets using JSON. CORS configuration is processed in order.</p>
+<p><strong>Request types</strong></p>
+<p>There are 2 types of requests to a resource that could require a CORS configuration.</p>
+<ol>
+<li>
+<p>Simple requests: works as long as the other origin is configured to allow requests from the original origin.</p>
+</li>
+<li>
+<p>Preflight and Preflighted requests: when the browser sends a HTTP request to the other origin to determine if the request you are making is safe to send.</p>
+</li>
+</ol>
+<p><strong>CORS configuration</strong></p>
+<p>Some relevant configuration that the other origin sends to the web browser:</p>
+<ul>
+<li><code>Access-Control-Allow-Origin</code> can be <code>*</code> or a particular origin allowed to make requests</li>
+<li><code>Access-Control-Max-Age</code> indicates how long results of a preflight request can be cached</li>
+<li><code>Access-Control-Allow-Methods</code> defines methods that could be used for cross-origin requests</li>
+<li><code>Access-Control-Allow-Headers</code> can be contained in the CORS configuration and in the response to a preflight request and indicates which HTTP headers can be used with the request</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="osi-model"><a class="header" href="#osi-model">OSI model</a></h2>
+<p>The OSI (Open System Interconnection) model is a conceptual model which enables diverse systems to communicate using standard protocols.</p>
+<pre><code class="language-Rust">// L7: application
+// L6: presentation
+// L5: session
+// L4: transport
+// L3: network
+// L2: data link
+// L1: physical
+</code></pre>
+<p><strong>Host layers</strong>: L7, L6, L5, L4. How the data is chopped up and reassembled for transport and how it is formatted to be understandable.</p>
+<p><strong>Media layers</strong>: L3, L2, L1. How data is moved between point A and point B.</p>
+<h3 id="l1-physical"><a class="header" href="#l1-physical">L1: Physical</a></h3>
+<ul>
+<li>A physical medium can be copper (electrical), fibre (lights) or WIFI (radio frequency)</li>
+<li>L1 specifications define the transmission and reception of <strong>raw bit streams</strong> between a device and a shared physical medium. It defines things like voltage levels, timing, rates, distances, etc.</li>
+<li>This layer defines standards for transmitting onto the physical medium and standards for receiving</li>
+<li>Is primitive i.e. everything is broadcast and there is no inter-device communication or access control</li>
+</ul>
+<h3 id="l2-data-link"><a class="header" href="#l2-data-link">L2: Data link</a></h3>
+<ul>
+<li>Requires a functional L1</li>
+<li>Devices at L2 have a unique hardware address (MAC)</li>
+<li>L2 provides frames which are a format for sending information over a L2 network</li>
+<li>The transmission and reception of frames is handled by L1</li>
+<li>A frame is a container of bits divided into parts eg. destination MAC address, source MAC address, payload, etc.</li>
+<li>L2 can interpret the parts of a frame it has received, L1 can't</li>
+<li>L2 facilitates data transfer between 2 devices on the same network (intra-network)</li>
+</ul>
+<h3 id="l3-network"><a class="header" href="#l3-network">L3: Network</a></h3>
+<ul>
+<li>Used to facilitate data transfer between devices on different networks</li>
+<li>Adds IP for cross-network routing</li>
+<li>IP packets are moved from source to destination and encapsulated inside different frames along the way</li>
+<li>It is able to break down the segments that it receives from the transport layer into packets which are reassembled on the receiving device</li>
+</ul>
+<p>It is useful to know at this point that a <strong>subnet mask</strong> allows a host to determine if an IP address; it needs to communicate with, is local or remote which influences if it needs to use a gateway or can communicate locally.</p>
+<p>A subnet mask of 255.255.0.0 and /16 prefix mean the same thing.</p>
+<p><strong>ARP</strong> (Address Resolution Protocol) is used when you have a L3 packet and you want to encapsulate it inside a frame and then send that frame to a MAC address. The MAC address is not known and you need a protocol which can find the MAC address for a given IP address.</p>
+<p>Routers are L3 devices i.e. they understand L1, L2 and L3.</p>
+<h3 id="l4-transport"><a class="header" href="#l4-transport">L4: Transport</a></h3>
+<ul>
+<li>Protocols include TCP and UDP</li>
+<li>TCP is used for reliability, error correction and ordering of data. It is slower and creates a bidirectional channel of communication</li>
+<li>UDP is faster but less reliable</li>
+<li>TCP introduces segments which are encapsulated inside IP packets</li>
+<li>This layer relies on L3 for transport but introduces source and destination ports</li>
+<li>TCP establishes a reliable connection between 2 devices. A connection or a channel is a collection of segments.</li>
+<li>TCP uses a 3-way handshake with signals such as SYN, ACK and FIN</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="containers"><a class="header" href="#containers">Containers</a></h1>
+<p><strong>Virtualisation</strong> is running multiple operating systems on the same physical hardware.</p>
+<pre><code class="language-Bash">------------------------------------------
+       App 1 | App 2 | ... | App N
+------------------------------------------
+ Runtime 1 | Runtime 2 | ... | Runtime N
+------------------------------------------
+Guest OS 1 | Guest OS 2 | ... | Guest OS N
+------------------------------------------
+          AWS Hypervisor (NITRO)
+------------------------------------------
+                AWS EC2 host
+------------------------------------------
+</code></pre>
+<p>The OS alone takes a lot of resources 60% to 70% of the disk and a lot of memory leaving little resources for the applications which run in the VMs.</p>
+<p>Most of the time, the same OS is running on multiple VMs i.e. there's duplication.</p>
+<p><strong>Containerisation</strong> is when a container runs a copy of a Docker image.</p>
+<pre><code class="language-Bash">---------------------------------------------
+Container 1 | Container 2 | ... | Container N
+---------------------------------------------
+        Container Engine (a process)
+---------------------------------------------
+                   Host OS
+---------------------------------------------
+               AWS EC2 hardware
+---------------------------------------------
+</code></pre>
+<p>The container which is (app + runtime) consumes little resources and is lightweight.</p>
+<p><strong>Docker image</strong></p>
+<ul>
+<li>The Docker image is made of multiple independent layers, it is a stack of layers.</li>
+<li>The Dockerfile is used to create the Docker image</li>
+<li>Each line creates a new filesystem layer inside the Docker image</li>
+<li><code>FROM</code> is used for the base image</li>
+<li>The filesystem layers that make up an image are read-only</li>
+<li>The Docker container is a running copy of the Docker image plus a read/write layer</li>
+<li>Multiple containers can be created from 1 image</li>
+<li>Layers are re-used minimising resource usage, the read/write layer is what differentiates containers.</li>
+<li>A container registry is a hub of container images</li>
+<li>Containers are islated from the outside world and they can expose ports so that the services in the container can be accessed</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="iam-identity-and-access-management"><a class="header" href="#iam-identity-and-access-management">IAM (Identity and Access Management)</a></h2>
+<p>An AWS account is a container for identities and resources. Every AWS account has a unique email which is that of the root user of the account.</p>
+<p>With IAM, you can create users, groups and roles. Multiple identities can be created within a single AWS account. A max of 5000 IAM users are allowed per account. And an IAM user can be a member of max 10 groups.</p>
+<h2 id="identity-types"><a class="header" href="#identity-types">Identity types</a></h2>
+<ul>
+<li><strong>users</strong>: for humans or applications</li>
+<li><strong>groups</strong>: a collection of related users eg. developers</li>
+<li><strong>roles</strong>: for AWS services or for getting external access</li>
+</ul>
+<h3 id="policies"><a class="header" href="#policies">Policies</a></h3>
+<p>Policies can be created and attached to users, groups or roles to allow or deny access to AWS services. It contains statements which grant or deny permissions to AWS services.</p>
+<p>A statement object consists of:</p>
+<ul>
+<li>Sid: statement ID</li>
+<li>Effect: is either allow or deny</li>
+<li>Action: a list of actions/operations on a service</li>
+<li>Resource: a list of resources/names</li>
+</ul>
+<p>A policy can be:</p>
+<ul>
+<li><strong>managed</strong>: used for multiple identities</li>
+<li><strong>inline</strong>: used for exceptional allow/deny to a managed policy</li>
+</ul>
+<h3 id="iam-groups"><a class="header" href="#iam-groups">IAM Groups</a></h3>
+<ul>
+<li>Are containers for IAM users</li>
+<li>Groups can not be nested in other groups</li>
+<li>In a policy, users and roles can be referenced using their ARN. Groups however can not be referenced in policies because groups are not a true identity. Groups can have permissions attached to them.</li>
+</ul>
+<h3 id="iam-roles"><a class="header" href="#iam-roles">IAM Roles</a></h3>
+<ul>
+<li>Used by multiple principals, humans, service, applications or an unknown number of principals</li>
+<li>Roles are generally used on a temporary basis i.e. borrowing permissions for a short time</li>
+<li>Roles can have identities, premissions, policies attached to them</li>
+<li>Roles can be referenced in resource policies</li>
+<li>Roles can have 2 types of policies attached: <strong>Trust policy</strong> and <strong>Permissions policy</strong></li>
+</ul>
+<p><strong>Trust policy</strong> controls which identities can assume that role.</p>
+<p><strong>Permission policy</strong> controls access to resources.</p>
+<p>Scenarios for using role:</p>
+<ul>
+<li>
+<p>In case of AWS services like Lambda where it needs access rights to perform actions. You should avoid hardcoding access keys into the Lambda function. A role is created and the Lambda function is added to its Trust policy. This role has a Permissions policy which grants access to AWS products and services. The <code>sts::AssumeRole</code> is then used by the Lambda function.</p>
+</li>
+<li>
+<p>External identity. To allow users with external identities outside of AWS to do single sign-on. This use case enables exceeding the 5000 user-limit enforced on AWS accounts. In this example, a role can be assumed by an external identity.</p>
+</li>
+</ul>
+<h3 id="arn-amazon-resource-name"><a class="header" href="#arn-amazon-resource-name">ARN (Amazon Resource Name)</a></h3>
+<p>Used to uniquely identify resources within an AWS account.</p>
+<p>It can have the following structures:</p>
+<ul>
+<li><code>arn:partition:service:region:account-id:resource-id</code></li>
+<li><code>arn:partition:service:region:account-id:resource-type/resource-id</code></li>
+<li><code>arn:partition:service:region:account-id:resource-type:resource-id</code></li>
+</ul>
+<p>Eg. <code>arn:aws:s3:::my-bucket/*</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="aws-organisations"><a class="header" href="#aws-organisations">AWS Organisations</a></h2>
+<p>This allows larger businesses to manage multiple AWS accounts</p>
+<p>Start by taking a standard AWS account which is not in an organisation. Within this account, create an organisation. This account then becomes the management or master account of the organisation. The master account is used to invite other standard accounts into the organisation. The standard accounts that join an organisation become member accounts.</p>
+<p>The structure of an organisation is hirarchichal i.e. there is an organisation root containing organisation units.</p>
+<p>The organisation has consolidated billing i.e. billing is removed for member accounts. Billing is passed to the management account of the organisation.</p>
+<p>New accounts can join an organisation via a link or they can be created directly. When creating or adding a new account to an organisation, a role is created or manually added respectively. This role allows the management account to switch into those new accounts.</p>
+<h3 id="scp-service-control-policy"><a class="header" href="#scp-service-control-policy">SCP (Service Control Policy)</a></h3>
+<ul>
+<li>A feature of AWS organisations which can be used to restrict AWS accounts</li>
+<li>SCP is a JSON policy that can be attached to an organisation, organisation unit or AWS account</li>
+<li>The management account is never affected by SCPs attached to the organisation. The management account can't be restricted</li>
+<li>SCP does not grant permissions, it only creates boundaries</li>
+<li>The default is Allow, you need to add Deny or remove the default Allow access</li>
+</ul>
+<p>Example organisation structure:</p>
+<pre><code class="language-Bash">Root
+|
+|---&gt; management account
+|---&gt; Dev (OU)
+       |
+       |---&gt; dev account
+|
+|---&gt; Prod (OU)
+       |
+       |---&gt; prod account
+</code></pre>
+<p>The SCP needs to be enabled.</p>
+<ul>
+<li><code>FullAWSAccess</code> policy is active</li>
+<li>Create a new SCP eg. to deny S3 actions</li>
+<li>Apply the new SCP to the prod OU</li>
+<li>Detach the <code>FullAWSAccess</code> SCP from prod OU</li>
+<li>When you switch roles to the prod account, you will not have access to S3</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="storage"><a class="header" href="#storage">Storage</a></h1>
+<ul>
+<li><a href="./elastic_block_storage.html">Elastic Block Storage</a></li>
+<li><a href="./s3_misc.html">S3 misc.</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ebs-elastic-block-storage"><a class="header" href="#ebs-elastic-block-storage">EBS (Elastic Block Storage)</a></h1>
+<p>Is a service that provides block storage. Allocates raw physical disk as a volume. Volumes can be unencrypted or encrypted using KMS.</p>
+<p>Storage is provisioned in 1 AZ where it is isolated and resilient. An EC2 instance in 1 AZ can not attach to a volume in another AZ.</p>
+<p>A volume can be snapshotted into S3. It can be used to create volumes in different AZ and regions.</p>
+<p>A volume is usually attached to 1 EC2 instance but you can use a multi-attach service to attach it to more than 1 instance at the same time.</p>
+<h2 id="ebs-volume-types"><a class="header" href="#ebs-volume-types">EBS volume types</a></h2>
+<h3 id="ssd-based"><a class="header" href="#ssd-based">SSD-based</a></h3>
+<p>Where it uses flash memory chips (no moving parts).</p>
+<ol>
+<li><strong>GP2 (General Purpose SSD)</strong></li>
+</ol>
+<p>Is good for boot volumes, low-latency interactive applications and dev/test environemnts.</p>
+<p>A newly created volume can be as small as 1GB or as large as 16TB. It is created with an IO credit allocation.</p>
+<ul>
+<li>IO is 1 input/output operation</li>
+<li>An IO credit is a 16Kb chunk of data</li>
+<li>1 IOP is 1 IO (16Kb) in 1 second</li>
+</ul>
+<p>An IO credit bucket has a capacity of 5.4 million IO credits and fills at the baseline performance rate of the volume.</p>
+<ol start="2">
+<li><strong>GP3</strong></li>
+</ol>
+<p>Is also SSD-based but removes the credit/bucket architecture used in GP2 for something simpler.</p>
+<p>Use case is similar to GP2 i.e. virtual desktops, medium sized single instance databases, low-latency apps, dev/test environments and bootable volumes.</p>
+<p>Every GP3 volume regardless of size starts with 3000 IOPs and 125 MiB transfer per second. More specs come at a higher cost.</p>
+<ol start="3">
+<li><strong>IO2 BlockExpress</strong></li>
+</ol>
+<p>Designed for super high performance situation for consistency and low latency.</p>
+<p>Can achieve 256,000 IOPs per volume and 4,000 MB/s throughput.</p>
+<div align="center">
+    <img src="./images/storage.png" alt="cloud services" width="500" />
+</div>
+<h3 id="hdd-based-hard-disk-drive"><a class="header" href="#hdd-based-hard-disk-drive">HDD-based (Hard Disk Drive)</a></h3>
+<p>Uses spinning magnetic disks with read/write heads.</p>
+<p>Cheaper than SSD volumes.</p>
+<ol start="4">
+<li><strong>st1 (throughput optimised)</strong></li>
+</ol>
+<p>Is cheap.</p>
+<p>Designed for data that is sequentially accessed.</p>
+<p>Range from 125 GB to 16 TB in size.</p>
+<p>IO is measured as 1MB block and st1 is capable of max 500 IOPs i.e. 500 MB/s.</p>
+<ol start="5">
+<li><strong>sc1 (cold HDD)</strong></li>
+</ol>
+<p>Is cheaper, lowest cost of EBS volume available.</p>
+<p>Used to store data without the focus on performance.</p>
+<p>Max of 250 IOPs (1MB IO size). Max 250 MB/s.</p>
+<p>Range from 125 GB to 16 TB in size.</p>
+<h2 id="instance-store-volumes"><a class="header" href="#instance-store-volumes">Instance Store volumes</a></h2>
+<p>They have higher performance than EBS volumes.</p>
+<p>They offer the highest storage performace in AWS because they are locally attached.</p>
+<p>Provide temporary block storage devices which are raw volumes that can be attached to instances to be used as a basis for a filesystem. They are local and are not presented over the network.</p>
+<p>They are ephemeral and should not be used when persistence is requried.</p>
+<p>They physically connect to 1 EC2 host. Instances on that host can access those volumes. An instance can use more than 1 volume.</p>
+<p>They are only attached at launch time.</p>
+<p>Data is lost if the volume moves, is resized or if there is hardware failure.</p>
+<h2 id="storage-gateway"><a class="header" href="#storage-gateway">Storage Gateway</a></h2>
+<p>Runs as a virtual machine on premises, it enables hybrid storage between on-prem and AWS. It connects on-prem applications to unlimited cloud storage.</p>
+<p>It works by installing the storage appliance in your local data centre, it then handles data transfer, encryption and caching. The storage appliance connects to local applications via LAN and to AWS via internet or Direct Connect.</p>
+<h2 id="types-of-storage-gateway"><a class="header" href="#types-of-storage-gateway">Types of storage gateway</a></h2>
+<p><strong>S3 File Gateway</strong></p>
+<p>This is best used for object storage, storing unstructured data (images, logs, etc.) in S3. It links on-prem file storage and S3.</p>
+<p>Mount points are created locally and are available via 2 protocols NFS (Linux) or SMB (Windows).</p>
+<p>Allows 10 bucket shares pre File Gateway.</p>
+<p>File Gateway does not support object locking in the case of multiple file share to a bucket.</p>
+<p><strong>FSx File Gateway</strong></p>
+<p>Used for configuration or file data. Offers low overhead for accessing files.</p>
+<p><strong>Volume Gateway</strong></p>
+<p>Provides block storage. It provides raw disks over iSCSI connection.</p>
+<p><strong>Tape Gateway</strong></p>
+<p>Makes it easier to handle backup operations i.e. instead of using physical tapes, you can use virtual tapes.</p>
+<p>Virtual Tape Library (VTL) stored in S3 buckets.</p>
+<p>Tape Shelf (VTS) stored in Glacier and is generally used for archives where they are not frequently accessed.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="s3-misc"><a class="header" href="#s3-misc">S3 misc.</a></h1>
+<h2 id="s3-security"><a class="header" href="#s3-security">S3 security</a></h2>
+<p>S3 is private by default.</p>
+<p>An S3 bucket policy is a form of resource policy; it is like identity policies but attached to a bucket.</p>
+<p>Bucket policies can be complex for eg. deny access to an IP address range / if the identity using the bucket does not use MFA.</p>
+<p><strong>Access Control Lists (ACLs)</strong></p>
+<p>Are legacy and not recommended to use by AWS but they are used to apply security to objects or buckets.</p>
+<h2 id="s3-static-website-hosting"><a class="header" href="#s3-static-website-hosting">S3 static website hosting</a></h2>
+<p>It allows access via standard HTTP by individuals using a web browser.</p>
+<p>When you enable this, you have to set an index and an error document.</p>
+<h2 id="s3-bucket-object-versioning"><a class="header" href="#s3-bucket-object-versioning">S3 bucket object versioning</a></h2>
+<p>By default, this is disabled. Once enabled, it can not be disabled again. The bucket however can be suspended and the versions deleted then re-enabled.</p>
+<p>Versioning lets you store multiple versions of an object in a bucket.</p>
+<p>An object has a key (name) and an ID (used for versioning). When versioning is disabled, the ID is null. But when versioning is enabled and an object is accessed without specifying an ID, the latest object is assumed.</p>
+<p>When an object is deleted without specifying a version, a Delete Marker is added which is a special version of an object which hides all previous versions of that object. The Delete Marker can be deleted and the object can be active again.</p>
+<p>To fully delete an object, you need to specify a version.</p>
+<h2 id="s3-bucket-upload"><a class="header" href="#s3-bucket-upload">S3 bucket upload</a></h2>
+<p>By default, data is uploaded to S3 in a single blob of data in a <strong>single stream</strong>. A file is uploaded using the <code>s3:PutObject</code> action and put into a bucket.</p>
+<p>But if a stream fails, the upload fails and nothing is uploaded. And a PUT upload is limited to 5GB of data in a single stream.</p>
+<p><strong>Multipart upload</strong> however improves the speed and reliability of uploads to S3. It does this by breaking data down into various blobs. The minimum size of the data uploaded should be 100MB.</p>
+<p>An upload can be split into a max of 10,000 parts and each part can range in size from 5MB to 5GB. Unlike single stream upload, each part can fail in isolation and restart in isolation. Transfer rate; which is the speed of all parts, is therefore improved.</p>
+<h2 id="s3-accelerated-transfer"><a class="header" href="#s3-accelerated-transfer">S3 Accelerated Transfer</a></h2>
+<p>Data can take inefficient routes to reach its destination especially if travelling from country to another. This can slow down data transfer due to this low performance.</p>
+<p>Transfer acceleration for S3 uses the network of AWS edge locations located globally in convenient locations. This is by default switched off and needs to be enabled given certain restrictions.</p>
+<p>The AWS network is purposely build to connect regions with one another.</p>
+<h2 id="s3-server-side-encryption"><a class="header" href="#s3-server-side-encryption">S3 server-side encryption</a></h2>
+<p>Buckets are not encrypted, objects are. Objects can use different encryption settings.</p>
+<p>Knowing that data to and from S3 is encrypted in transit, encryption at rest i.e. how data is stored on disk can be:</p>
+<p><strong>client-side encryption:</strong></p>
+<p>Data is encrypted at the client side and S3 receives data that is already encrypted. The client is responsible for the encryption keys and for the encryption process. Here, S3 is just used for storage.</p>
+<p><strong>server-side encryption:</strong></p>
+<p>Data is not encrypted on the client side but when it reaches S3 it gets encrypted. FYI encryption at rest is mandatory on S3.</p>
+<p>Serve-side encryption for S3 objects has 3 types:</p>
+<ol>
+<li>SSE-C (server-side encryption with customer-provided keys)</li>
+</ol>
+<p>The customer is responsible for the keys but S3 handles the cryptographic operation.</p>
+<ol start="2">
+<li>SSE-S3 (server-side encryption with Amazon S3-managed keys)</li>
+</ol>
+<p>This is the default. S3 provides the key and the encryption process.</p>
+<ol start="3">
+<li>SSE-KMS (server-side encryption with KMS keys stored in AWS KMS)</li>
+</ol>
+<p>Here, the KMS service is involved. The client has control over the KMS key. S3 handles the encryption process.</p>
+<h2 id="s3-bucket-keys"><a class="header" href="#s3-bucket-keys">S3 bucket keys</a></h2>
+<p>This helps S3 scale and reduce cost when using KMS encryption.</p>
+<p>Usually every object requires a unique KMS key to get encrypted. Which means that for every S3 object, a unique KMS key is needed. This increases cost due to the many requests to KMS, it might also be subject to throttling restrictions.</p>
+<p>With bucket keys, instead of the KMS key being used to generate many data encryption keys, it is used to generate a time-limited bucket key. The bucket key is then used to generate data encryption keys for objects in the bucket. This reduces KMS API calls, reduces cost and improves scalability.</p>
+<h2 id="object-storage-classes"><a class="header" href="#object-storage-classes">Object storage classes</a></h2>
+<p><strong>1. S3 Standard</strong></p>
+<p>This is the default class where objects are replicated across at least 3 AZs. It can cope with AZ failure. It provides 11 nines (9s) of durability. The replication uses Content-MD5 Checksums and Cyclic Redundancy Checks (CRCs) to detect and fix any data corruption.</p>
+<p>Billing is 1 GB per month fee for data stored. A $ per GB charge for transfer OUT (IN is free) and a price per 1,000 requests. No retrieval fee.</p>
+<p>This class should be used for frequently accessed data which is important and non-replaceable.</p>
+<p><strong>2. S3 Standard-IA (infrequent access)</strong></p>
+<p>Shares most of the architecture of S3 Standard however it is much cheaper than S3 Standard.</p>
+<p>It has a retrieval fee per GB of data, it is therefore designed for minimally accessed data.</p>
+<p>It has a minimum duration charge of 30 days.</p>
+<p>This class should be used for long-lived data which is important but where access is infrequent.</p>
+<p><strong>3. S3 One Zone-IA</strong></p>
+<p>This is cheaper than Standard and Standard-IA but with some compromise.</p>
+<p>Shares most of the features of Standard-IA but data is not replicated and is stored in 1 AZ only.</p>
+<p>This class should be used for long-lived data which is not critical and replaceable and where access is infrequent.</p>
+<p><strong>4. S3 Glacier Instant Retrieval</strong></p>
+<p>Is like S3 Standard-IA but has cheaper storage, more expensive retrieval and longer minimum storage duration of 90 days instead of 30.</p>
+<p>Although it costs more to access the data, instant data access is still an option here.</p>
+<p><strong>5. S3 Glacier Flexible Retrieval</strong></p>
+<p>This allows storing data in a chilled state.</p>
+<p>Similar to S3 Standard but with a storage cost 1 sixth of the cost of S3 Standard. It is therefore cost-effective but with some tradeoff.</p>
+<p>Objects stored here are cold and not immediately available. Objects cannot be made publicly available and to gain access, a retrieval operation needs to be performed.
+You pay for object retrieval and they are stored in the S3 Standard class on a temporary basis. They are removed once accessed.</p>
+<p>Retrieval can be <strong>expedited</strong> (1-5 minutes), <strong>standard</strong> (3-5 hours) and <strong>bulk</strong> (5-12 hours). The faster, the more expensive. Objects have a first byte latency in minutes or hours so this is not ideal for static website hosting.</p>
+<p>Some limitations here are a 40KB minimum billable size and a 90 day minimum billable duration.</p>
+<p>This class is ideal for archival data where frequent or real-time access is not needed.</p>
+<p><strong>6. S3 Glacier Deep Archive</strong></p>
+<p>Is the cheapest storage class and allows storing data in frozen state. It also has 40KB minimum billable size and 180 day minimum billable duration.</p>
+<p>Similar to Glacier Flexible, objects are not publicly available and a retrieval job is needed to access the data.</p>
+<p>Data is temporarily retrieved to S3 Standard-IA which takes 12 hours and Bulk up to 48 hours.</p>
+<p>First byte latency is in hours or days.</p>
+<p><strong>7. S3 Intelligent-Tiering</strong></p>
+<p>Is a storage class that contains 5 different storage tiers:</p>
+<ul>
+<li>Frequent access</li>
+<li>Infrequent access</li>
+<li>Archive instant access</li>
+<li>Archive access</li>
+<li>Deep archive</li>
+</ul>
+<p>The system monitors the usage of an object and moves it for you into the right tier based on frequency of access.</p>
+<p>This class is good for data where the access pattern changes or is not known.</p>
+<h2 id="s3-lifecycle-configuration"><a class="header" href="#s3-lifecycle-configuration">S3 lifecycle configuration</a></h2>
+<p>You can create lifecycle rules on S3 buckets which can automatically transition or expire objects in the bucket.</p>
+<p>Lifecycle configuration is a set of rules that consist of actions which apply based on criteria i.e. do X if Y. They can be applied on a bucket or a group of objects in that bucket defined by prefix or tags.</p>
+<p>Actions can be of 2 types:</p>
+<ul>
+<li>Transition actions: they can change the storage class of an object eg. from S3 Standard to S3 Standard-IA.</li>
+</ul>
+<p>Note this exception: objects in S3 One Zone-IA can transition into S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive but not S3 Glacier Instant Retrieval.</p>
+<div align="center">
+    <img src="./images/s3-storage-class-transition.png" alt="s3 storage class transition" width="500" />
+</div>
+<p>Transition can not happen in an upward direction, only downward.</p>
+<p>Note that if an object is stored in S3 Standard, it requires to have been there for a minimum of 30 days before transitioning to an infrequent access tier like S3 Standard-IA or S3 One Zone-IA.</p>
+<p>A duration of 30 days is required if objects were to transition further from IA tiers to Glacier classes.</p>
+<ul>
+<li>Expiration actions: they can delete objects or object versions.</li>
+</ul>
+<h2 id="s3-replication"><a class="header" href="#s3-replication">S3 Replication</a></h2>
+<p>Replicating objects between a source and destination S3 bucket. 2 types of replication are supported by S3:</p>
+<ol>
+<li>Cross-Region Replication (CRR)</li>
+</ol>
+<p>Allows replication of objects from a source bucket to 1 or more destination buckets in different AWS regions.</p>
+<ol start="2">
+<li>Same-Region Replication (SRR)</li>
+</ol>
+<p>The same process but where the source and destination buckets are in the same region.</p>
+<p>An IAM role is configured to allow the S3 service to use it. The premissions on this role allows it to read data on the source bucket and replicate them on the destination bucket.</p>
+<p>In case of replication between different AWS accounts, a bucket policy on the destination bucket is needed to allow the IAM roles to replicate data into it.
+Replication between bucket of the same account do not need this policy because the destination bucket trusts the source bucket.</p>
+<p>You can replicate all objects or a subset and you can choose the storage class to be used. You can also define ownership of the objects eg. owned by the account of the destination bucket. You can also define a Replication Time Control (RTC) between the source and destination bucket.</p>
+<h3 id="notes-in-replication"><a class="header" href="#notes-in-replication">Notes in replication</a></h3>
+<p>By default, replication is not retroactive i.e. objects that were already there are not replicated. Batch replication can be used to replicate existing objects.</p>
+<p>Versioning needs to be ON on both source and destination buckets.</p>
+<p>Replication is one-way and is not bi-directional.</p>
+<p>Replication is able to handle objects that are unencrypted, SSE-S3, SSE-KMS and SSE-C.</p>
+<p>Replication can not happen on objects in Glacier or Glacier Deep Archive.</p>
+<h2 id="s3-pre-signed-urls"><a class="header" href="#s3-pre-signed-urls">S3 Pre-signed URLs</a></h2>
+<p>Used to give another person access to objects in an S3 bucket using your credentials and in a secure way.</p>
+<p>Example: an IAM admin can make a request to S3 to generate a pre-signed URL while providing security credentials, bucket name, object key and expiry datetime and how the object will be accessed. The URL returned has encoded in it all the information provided.
+The unauthenticated user using the pre-signed URL interacts with the object as the preson who generated it.</p>
+<h2 id="exam-powerups"><a class="header" href="#exam-powerups">Exam powerups</a></h2>
+<ul>
+<li>A pre-signed URL can be created for an object you don't have access to</li>
+<li>The premissions used when an object is accessed via a pre-signed URL match the identity which generated it</li>
+<li>Authentication to an object in a bucket can be provided via a token in the URL</li>
+<li>You can generate a pre-signed URL for an object that does not exist</li>
+<li>You can create a pre-signed URL using the CLI <code>aws s3 presign &lt;options&gt;</code></li>
+</ul>
+<h2 id="s3-select-and-glacier-select"><a class="header" href="#s3-select-and-glacier-select">S3 Select and Glacier Select</a></h2>
+<p>These 2 services can store objects with huge size (up to 5TB). Sometimes you do not want to retrieve an entire object and you want to instead filter it on the bucket side. S3 and Glacier Select services allow you to create a SQL-like statement to retrieve partial objects.
+The S3 service can use the SQL-like statement and apply it to the raw data in S3 to filter it down.</p>
+<p>File formats include CSV, JSON, Parquet BZIP2 compression for CSV and JSON.</p>
+<h2 id="s3-events"><a class="header" href="#s3-events">S3 Events</a></h2>
+<p>This feature allows you to create event configurations on a bucket. When enabled, a notification is generated when an event occurs in a bucket. Events can be delivered to different destinations eg. SNS, SQS and Lambda functions.</p>
+<p>Eg. on object creation, restores, replications or deletion. The events themselves are JSON objects.</p>
+<p>EventBridge is an alternative and it supports more types of events and more services.</p>
+<h2 id="s3-access-logs"><a class="header" href="#s3-access-logs">S3 Access Logs</a></h2>
+<p>Helps understand what types of accesses are occurring on a source bucket. The logs are stored in a target bucket.</p>
+<p>This feature needs to be enabled on the source bucket. Loggin is managed by a system called the S3 Log Delivery Groups. This group needs to be given access to the target bucket via an ACL.</p>
+<h2 id="s3-object-lock"><a class="header" href="#s3-object-lock">S3 Object Lock</a></h2>
+<p>This feature is enabled on new buckets along with versioning. Once enabled, it can not be disabled.</p>
+<p>Object Lock implements a Write-Once-Read-Many (WORM) architecture where objects versions can't be overwritten or deleted.</p>
+<p>Has 2 types:</p>
+<ol>
+<li>S3 object lock retention</li>
+</ol>
+<p>When you create the object lock, you specify the retention period in days or years.</p>
+<p>This has 2 modes:</p>
+<ul>
+<li>Compliance mode: an object can not be adjusted deleted or overwritten during the retention period. And no change is possible to the retention period settings.</li>
+</ul>
+<p>Eg. used for medical or financial data.</p>
+<ul>
+<li>Governance mode: same, but special permissions can be granted to allow lock settings to be adjusted. This is done using this permission <code>s3:BypassGovernanceRetention</code>.</li>
+</ul>
+<ol start="2">
+<li>S3 object local legal hold</li>
+</ol>
+<p>A retention period is not set here and instead legal hold is set to be ON or OFF. There is no concept of retention.</p>
+<p>Here you can not delete ot change the object version. The <code>s3:PutObjectLegalHold</code> permission allows you to add or remove the legal hold feature.</p>
+<div align="center">
+    <img src="./images/s3-object-lock.png" alt="s3 object lock" width="500" />
+</div>
+<h2 id="s3-access-points"><a class="header" href="#s3-access-points">S3 Access Points</a></h2>
+<p>Features that improves the accessibility of S3 buckets, it simplifies the access to S3 buckets and objects.</p>
+<p>Every access point can have an endpoint and can be used from within different networks.</p>
+<p>Extra reading: https://docs.aws.amazon.com/AmazonS3/latest/dev/creating-access-points.html#access-points-policies</p>
+<h2 id="s3-inventory"><a class="header" href="#s3-inventory">S3 Inventory</a></h2>
+<p>Helps you manage your storage within S3 buckets. Can be configured to generate inventory reports based on a specific frequency, eg. daily or weekly.</p>
+<p>Output is generated in 1 of these 3 formats: CSV, ORC, Parquet.</p>
+<p>The reports are stored in the target bucket.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dynamodb"><a class="header" href="#dynamodb">DynamoDB</a></h1>
+<p>Is a no-SQL, wide-column database as a service product. It is a public service that can handle key/value and document data.</p>
+<p>It is highly resilient across AZs and optionally globally. It is fast and is SSD-based.</p>
+<p>It allows backups an data is encrypted at rest. It supports event-driven integration.</p>
+<h2 id="dynamodb-tables"><a class="header" href="#dynamodb-tables">DynamoDB tables</a></h2>
+<p>A table is a grouping of items that share a primary key. The number of items is infinite but the max size of an item is 400KB.</p>
+<p>A primary key can be simple (Partition) aka <code>pk</code> or composite which is a combination of the <code>pk</code> and the <code>sk</code> (Sort key).</p>
+<h2 id="point-in-time-recovery-pitr"><a class="header" href="#point-in-time-recovery-pitr">Point-in-time Recovery (PITR)</a></h2>
+<p>Is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35 day recovery window.</p>
+<h2 id="access"><a class="header" href="#access">Access</a></h2>
+<p>DynamoDB can be accessed via the console, CLI or API.</p>
+<h2 id="capacity"><a class="header" href="#capacity">Capacity</a></h2>
+<p>2 capacity modes:</p>
+<ul>
+<li>
+<p>on-demand: managed by AWS.</p>
+</li>
+<li>
+<p>provisioned: by specifying the RCU (read capacity unit) and WCU (write capacity unit) on a per table basis.</p>
+</li>
+</ul>
+<p>Every operation consumes at least 1 RCU/WCU with a max of 4KB per RCU and 1KB for WCU.</p>
+<p>Every table has a RCU and WCU burst pool of 300 seconds of the read/write capacity unit on the table.</p>
+<h2 id="operations"><a class="header" href="#operations">Operations</a></h2>
+<p><strong>Query</strong></p>
+<p>Is the most efficient operation and is used with a partition key.</p>
+<p><strong>Scan</strong></p>
+<p>Is not too efficient since it moves through the table item by item.</p>
+<p>Even if an item is not returned, capacity is still consumed.</p>
+<h2 id="indexes"><a class="header" href="#indexes">Indexes</a></h2>
+<p>They help improve the efficiency of data retrieval and are of 2 types of indexes:</p>
+<p><strong>Local Secondary Indexes (LSI)</strong></p>
+<p>They must be created when the base table is created and they allow for an alternative sort key <code>sk</code> on the table.</p>
+<p><strong>Global Secondary Indexes (GSI)</strong></p>
+<p>They can be created at any time with a default limit of 20 per base table.</p>
+<p>It allows for creating an alternative view of the table using a different partition key and sort key.</p>
+<h2 id="streams-and-triggers"><a class="header" href="#streams-and-triggers">Streams and Triggers</a></h2>
+<p><strong>Streams</strong></p>
+<p>Is a time ordered list of item changes in a table with a 24-hour rolling window. Changes include inserts, updates and deletes.</p>
+<p><strong>Triggers</strong></p>
+<p>Allow for actions to take place upon a change in the data. Actions can be via a Lambda function.</p>
+<h2 id="dynamodb-accelerator-dax"><a class="header" href="#dynamodb-accelerator-dax">DynamoDB Accelerator (DAX)</a></h2>
+<p>Is an in-memory cache for DynamoDB that improves performance.</p>
+<p>The interaction with the DynamoDB database is handled by the DAX SDK rather than the user application itself.</p>
+<h2 id="global-tables"><a class="header" href="#global-tables">Global Tables</a></h2>
+<p>Provides a multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
+<h2 id="ttl"><a class="header" href="#ttl">TTL</a></h2>
+<p>Used to set a timestamp for automatic delete of items. Useful for items that lose relevance after a period of time.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-load-balancing"><a class="header" href="#elastic-load-balancing">Elastic Load Balancing</a></h1>
+<p>It distributes traffic across different resources such as EC2 instances, containers and IP addresses in 1 or more availability zones.</p>
+<p>LBs can be set to private or public.</p>
+<h2 id="types"><a class="header" href="#types">Types</a></h2>
+<p><strong>Application LB</strong></p>
+<ul>
+<li>Runs at the OSI application layer, L7</li>
+<li>Targets IP addresses, EC2, EKS, Fargate, Lambda</li>
+</ul>
+<p><strong>Network LB</strong></p>
+<ul>
+<li>At the OSI transport layer, L4</li>
+<li>Handles more traffic than the ALB</li>
+</ul>
+<p><strong>Gateway LB</strong></p>
+<ul>
+<li>Runs at the OSI network layer, L3</li>
+<li>Can act as a single entry/exit for all traffic</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="cloudormation-cfn"><a class="header" href="#cloudormation-cfn">Cloudormation (CFN)</a></h2>
+<ul>
+<li>
+<p>Cloudformation allows automating infrastructure provisioning</p>
+</li>
+<li>
+<p>Starts with a template written in YAML or JSON</p>
+</li>
+<li>
+<p>The template defines logical resources</p>
+</li>
+<li>
+<p>A template can create 1 or more stacks</p>
+</li>
+<li>
+<p>A template can be reusable</p>
+</li>
+<li>
+<p>The stack definition will create physical resources based on logical resources</p>
+</li>
+<li>
+<p>If the stack definition is updated, the physical resources also change</p>
+</li>
+<li>
+<p>Templates can take parameters i.e. accept input</p>
+</li>
+<li>
+<p>Parameters are defined in the template and can have a types eg. an EC2 image</p>
+</li>
+<li>
+<p>Pseudo parameters are defined by AWS. They are injected by AWS into the template eg. Region, stack ID, stack name, account ID, etc.</p>
+</li>
+<li>
+<p>Cloudformation does things in parallel so use <code>DependsOn</code> to define an order if needed</p>
+</li>
+<li>
+<p>You can configure Cloudformation to hold until a number of signals are successful before returning <code>CreateComplete</code></p>
+</li>
+<li>
+<p>You can configure a timeout for Cloudformation execution</p>
+</li>
+</ul>
+<h3 id="intrinsic-functions"><a class="header" href="#intrinsic-functions">Intrinsic functions</a></h3>
+<ul>
+<li>Allow you to gain access to data at runtime i.e. when the template is being used to create a stack eg.
+<ul>
+<li><code>Ref</code> and <code>Fn::GetAtt</code></li>
+<li><code>Fn::Join</code> and <code>Fn::Split</code></li>
+<li><code>Fn::GetAZs</code> and <code>Fn::Select</code></li>
+<li><code>Fn::</code>(IF, And, Equals, Not, Or)</li>
+<li><code>Fn::Base64</code> and <code>Fn::Sub</code></li>
+<li><code>Fn:Cidr</code></li>
+<li><code>Fn::Import Value</code></li>
+<li><code>Fn::FindInMap</code></li>
+<li><code>Fn::Transform</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="mappings"><a class="header" href="#mappings">Mappings</a></h3>
+<ul>
+<li>Is an object in the template eg. map the prod env to a specific database config</li>
+<li>Mappings use the <code>!FindInMap</code> intrinsic function</li>
+</ul>
+<h3 id="outputs"><a class="header" href="#outputs">Outputs</a></h3>
+<ul>
+<li>Provide status information or how to access services created by a stack</li>
+<li>Outputs are optional</li>
+</ul>
+<h3 id="nested-stacks"><a class="header" href="#nested-stacks">Nested stacks</a></h3>
+<ul>
+<li>There is a limit of 500 resources per stack and nested stacks can be used to overcome this resource limit</li>
+<li>Stacks are isolated and resources in them can't be referenced</li>
+<li>A root stack is the stack that gets created first</li>
+<li>A parent stack usually has nested stacks</li>
+<li>You can define a stack as a logical resource and make it refer to a YAML template</li>
+<li>Use nested stacks when resources are lifecycle-linked i.e. create and deleted together</li>
+</ul>
+<p><strong>Cross-stack references</strong></p>
+<ul>
+<li>Is used when we want to create a shared resource eg. VPC usable by other stacks</li>
+<li>Stacks are isolated meaning things in a stack can't be referenced by another i.e. the <code>!Ref</code> function can't be used, with the exception that root stacks can reference the output of a stack</li>
+<li>A use case of this is a VPC stack with a long lifecycle and app stacks that use it but have a shorter lifecycle</li>
+<li>Outputs of a stack can be exported making them visible to other stacks. You can then use <code>Fn::ImportValue</code> in another stack instead of <code>!Ref</code> in the same stack</li>
+</ul>
+<h3 id="stack-sets"><a class="header" href="#stack-sets">Stack sets</a></h3>
+<ul>
+<li>Allow you to deploy CFN stacks across many accounts and regions</li>
+<li>Stack sets are containers in an admin account. They contain stack instances that reference stacks</li>
+</ul>
+<h3 id="cfn-deletionpolicy"><a class="header" href="#cfn-deletionpolicy">CFN DeletionPolicy</a></h3>
+<ul>
+<li>Deleting a stack causes deleting a physical resource. This can cause data loss for eg. databases</li>
+<li>The deletion policy can be defined on a resource in a CFN template to specify an action for when the resource is deleted eg. Delete, Retain, Snapshot</li>
+</ul>
+<h3 id="cfn-stack-roles"><a class="header" href="#cfn-stack-roles">CFN stack roles</a></h3>
+<ul>
+<li>By default, CFN uses the permissions of the logged in identity</li>
+<li>CFN can assume another role to gain permissions</li>
+<li>We have a role attached to a stack
+<ul>
+<li>a user creates a template with a role attached</li>
+<li>this user has <code>PassRole</code> permissions but doesn't actually have permissions to create the stack</li>
+<li>the role can be created by an admin</li>
+</ul>
+</li>
+</ul>
+<h3 id="cfn-init-cfn-init-and-cfn-hup"><a class="header" href="#cfn-init-cfn-init-and-cfn-hup">CFN Init, cfn-init and cfn-hup</a></h3>
+<ul>
+<li>Is a configuration management system</li>
+<li>The CFN Init can be defined in the metadata of a logical resource in a template. <code>UserData</code> can be passed which contains <code>cfn-init</code> used to implement the config we define</li>
+<li><code>cfn-init</code> only runs once and doesn't run again when the stack is updated</li>
+<li><code>cfn-hup</code> can point at a logical resource in a stack to detect changes in its metadata. When it detects change it can run things like <code>cfn-init</code></li>
+</ul>
+<h3 id="notes-on-creating-cfn-templates"><a class="header" href="#notes-on-creating-cfn-templates">Notes on creating CFN templates</a></h3>
+<ul>
+<li>The <code>UserData</code> section serves as an init script that runs automatically when an EC2 instance launches for the first time. It executes at boot time</li>
+<li>CFN waits for a signal from the EC2 instance. As soon as the instance is launched, CFN marks Creation Complete even though the <code>UserData</code> script is still running i.e. instance bootstrapping hasn't finished.
+<ul>
+<li>here you can use <code>CreationPolicy</code> and <code>cfn-signal</code> to signal to Cloudformation when bootstrapping the instance is finished</li>
+</ul>
+</li>
+<li>The <code>UserData</code> part is only executed once when the instance launches. If the <code>UserData</code> is changed and the stack is updated, the instance won't rerun this configuration</li>
+<li>Use the <code>cfn-init</code> feature and <code>cfn-hup</code> to rerun <code>cfn-init</code> on metadata changes</li>
+</ul>
+<h3 id="cfn-change-sets"><a class="header" href="#cfn-change-sets">CFN change sets</a></h3>
+<ul>
+<li>Provides an overview of the changes that are to be applied to a stack. You can preview many change sets for a stack. The chosen change set can then be applied to the stack</li>
+</ul>
+<h3 id="cfn-custom-resources"><a class="header" href="#cfn-custom-resources">CFN custom resources</a></h3>
+<ul>
+<li>CFN doesn't support creating all AWS products</li>
+<li>Use custom resources to compensate for what CFN does not support natively
+<ul>
+<li>eg. a Lambda function used to populate or remove items from a bucket. This is because CFN can't delete buckets that have objects in them. The Lambda function receives a CREATE or DELETE event and then uploads or deletes bucket items. The custom resource references both the Lambda function and then bucket</li>
+</ul>
+</li>
+</ul>
+<h3 id="cfn-drift-detection"><a class="header" href="#cfn-drift-detection">CFN drift detection</a></h3>
+<ul>
+<li>When the logical resources and the physical resources in a stack no longer match</li>
+<li>CFN offers drift detection</li>
+<li>What can be done is:
+<ul>
+<li>removing the logical resources while keeping the physical resources in place and then importing those physical resources to bring back into sync the relationship between logical and physical resources</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="elasic-beanstalk-eb"><a class="header" href="#elasic-beanstalk-eb">Elasic Beanstalk (EB)</a></h1>
+<ul>
+<li>Uses Cloudformation to do infrastructure actions</li>
+<li>Is a PaaS i.e. vendor handles the infrastructure and user provides the application code</li>
+<li>Is developer-focussed</li>
+<li>Is fully customisable</li>
+<li>It provides managed environments for the developer applications</li>
+<li>An EB "Application" is a contianer containing everything related to the application eg. infrastructure, app code, environments, versions, etc.</li>
+<li>Keep database deployments outside of EBs, decoupling is a best practice</li>
+</ul>
+<h3 id="eb-deployment-types"><a class="header" href="#eb-deployment-types">EB deployment types</a></h3>
+<ul>
+<li>All-in-one: service is interrupted for the duration of the deployment</li>
+<li>Rolling: rolls through the environment upgrading batches 1 at a time. A batch is a replica of the instance eg. 1 of 3 replicas</li>
+<li>Rolling with additional batch: similar to rolling but without dropping any capacity. Another batch is deployed with version 2 of the application alongside the batches with version 1</li>
+<li>Immutable: another full set of instances are created alongside the original i.e. instance x 2</li>
+<li>Traffic-splitting: traffic is split between new and old version similar to blue/green deployment</li>
+<li>Blue/green: allows beta testing version 2 of the application</li>
+</ul>
+<h3 id="ebextensions-ebextensions"><a class="header" href="#ebextensions-ebextensions">Ebextensions (.ebextensions)</a></h3>
+<ul>
+<li>Allow customising the EB environment</li>
+<li>They are based on Cloudformation</li>
+<li>Create a <code>.ebextensions</code> folder in an application's source bundle</li>
+<li>Use CFN format (YAML or JSON) inside the <code>ebextensions</code> folder to influence the environment</li>
+</ul>
+<h3 id="eb-and-docker"><a class="header" href="#eb-and-docker">EB and Docker</a></h3>
+<ul>
+<li>Single container mode (1 container per environment)
+<ul>
+<li>Dockerfile</li>
+<li>Dockerrun.aws.json (v1)</li>
+<li>Docker-compose.yaml</li>
+</ul>
+</li>
+<li>Multi-container mode
+<ul>
+<li>EB used the ECS cluster</li>
+<li>Dockerrun.aws.json (v2)</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lambda"><a class="header" href="#lambda">Lambda</a></h1>
+<ul>
+<li>FaaS: Function-as-a-Service</li>
+<li>Part of serverless or event-driven architecture</li>
+<li>It is stateless i.e. every time the function is invoked, it uses a brand new environment</li>
+<li>Lambda functions can run for up to 900 seconds ~ 15 minutes</li>
+<li>Lambda functions assume IAM roles to interact with other AWS resources</li>
+<li>Lambda is provided an execution role</li>
+</ul>
+<h3 id="lambda-networking-modes"><a class="header" href="#lambda-networking-modes">Lambda networking modes</a></h3>
+<p><strong>1. Public</strong></p>
+<ul>
+<li>In the public AWS network</li>
+<li>Can access public-space AWS services like SQS and DynamoDB as well as the public internet</li>
+<li>But Lambda here has no access to services running in a VPC unless they have a public IP and access permissions</li>
+</ul>
+<p><strong>2. Private / VPC</strong></p>
+<ul>
+<li>Lambda runs in a private subnet in a VPC and is subject to the networking rules of that VPC</li>
+<li>In this case rules need to allow Lambda access to public internet</li>
+<li>The Lambda here still needs permissions to interact with services in the same subnet</li>
+</ul>
+<h3 id="invoking-a-lambda-function"><a class="header" href="#invoking-a-lambda-function">Invoking a Lambda function</a></h3>
+<p>A Lambda function can be invoked in 3 different ways:</p>
+<p><strong>Synchronous</strong></p>
+<p>Where the client waits for a response from the Lambda function.</p>
+<p><strong>Asynchronous</strong></p>
+<p>For when an AWS service invokes a Lambda function. The service does not wait for a response. Upon failure, the Lambda function will do a retry.</p>
+<p><strong>Event source mapping</strong></p>
+<p>This is used on streams or queues which don't generate events.</p>
+<h3 id="lambda-function-versions"><a class="header" href="#lambda-function-versions">Lambda function versions</a></h3>
+<p>Lambda functions can have different versions eg. 1, 2, 3, etc. A version is the function code plus the configuration.</p>
+<p>Once published, a version is immutable and has its own ARN. The <code>$latest</code> tag points to the latest version of a Lambda function. Aliases can be created to point at a particular version of a Lambda function eg. a prod alias.</p>
+<h3 id="lambda-startup-time"><a class="header" href="#lambda-startup-time">Lambda startup time</a></h3>
+<ul>
+<li>A Lambda function can have a warm or cold startup</li>
+<li>AWS creates and keeps execution contexts warm and ready to use</li>
+<li>To speed up running a Lambda function, the execution context can be reused. This is done using a feature called Provisioned Concurrency where an execution context is provisioned in advance.</li>
+<li>Use <code>/tmp</code> to pre-download artifacts eg. images that will be available to other functions using the execution context.</li>
+<li>You should however by default assume that execution contexts are stateless.</li>
+</ul>
+<h3 id="lambda-function-handler"><a class="header" href="#lambda-function-handler">Lambda function handler</a></h3>
+<p><strong>Lambda execution lifecycle</strong></p>
+<ul>
+<li>init: creates or unfreezes the execution environment</li>
+<li>invoke: runs the function handler</li>
+<li>next invoke(s): warm start eg. same environmnet</li>
+<li>shutdown: terminate the environment</li>
+</ul>
+<p><strong>init includes:</strong></p>
+<ul>
+<li>extension init</li>
+<li>runtime init</li>
+<li>function init</li>
+</ul>
+<p><strong>shutdown has:</strong></p>
+<ul>
+<li>runtime shutdown</li>
+<li>extension shutdown</li>
+</ul>
+<p><strong>Lambda function has 2 parts:</strong></p>
+<ul>
+<li>function init: this is executed during cold starts. It contains anything that might be reused eg. database connection.</li>
+<li>invoke: the handler component which performs the logic of the function.</li>
+</ul>
+<h3 id="logging-and-tracing"><a class="header" href="#logging-and-tracing">Logging and tracing</a></h3>
+<p>Lambda sends execution logs to Cloudwatch logs <code>/aws/lambda/&lt;function name&gt;</code> log group but the STDOUT/STDERR can also be viewed in the function itself.</p>
+<p>To log, the Lambda function needs permissions provided via the execution role.</p>
+<p>XRay shows requests to the function and Active Tracing can be enabled on the function.</p>
+<h3 id="lambda-layers"><a class="header" href="#lambda-layers">Lambda layers</a></h3>
+<p>This groups similar libraries into layers that can be shared between Lambda functions instead of including those libraries in every function. You can create layers or use pre-existing ones provided by AWS.</p>
+<h3 id="lambda-container-images"><a class="header" href="#lambda-container-images">Lambda container images</a></h3>
+<p>This is used when CI/CD processes produce container images. To use the container image with Lambda, you need to include the Lambda runtime API within the image.</p>
+<h3 id="lambda-funtion-permissions"><a class="header" href="#lambda-funtion-permissions">Lambda funtion permissions</a></h3>
+<ul>
+<li>execution role: assumed by the function. It determines what the function can do.</li>
+<li>resource policy: determines who can do what with the Lambda function.</li>
+</ul>
+<p>The resource policy is used for cross-account invocation or for service access i.e. when a service wants to invoke Lambda eg. S3.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="step-functions"><a class="header" href="#step-functions">Step Functions</a></h1>
+<p>Is a long-running serverless workflow with a start, state and end.</p>
+<p>Step functions address some of the limitations or design decisions of Lambda functions. Eg. 15 minutes max and stateless runtime.</p>
+<p>They help create state machines and have a max duration of state execution of 1 year.</p>
+<p>They can be configured using a JSON template called Amazon States Language (ASL).</p>
+<p>States can be: succeed, fail, wait, choice, parallel, map, task.</p>
+<h2 id="2-types-of-workflows"><a class="header" href="#2-types-of-workflows">2 types of workflows:</a></h2>
+<p><strong>Standard</strong></p>
+<p>Is the default with 1 year execution limit.</p>
+<p><strong>Express</strong></p>
+<p>Used for high volume event processing eg. IoT, streaming, etc.</p>
+<h2 id="example-architecture"><a class="header" href="#example-architecture">Example architecture</a></h2>
+<ol>
+<li>
+<p>Create a Lambda role. Its Trust Policy is that it can be assumed by the Lambda service. Its Permissions Policy is that it can interact with SES, SNS and States.</p>
+</li>
+<li>
+<p>Create the Lambda function. Select the role created above as execution role. Update the Lambda function code and deploy the function. The Lambda function code sends emails using Python's Boto3 client.</p>
+</li>
+<li>
+<p>Create a role for the state machine. The role's Trust Policy is that it can be assumed by States. The Permissions Policy of the role include being able to invoke Lambda functions as well as SNS*.</p>
+</li>
+<li>
+<p>Create the step function i.e. state machine. The state machine's config is ASL. The step function invokes the Lambda function and provides a payload. Give the state machine the role you created for it.</p>
+</li>
+<li>
+<p>Create the supporting Lambda function for the API Gateway.</p>
+</li>
+<li>
+<p>Create the API Gateway. A REST API Gateway. Create a resource -&gt; create a method with integration type "Lambda function". Deploy the API Gateway you created. The API Gateway will have an invoke URL.</p>
+</li>
+</ol>
+<div align="center">
+    <img src="./images/step_function.png" alt="cloud services" width="500" />
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sns-and-sqs"><a class="header" href="#sns-and-sqs">SNS and SQS</a></h1>
+<h2 id="simple-notification-service-sns"><a class="header" href="#simple-notification-service-sns">Simple Notification Service (SNS)</a></h2>
+<ul>
+<li>Is a public AWS service i.e. it can be accessed from public internet but also VPC as well</li>
+<li>It coordinates the sending and delivery of messages</li>
+<li>The message payload is &lt;= 256 Kb</li>
+<li>SNS is used across AWS eg. CloudWatch, CloudFormation</li>
+<li>SNS is highly available (HA) and scalable i.e. per region</li>
+<li>It is capable of server-side encryption (SSE)</li>
+</ul>
+<p><strong>How it works:</strong></p>
+<ul>
+<li>A <strong>publisher</strong> sends messages to a <strong>topic</strong></li>
+<li>Topics have <strong>subscribers</strong> which receive messages</li>
+<li>Subscribers can be HTTP(s) endpoints, email addresses, SQS, SMS messages, Lambda funcitons</li>
+<li>A filter can be applied on a subscriber so that it receives messages relevant to it</li>
+<li>SNS supports delivery status and delivery retries</li>
+<li>Topic policy can be applied for cross-account use</li>
+</ul>
+<h2 id="simple-queue-service-sqs"><a class="header" href="#simple-queue-service-sqs">Simple Queue Service (SQS)</a></h2>
+<ul>
+<li>Is a public service, fully managed that provides highly available message queues</li>
+<li>Can access private services</li>
+<li>Messages in a queue can be up to 256 Kb in size</li>
+<li>A client can send messages to a queue and another client aka consumer can poll the queue and check for any messages on the queue.</li>
+</ul>
+<p><strong>2 types of SQS queues</strong></p>
+<p><strong>Standard:</strong></p>
+<ul>
+<li>message delivered at least once and is scalable</li>
+<li>standard queues can scale to unlimited TPS (transaction per second)</li>
+</ul>
+<p><strong>FIFO:</strong></p>
+<ul>
+<li>message delivered exactly once, ordered delivery, lower level of scaling</li>
+<li>FIFO queues can handle 300 TPS or messages per second without batching and 3000 with batching</li>
+</ul>
+<h3 id="sqs-and-sns-fanout-architecture"><a class="header" href="#sqs-and-sns-fanout-architecture">SQS and SNS Fanout architecture</a></h3>
+<ul>
+<li>A message is added to a SNS topic</li>
+<li>Each topic has a SQS queue i.e. a queue is a subscriber to a topic</li>
+</ul>
+<h3 id="sqs-extended-client-library"><a class="header" href="#sqs-extended-client-library">SQS extended client library</a></h3>
+<p>Allows sending a message with size more than 256 Kb.</p>
+<h3 id="sqs-delay-queues"><a class="header" href="#sqs-delay-queues">SQS delay queues</a></h3>
+<ul>
+<li>Allows you to postpone the delivery of messages to consumers</li>
+<li>Is something other than Visibility Timeout (which allows automatic reprocessing of problematic messages)</li>
+<li>Messages are delayed to become visible on a queue</li>
+</ul>
+<h3 id="dead-letter-queues"><a class="header" href="#dead-letter-queues">Dead-letter queues</a></h3>
+<ul>
+<li>Help handle reccurring failures while processing messages within an SQS</li>
+<li>When <code>ReceiveCount</code> &gt; <code>maxReceiveCount</code> and message isn't deleted =&gt; the message is moved to the dead-letter queue</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-container-service"><a class="header" href="#elastic-container-service">Elastic Container Service</a></h1>
+<p>Is a fully managed container orchestration service that helps deploy, manage and scale containerised applications.</p>
+<ul>
+<li>You can configure this using a service definition</li>
+<li>Defines how the task should scale</li>
+<li>A load balancer can be deployed with the service for load distribution</li>
+<li>When using a single simple task, a service is not needed</li>
+</ul>
+<h2 id="cluster-mode"><a class="header" href="#cluster-mode">Cluster mode</a></h2>
+<p>Can be EC2 or Fargate.</p>
+<p><strong>1. EC2 mode</strong></p>
+<ul>
+<li>There is some overhead but allows flexibility.</li>
+<li>ECS management components eg. scheduling, orchestration, cluster management and PlacementEngine.</li>
+<li>EC2 is used to run containers with ASG (Auto Scaling Group).</li>
+<li>You can manage the container host, capacity ad availability.</li>
+</ul>
+<p><strong>2. Fargate mode</strong></p>
+<ul>
+<li>Also includes ECS management components such as scheduling, orchestration, cluster management and PlacementEngine.</li>
+<li>Removes management overhead</li>
+<li>You don't have to manage EC2 instances as container hosts</li>
+<li>The difference with Fargate is how containers are actually hosted. AWS maintains a shared Fargate infrastructure platform, which is offered to all users of Fargate. You still make use of VPC.</li>
+</ul>
+<h2 id="elastic-container-registry-ecr"><a class="header" href="#elastic-container-registry-ecr">Elastic Container Registry (ECR)</a></h2>
+<p>Is a managed container image registry service. Registries can be public or private. A registry can contain many repositories.</p>
+<p>ECR is integrated with IAM. It comes with image scanning, basic and enhanced.</p>
+<p>ECR offers replication of container images that can be cross-region or cross-account.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api-gateway"><a class="header" href="#api-gateway">API Gateway</a></h1>
+<ul>
+<li>Is a service for publishing, maintaining, securing and monitoring APIs at scale</li>
+<li>Is an entry point to applications. It acts as an intermediary between a client and the backend service</li>
+<li>Is highly available, scalable, handles authorisation, throttling, caching, CORS, etc.</li>
+<li>It is able to handle and process large volumes of API calls</li>
+<li>It can be deployed as private, regional or edge-optimised using Cloudfront</li>
+<li>It supports 3 types of APIs:
+<ul>
+<li>REST API: using resources and methods and is feature-rich</li>
+<li>HTTP API: lower latency and lower cost than REST APIs and supports minimal features eg. send request to a Lambda function or public HTTP endpoints</li>
+<li>WebSocket API: stateful API eg. real-time applications eg. chat bot, dashboards, etc.</li>
+</ul>
+</li>
+</ul>
+<h3 id="authentication"><a class="header" href="#authentication">Authentication</a></h3>
+<p>It supports a range of authentication methods:</p>
+<ul>
+<li>Cognito use pools where the client receives a token in return.</li>
+<li>Lambda-based authorisation where the client passes a bearer token to the API Gateway and Lambda validates the request.</li>
+</ul>
+<h3 id="error-codes-generated-by-the-api-gateway"><a class="header" href="#error-codes-generated-by-the-api-gateway">Error codes generated by the API Gateway</a></h3>
+<ul>
+<li>
+<p>4XX client error: invalid request on the client side</p>
+<ul>
+<li>400 bad request: generic client-side error</li>
+<li>403 access denied</li>
+<li>429 throttling: exceeded amount of requests</li>
+</ul>
+</li>
+<li>
+<p>5XX server error: request is valid but backend issue</p>
+<ul>
+<li>502 bad gateway: bad output returned by the backend</li>
+<li>503 service unavailable</li>
+<li>504 timeout</li>
+</ul>
+</li>
+</ul>
+<h3 id="api-gateway-stage"><a class="header" href="#api-gateway-stage">API Gateway stage</a></h3>
+<p>Is a logical reference to a lifecycle state of your API eg. dev, prod, beta, v2, etc. It is a named reference to a deployment of the API and is made available in the URL eg. <code>&lt;API Gateway URL&gt;/&lt;stage&gt;/&lt;endpoint&gt;</code>.</p>
+<h3 id="api-gateway-integrations"><a class="header" href="#api-gateway-integrations">API Gateway Integrations</a></h3>
+<p>API Gateway can take in a request and transform it to an integration request which is sent to the target backend service.</p>
+<p><strong>Types of integrations</strong></p>
+<ul>
+<li>mock: used for testing, no backend involvement</li>
+<li>http: request/response are configured using mapping templates</li>
+<li>http proxy: request/response is not modified</li>
+<li>AWS: to expose AWS services</li>
+<li>AWS proxy: uses Lambda and no mapping is requried</li>
+</ul>
+<p><strong>Mapping templates</strong></p>
+<p>are used for http and AWS integration to modify or rename parameters, body, headers, etc. Uses the Velocity Template Language (VTL).</p>
+<h3 id="openapi-specification-oas"><a class="header" href="#openapi-specification-oas">OpenAPI Specification (OAS)</a></h3>
+<p>Defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation or through network traffic inspection.</p>
+<p>OAS was formally known as Swagger. Swagger is OpenAPI v2 and OpenAPI is now v3.</p>
+<p>It is an API description format for REST APIs eg. endpoints, input/output parameters, authentication.</p>
+<p>AWS API Gateway can export and import to Swagger/OAS.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="aws-opsworks"><a class="header" href="#aws-opsworks">AWS OpsWorks</a></h1>
+<ul>
+<li>Is a configuration management service that helps you configure and operate applications in AWS when you use Puppet or Chef</li>
+<li>Is an AWS service that provides implementations of Chef and Puppet. Chef and Puppet are automation platforms that allow you to use code to cofigure servers</li>
+<li>Use OpsWorks if you are already using Chef or Puppet</li>
+</ul>
+<p><strong>Chef</strong></p>
+<p><strong>Puppet</strong></p>
+<h3 id="opsworks-modes"><a class="header" href="#opsworks-modes">OpsWorks modes</a></h3>
+<p>OpsWorks functions in 3 modes:</p>
+<ol>
+<li>Puppet Enterprise: where you can create an AWS managed Puppet master server</li>
+<li>Chef Automate: you can create AWS managed Chef servers</li>
+<li>OpsWorks: is an AWS implementation of Chef and is managed by AWS</li>
+</ol>
+<h3 id="opsworks-components"><a class="header" href="#opsworks-components">OpsWorks components</a></h3>
+<ul>
+<li>Stacks: is the core component, a container of resources which share a similar function</li>
+<li>Layers: represent a specific function in the stack eg. load balancer layer, database layer, etc. Recipes and cookbooks are applied to layers</li>
+<li>Lifecycle Events: are events that run on layers eg. Setup, Configure, Deploy, Undeploy and Shutdown</li>
+<li>Instances: are manages by OpsWorks. 3 types of instances: 24/7, time-based and load-based. OpsWorks supports instance healing</li>
+<li>Apps: can be stored in buckets and are deployed in the app layer</li>
+</ul>
+<div align="center">
+    <img src="./images/opsworks.png" alt="cloud services" width="500" />
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="credentials-and-secrets"><a class="header" href="#credentials-and-secrets">Credentials and Secrets</a></h1>
+<h2 id="parameter-store"><a class="header" href="#parameter-store">Parameter store</a></h2>
+<p>The Parameter Store is a sub product of the Systems Manager (SSM).</p>
+<p>You can create a standard-tier (up to 10,000 parameters at 4 Kb size) or advanced-tier (more than 10,000 parameters at 8 Kb size plus other features) parameter.</p>
+<p>You can create a parameter eg. <code>/app/app_username</code> that can be String, StringList or Encrypted via KMS.</p>
+<p>It can be used to store configuration information.</p>
+<h2 id="aws-secrets-manager"><a class="header" href="#aws-secrets-manager">AWS Secrets Manager</a></h2>
+<ul>
+<li>It shares functionality with Paramter Store</li>
+<li>It is designed specifically for secrets (passowrds, API keys)</li>
+<li>Usable via Console, CLI, API or SDK i.e. used from within applications</li>
+<li>Supports the automatic rotation of secrets (via Lambda)</li>
+<li>It directly integrates with some AWS products eg. when a secret is rotated, it is changed also inside RDS</li>
+<li>It integrates with IAM</li>
+<li>Secrets are encrypted using KMS</li>
+</ul>
+<div align="center">
+    <img src="./images/secrets_manager.png" alt="cloud services" width="500" />
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="advanced-identity-and-permissions"><a class="header" href="#advanced-identity-and-permissions">Advanced Identity and Permissions</a></h1>
+<h2 id="security-token-service-sts"><a class="header" href="#security-token-service-sts">Security Token Service (STS)</a></h2>
+<p>STS generates temporary credentials when the <code>sts::AssumeRole*</code> operation is used to gain access to temporary credentials. This happens behind the scene.</p>
+<p>This is similar to access keys, however these credentials are short-term and they expire after a certain duration.</p>
+<p>The credentials generated are used to gain access to AWS resources. The credentials are requested by another identity or service via IAM or external.</p>
+<div align="center">
+    <img src="./images/sts.png" alt="cloud services" width="500" />
+</div>
+<h2 id="boundary-policies"><a class="header" href="#boundary-policies">Boundary policies</a></h2>
+<p>They use JSON documents like identity policies but they don't grant any permissions only limit what permissions an identity can receive.</p>
+<h2 id="aws-policy-evaluation-logic-order"><a class="header" href="#aws-policy-evaluation-logic-order">AWS policy evaluation logic order</a></h2>
+<ol>
+<li>Explicit deny</li>
+<li>SCPs (service control policies)</li>
+<li>Resource policies</li>
+<li>Permissions buondaries</li>
+<li>Session policies</li>
+<li>Identity policies</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="route53"><a class="header" href="#route53">Route53</a></h1>
+<p>Is AWS's managed DNS product which provides 2 main services:</p>
+<ul>
+<li>Domain registration</li>
+<li>Hosting zone files on managed nameservers</li>
+</ul>
+<p>It is a global service with a single database i.e. no region is needed on usage. It is globally resilient.</p>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h2>
+<p>Route53 has relationships with all of the domain registries eg. <code>.com</code>, <code>.io</code>, <code>.net</code>. And relationships with the PIR organisation for the <code>.org</code> registery.</p>
+<p>First Route53 checks with the registry for the top-level domain if the domain is available.</p>
+<p>Creates a zone file for the domain being registered. And allocates nameservers for this zone, generally 4 nameservers per zone. They are distributed globally.</p>
+<p>Zones are called hosted zones in AWS terminology. AWS puts the zone file on the 4 nameservers.</p>
+<p>It communicates with the said registry and adds the nameserver (NS) records into the zone file for the <code>.org</code> top-level domain using NS records on the <code>.org</code> registry. Which then indicates that the 4 nameservers are authoritative for the domain.</p>
+<h2 id="hosted-zones"><a class="header" href="#hosted-zones">Hosted zones</a></h2>
+<p>Zone files are hosted on AWS managed nameservers. A hosted zone on AWS can be public or private.</p>
+<h2 id="dns-record-types"><a class="header" href="#dns-record-types">DNS record types</a></h2>
+<p><strong>A and AAAA</strong></p>
+<p>Given a DNS zone eg. <code>google.com</code>, these records map IP addresses to DNS names.</p>
+<p>A records map to IP v4 address.</p>
+<p>AAAA records map to IP v6 address.</p>
+<p><strong>CNAME</strong></p>
+<p>Stands for canonical name. Given a zone, the CNAME allows you to create DNS shortcuts or host to host records. It does not point to an IP.</p>
+<p>For example, CNAME ftp, CNAME mail and CNAME www all point to an A server record which means they will all resolve to the same IP v4 address.</p>
+<p><strong>TXT</strong></p>
+<p>These records allow you to add arbitrary text to a domain. For example to prove domain ownership.</p>
+<p><strong>MX</strong></p>
+<p>It is how a server can find the mail server for a specific domain to connect to via SMTP. It does that via an MX lookup or query.</p>
+<p>MX records have 2 parts: priority and value.</p>
+<p>The value can be a host eg. <code>mail</code> which resolves to <code>mail.mydomain.com</code> i.e. same zone.</p>
+<p>The value can have a dot at the end <code>mail.other.domain.</code> which means it is a fully qualified domain name i.e. can point to the same zone or something outside.</p>
+<p><strong>NS</strong></p>
+<p>Allows delegation to occur in DNS. NS records in the organisation registry eg. <code>.com</code> point at NS servers managed by AWS that host the zone.</p>
+<h2 id="ttl-time-to-live"><a class="header" href="#ttl-time-to-live">TTL (Time to Live)</a></h2>
+<p>Can be set on DNS records (in seconds). For example TLS of 3600 means that the result of a DNS query is stored/cached at the resolver server for 3600 seconds.</p>
+<p>Below is a diagram of walking the tree to get a result from the authoritative source.</p>
+<div align="center">
+    <img src="./images/ttl.png" alt="cloud services" width="500" />
+</div>
+<h2 id="r53-public-hosted-zones"><a class="header" href="#r53-public-hosted-zones">R53 Public Hosted Zones</a></h2>
+<p>A hosted zone is a DNS database for a given section of the global DNS database for a domain.</p>
+<p>They are created automatically (or manually) when you register a domain.</p>
+<p>There is a monthly fee to host a hosted zone and a fee for queries made against the hosted zone.</p>
+<p>A zone hosts DNS records.</p>
+<p>A public hosted zone is hosted on public nameservers and can be accessible from the public internet and VPCs.</p>
+<h2 id="r53-private-hosted-zones"><a class="header" href="#r53-private-hosted-zones">R53 Private Hosted Zones</a></h2>
+<p>It is not public and is associated with VPCs in AWS. It is inaccessible from public internet.</p>
+<p>Split-view is when you have public and private hosted zones. You can expose certain records to the public internet and keep some records private for internal use.</p>
+<div align="center">
+    <img src="./images/private_hosted_zone.png" alt="cloud services" width="500" />
+</div>
+<h2 id="cname-vs-alias"><a class="header" href="#cname-vs-alias">CNAME vs. ALIAS</a></h2>
+<p>An A record maps a name to a v4 IP address. A CNAME maps a name to another name eg. www.mydomain.io =&gt; mydomain.io</p>
+<p>CNAME can not use a naked domain (apex domain) eg. mydomain.io to point at another name.</p>
+<p>An ALIAS record is implemented by AWS and maps a name to an AWS resource. ALIAS can use apex domains.</p>
+<h2 id="r53-health-checks"><a class="header" href="#r53-health-checks">R53 health checks</a></h2>
+<p>Health checks are configured separately and are used by records. They can be TCP, HTTP/HTTPS and HTTP/HTTPS with String Matching which is a check where a string must appear in the first 5120 bytes of the response body.</p>
+<p>The health check can be created from the Route53 dashboard.</p>
+<p>If more than 18% of the health checkers report as healthy then the health check passes.</p>
+<h2 id="failover-routing"><a class="header" href="#failover-routing">Failover routing</a></h2>
+<p>Can add a primary record and a secondary with the same name pointing at different resources. For example when an A record points at an EC2 instance whose health check fails, the secondary record can point at an S3 bucket serving a static page for when the main application is down.</p>
+<p>Traffic is routed to a resource when the resource is healthy and when it is not, traffic is pointed to another resource.</p>
+<h2 id="multi-value-routing"><a class="header" href="#multi-value-routing">Multi value routing</a></h2>
+<p>It is used when you have multiple sources which can all service requests and you want them all health checked and returned at random.</p>
+<p>Create multiple values of the same record eg.</p>
+<p>A =&gt; IP1</p>
+<p>A =&gt; IP2</p>
+<p>A =&gt; IP3</p>
+<p>Each record has a health check.</p>
+<p>This is not a substitute to load balancers.</p>
+<h2 id="weighted-routing"><a class="header" href="#weighted-routing">Weighted routing</a></h2>
+<p>Used as a simple form of load balancing, when you want to test new versions of software.</p>
+<p>For example, 3 A records that point at different IP addresses (EC2 instances). Each record has a weight (%) associated to it.</p>
+<p>It does not have to be in %, the weight is calculated based on the total weight.</p>
+<h2 id="latency-based-routing"><a class="header" href="#latency-based-routing">Latency-based routing</a></h2>
+<p>When you are trying to optimise for performance and user experience.</p>
+<p>For example, 3 A records pointing at different IP addresses with each record having a different AWS region.</p>
+<p>The idea is that you are specifying the region for where the infrastructure of that record is created.</p>
+<p>Route53 will route the user to the region closer to them.</p>
+<h2 id="geolocation-routing"><a class="header" href="#geolocation-routing">Geolocation routing</a></h2>
+<p>Similar to latency-based routing only the location is used to tag the records.</p>
+<p>Geolocation does not return the closest record only the relevant record.</p>
+<p>I.e. match a client location with a custom record.</p>
+<p>A default record can be returned when no record matches a user.</p>
+<p>Ideal for when you want to restrict content by location. Eg. only people located in the US receive the record.</p>
+<h2 id="geoproximity-routing"><a class="header" href="#geoproximity-routing">Geoproximity routing</a></h2>
+<p>Provides records as close to the customer as possible by calculating the distance between the record and the customer.</p>
+<p>Unlike latency routing, it works by distance but also allows you to place bias on locations.</p>
+<p>You define a bias if you choose to route more resources to a location.</p>
+<h2 id="r53-interoperability"><a class="header" href="#r53-interoperability">R53 interoperability</a></h2>
+<p>When you register a domain with Route53, it does 2 jobs:</p>
+<ul>
+<li>Domain registrar (domain registration fee)</li>
+<li>Domain hosting (allocating 4 nameservers)</li>
+</ul>
+<p>Route53 also communicates with the registry of the top level domain (TLD); eg. the <code>.com</code> registry, to add a new entry for the domain containing the 4 nameservers.</p>
+<p>When you register a domain outside of Route53, it does 1 of the 2 jobs.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="key-management-service"><a class="header" href="#key-management-service">Key Management Service</a></h1>
+<p>Is a regional and public service which manages keys both symmetric and asymmetric. It can also perform cryptographic operations. The keys managed never leave KMS.</p>
+<p>A KMS key is logical (i.e. similar to a container) and it contains an ID, date, policy, description and state.</p>
+<p>A KMS key can encrypt or decrypt data up to 4KB in size.</p>
+<p>By default, keys are created only within a region although multi-region keys can also be created. Those are keys that span multiple regions.</p>
+<h2 id="data-encryption-keys-deks"><a class="header" href="#data-encryption-keys-deks">Data Encryption Keys (DEKs)</a></h2>
+<p>Another type of key that KMS can generate. They are generated using a KMS key using the <code>GenerateDataKey</code> operation. This generated key can encrypt/decrypt data that is more than 4KB in size.</p>
+<p>When created, KMS provides a plaintext version of the key as well as a Ciphertext version.</p>
+<p>The way this is used is that the plaintext version is used to encrypt data. The plaintext version is then discarded and the encrypted data is stored along with the Ciphertext version.</p>
+<h2 id="key-policy"><a class="header" href="#key-policy">Key policy</a></h2>
+<p>Every key has a key policy because you have to explicitly declare that the key trusts the identity using it.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-file-system-efs"><a class="header" href="#elastic-file-system-efs">Elastic File System (EFS)</a></h1>
+<p>Provides network-based filesystems that can be mounted within Linux EC2 instances and can be shared by multiple instances at once. This helps the EC2 instances be more stateless.</p>
+<p>EFS is an AWS implementation of a common file storage standard called NFS (version 4) network filesystem. It runs inside a VPC.</p>
+<p>Filesystems created in EFS are POSIX-based.</p>
+<p>An EFS is made available inside a VPC via mount targets. Mount targets have IP addresses within a subnet in an AZ.</p>
+<ul>
+<li>EFS is Linux only</li>
+<li>It offers 2 performance modes: General Purpose and Max I/O</li>
+<li>It has 2 throughput modes: Bursting and Provisioned</li>
+<li>It has 2 storage classes: Standard and Infrequent Access (IA)</li>
+</ul>
+<h2 id="fsx-for-windows-file-server"><a class="header" href="#fsx-for-windows-file-server">FSx for Windows File Server</a></h2>
+<p>Is a shared filesystem product that handles the implementation in a different way than EFS. It supports Windows environments on AWS.</p>
+<p>It integrates with Directory Service or Self-Managed Active Directory.</p>
+<p>It can be Single or Multi-AZ within a VPC.</p>
+<h2 id="fsx-for-lustre"><a class="header" href="#fsx-for-lustre">FSx for Lustre</a></h2>
+<p>It is a managed implementation of the Lustre filesystem designed for high-performance computing (HPC) workloads. It supports both Linux and POSIX-based filesystems.</p>
+<p>FSx is available over VPN or Direct Connect.</p>
+<p>Can be provisioned via 2 modes:</p>
+<ul>
+<li>Scratch: optimised for short-term workloads, no resilience or high-availability but fast performance</li>
+<li>Persistent: longer term, HA in 1 AZ and self-healing</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="content-delivery-network"><a class="header" href="#content-delivery-network">Content Delivery Network</a></h1>
+<p>CloudFront is a content delivery network, used to improve the delivery of content to the viewers. It does so by caching and by using an efficient global network.</p>
+<p>CloudFront is for download operations only, and uploads are done directly to the origin. CloudFront does read-only caching.</p>
+<p><strong>Some terms:</strong></p>
+<ul>
+<li>
+<p>Origin: the source location of the content. Can be S3 Origin or Custom Origin. Groups of origins can improve resiliency.</p>
+</li>
+<li>
+<p>Distribution: the unit of configuration within CloudFront.</p>
+</li>
+<li>
+<p>Behaviour: is contained within a distribution and works on the principal of pattern match.</p>
+</li>
+<li>
+<p>Edge location: pieces of the global infrastructure where data is cached locally. They are mostly used for storage/caching of data for CloudFront.</p>
+</li>
+<li>
+<p>Regional edge cache: they are bigger than edge locations and they are fewer. They are designed to cache data accessed less frequently but where there is a performance benefit.</p>
+</li>
+</ul>
+<h2 id="how-it-works-1"><a class="header" href="#how-it-works-1">How it works?</a></h2>
+<ol>
+<li>
+<p>Bob uploads some content to an S3 bucket which will be the origin of the CloudFront distribution.</p>
+</li>
+<li>
+<p>Bob creates a CLoudFront distribution. The S3 bucket will be the origin in that distribution.</p>
+</li>
+</ol>
+<p>The distribution will have a unique domain name which ends in <code>.cloudfront.net</code> and/or an alternate domain name.</p>
+<p>Bob can then deploy the distribution to the CloudFront network. The configuration will be pushed to edge locations which will cache the content distributed globally as close to the customers as possible.</p>
+<p>In between the edge locations and the origin are the regional edge caches. These are bigger than the edge locations.</p>
+<ol start="3">
+<li>When customers attempt to access Bob's data, they will be directed towards the closest edge location. The following scenatrios can take place:</li>
+</ol>
+<ul>
+<li>cache hit: the data is on the edge location and is served fast with low latency.</li>
+<li>cache miss: the edge location missing the data will check the closest regional edge cache.
+<ul>
+<li>if the data is there it will be served.</li>
+<li>if the data is not there, origin fetch will take place where the data is fetched from the source. The regional edge location pushes the data to the edge location that requested it where the data be be cached there and returned to the user.</li>
+</ul>
+</li>
+</ul>
+<h2 id="cloudfront-behaviours"><a class="header" href="#cloudfront-behaviours">CloudFront Behaviours</a></h2>
+<p>The Behaviour can be configured from the Distribution. There is a default behaviour (*) which matches all patterns.</p>
+<p>Behaviour configurations include the origin source, protocol and methods, viewer access, Lambda function association, caching and TTL controls.</p>
+<h2 id="cloudfront-and-origin-failover"><a class="header" href="#cloudfront-and-origin-failover">CloudFront and origin failover</a></h2>
+<p>For high availability, CloudFront can be configured with origin failover by creating an origin group with 2 origins; a primary and a secondary. If the primary origin is unavailable, CloudFront switched to the secondary origin.</p>
+<h2 id="ttl-and-invalidation"><a class="header" href="#ttl-and-invalidation">TTL and invalidation</a></h2>
+<p>When the data on the edge location becomes stale and needs to be refreshed.</p>
+<p>The source could return a status 304 when the object is not expired and 200 status in case it needs to be refreshed along with the latest object.</p>
+<p>An object is not expired when it is within its TTL (Time To Live). The default TTL is 24 hours.</p>
+<p>Minimum TTL and Maximum TTL can be set using HTTP Headers sent from origin and they act as limiters.</p>
+<p><strong>Cache invalidation</strong>: invalidates an object independent of its TTL. It is performed on a distribution and uses pattern matching.</p>
+<h2 id="cloudfront-with-other-aws-services"><a class="header" href="#cloudfront-with-other-aws-services">CloudFront with other AWS services</a></h2>
+<p>CloudFront integrates with the AWS Certificate Manager (ACM) so SSL certificates can be used with CloudFront.</p>
+<p>ACM can generate or import certificates. Generated certificates renew automatically but imported ones need to be renewed manually.</p>
+<p>Publicly-trusted certificates and not self-signed are allowed to be used with CloudFront distributions.</p>
+<p>Not all services within AWS are supported by ACM, in general it is CloudFront and ALBs NOT EC2 which is a self-managed service. Because with EC2, you can always access the certificate which is not allowed by ACM.</p>
+<p>ACM is a regional service. Certificates are locked to the region they are generated in.</p>
+<p>For global services like CloudFront, <code>us-east-1</code> is always used for ACM certificates.</p>
+<p>There exists 2 SSL connections:</p>
+<ul>
+<li>Viewer protocol: Viewer &lt;=&gt; CloudFront</li>
+<li>Origin protocol: CloudFront &lt;=&gt; Origin</li>
+</ul>
+<p>Both need valid public certificates.</p>
+<p>If the origin is S3, S3 handles certificates natively and nothing needs to be done.</p>
+<h2 id="cloudfront-and-sni"><a class="header" href="#cloudfront-and-sni">CloudFront and SNI</a></h2>
+<p>In the past, every SSL-enabled website needed its own IP address. It is however possible to host 2 domains on the same server. The latter is achieved using a header in the request to indicate which website is requested.</p>
+<p>In 2023, SNI (Serve Name Indication) appeared which is a TLS extention that allows a client to tell the server which domain it is trying to access. This occurs within the TLS handshake before HTTP. This allows 1 server to host several websites. The issue is that older browser do not support SNI. Hence why CLoudFront supports both SNI but also IP per server at an extra cost.</p>
+<h2 id="origin-types"><a class="header" href="#origin-types">Origin types</a></h2>
+<p>Origins are where CloudFront goes to get content Origins are selected from the Behaviour section.</p>
+<p>Origins can be:</p>
+<ul>
+<li>S3 buckets</li>
+<li>AWS media package channel endpoints</li>
+<li>AWS media store container endpoints</li>
+<li>everything else i.e. web servers</li>
+</ul>
+<p>With S3 as origin, the same protocol is used on the viewer and origin sides.</p>
+<h2 id="cache-invalidation"><a class="header" href="#cache-invalidation">Cache invalidation</a></h2>
+<p>From the AWS console and in a distribution, under the invalidations tag, you can create a new invalidation. An invalidation is an operation which sends a directive to every edge location to invalidate 1 or more objects.</p>
+<h2 id="securing-the-cf-content-delivery-path"><a class="header" href="#securing-the-cf-content-delivery-path">Securing the CF content delivery path</a></h2>
+<p>How to make sure that a customer does not bypass CloudFront to access data in the origin directly.</p>
+<h3 id="oai-origin-access-identity"><a class="header" href="#oai-origin-access-identity">OAI (Origin Access Identity)</a></h3>
+<p>This is only applicable to S3 origins and not S3 static websites used as origin.</p>
+<p>Is a type of identity that can be associated with a CloudFront distribution where when the distribution is trying to access data, it becomes the OAI.</p>
+<p>The OAI can be used within bucket policy eg. DENY all except the OAI. This way a direct access to origin is denied.</p>
+<h3 id="access-identity-for-non-s3-origin"><a class="header" href="#access-identity-for-non-s3-origin">Access identity for non-S3 origin</a></h3>
+<p>There are 2 ways around this:</p>
+<ol>
+<li>Custom headers</li>
+</ol>
+<p>Configure CloudFront to send a custom header to the origin. Since this is over HTTPS, the headers are not be visible and can not be immitated.</p>
+<p>If the header is missing, the origin will refuse the request.</p>
+<ol start="2">
+<li>Firewall</li>
+</ol>
+<p>Create a firewall around the custom origin to only allow requests from the edge location IP addresses and deny everything else.</p>
+<h2 id="delivering-private-content-to-end-users"><a class="header" href="#delivering-private-content-to-end-users">Delivering private content to end users</a></h2>
+<p>CloudFront can run in public or private modes. Private mode is achieved in 2 ways:</p>
+<ol>
+<li>Signed URLs</li>
+</ol>
+<p>When a signer is added to a distribution, it becomes private. Trusted key groups are used to generate signed URLs.</p>
+<p>Signed URLS provide access to 1 object.</p>
+<ol start="2">
+<li>Signed cookies</li>
+</ol>
+<p>Cookies provide access to groups of objects and keeps the object URL intact.</p>
+<p>The signed cookie is generated via a Lambda function after authentication is done. This cookie is returned back to the user which will use it with the request sent to the CF distribution. Access to resources is then granted.</p>
+<h2 id="cloudfront-geo-restriction"><a class="header" href="#cloudfront-geo-restriction">CloudFront Geo Restriction</a></h2>
+<p>Determines which areas of the planet can access content delivered via CF.</p>
+<p>It has 2 types:</p>
+<ol>
+<li>CF Geo Restriction</li>
+</ol>
+<p>Is a built-in, whitelist or blacklist architecture. This only works with countries. Uses a GeoIP database with 99.8%+ accuracy.</p>
+<div align="center">
+    <img src="./images/georestriction.png" alt="CF Geo Restriction" width="500" />
+</div>
+<ol start="2">
+<li>Third party Geolocation</li>
+</ol>
+<p>Is customisable. You can use this to access 3rd party geolocation services, so it can be more accurate. It can also be used to restrict based on users, browsers, or other and not just geolocation.</p>
+<p>It works using signed URLs or cookies.</p>
+<h2 id="lambda-at-the-edge"><a class="header" href="#lambda-at-the-edge">Lambda at the Edge</a></h2>
+<p>Allows you to run lightweight Lambda functions at edge locations. They don't have the full Lambda feature set.</p>
+<p>Use cases include:</p>
+<ul>
+<li>A/B testing using a Viewer Request function</li>
+<li>As part of the Origin request eg. migration betweem S3 origins</li>
+<li>Customise behaviour based on the device type of a customer</li>
+<li>Vary the content displayed by country</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sdlc-automation"><a class="header" href="#sdlc-automation">SDLC Automation</a></h1>
+<p>A development pipeline can be generally broken down to the following stages:</p>
+<ol>
+<li>code</li>
+<li>build</li>
+<li>test</li>
+<li>deploy</li>
+</ol>
+<p>AWS provides a range of tools that support all of those stages, for eg.</p>
+<ul>
+<li>CodeCommit similar to GitHub</li>
+<li>CodeBuild which can handle the build and test processes</li>
+<li>CodeDeploy which supports code deployment within AWS</li>
+</ul>
+<p>These AWS tools are isolated but they can be configured together using AWS CodePipeline which orchestrates the development pipeline.</p>
+<p>A pipeline is linked to 1 branch in a repository eg. a <code>main</code> pipeline and a <code>dev</code> pipeline.</p>
+<h2 id="codedeploy"><a class="header" href="#codedeploy">CodeDeploy</a></h2>
+<p>Is a code deployment as-a-service product. It deploys code not resources i.e. a web application and not a fleet of EC2 instances.</p>
+<p>A CodeDeploy agent needs to be installed which communicates with the product and implements instructions.</p>
+<p>Can deploy code to:</p>
+<ul>
+<li>EC2 instances</li>
+<li>Elastic Beanstalk</li>
+<li>AWS OpsWorks</li>
+<li>Amazon ECS</li>
+</ul>
+<p>It can be used to deploy using CloudFormation.</p>
+<h3 id="the-appspec-file"><a class="header" href="#the-appspec-file">The appspec file</a></h3>
+<p>CodeDeploy is customised using <code>appspec.yml</code> or <code>appspec.json</code> files.</p>
+<p>This file contains configuration + lifecycle event hooks.</p>
+<p>Lifecycle event hooks such as ApplicationStop, DownloadBundle, BeforeInstall, Install, AfterInstall, ApplicationStart, ValidateService.</p>
+<p>The configuration section has:</p>
+<ul>
+<li>files (for EC2/on-premise): provides information to CodeDeploy about which files need to be installed on the EC2 instance during the deployment.</li>
+<li>resources (for ECS/Lambda): for Lambda it contains the information about the Lambda function used during deployment. For ECS, it contains things like task definitions or container information.</li>
+<li>permissions (for EC2/on-premise): details any special permissions that need to be applied on parts of the filesystem.</li>
+</ul>
+<h2 id="codepipeline"><a class="header" href="#codepipeline">CodePipeline</a></h2>
+<p>Is a continuous delivery tool designed to control the flow from source code through build and finally deployment. It is the glue that holds things together.</p>
+<p>Pipelines are built from Stages which contain sequential or parallel actions. The output of one action can be the input of another action.</p>
+<div align="center">
+    <img src="./images/code_pipeline.png" alt="CodePipeline" width="500" />
+</div>
+<p>CodePipeline can be triggered as follows:</p>
+<ul>
+<li>Pipeline creation: a pipeline gets triggered when created.</li>
+<li>Put action or changes on objects in the pipeline.</li>
+<li>CloudWatchEvent trigger: the source action provider here is CodeCommit.</li>
+<li>Webhook events for 3rd party sources like GitHub, BitBucket, GitLab, etc.</li>
+<li>Manually triggering the pipeline</li>
+</ul>
+<h2 id="codebuild"><a class="header" href="#codebuild">CodeBuild</a></h2>
+<p>Is a build-as-a-service product that lets you manage a build environment where you pay for the resources consumed during builds. It is also used during the test stage.</p>
+<p>It gets the source code from GitHub, CodeCommit, CodePipeline, S3, etc.</p>
+<p>Can log output to S3 and CloudWatch Logs. Can also push events to EventBridge.</p>
+<h3 id="the-build-file"><a class="header" href="#the-build-file">The build file</a></h3>
+<p>CodeBuild can be customised via the <code>buildspec.yml</code> in the root directory.</p>
+<p>This file has 4 main phases:</p>
+<ol>
+<li>install: for major environment installations</li>
+<li>pre_build: install dependencies</li>
+<li>build: source code is built into application</li>
+<li>post_build: to package things up, push to Docker or send notifications</li>
+</ol>
+<p>The build spec file also allows you to define environment variables eg. parameter store or secrets manager variables.</p>
+<p>It also contains an artifacts section.</p>
+<h2 id="practical-example"><a class="header" href="#practical-example">Practical example</a></h2>
+<h3 id="manual-codebuild-process"><a class="header" href="#manual-codebuild-process">Manual CodeBuild process</a></h3>
+<p>Steps to create a Docker image from a code repository.</p>
+<ul>
+<li>create a code repo on CodeCommit</li>
+<li>create an ECR repo on ECR</li>
+<li>create a build project in CodeBuild
+<ul>
+<li>here you can use the CodeCommit repo as the source of the Dockerfile to build</li>
+<li>specify an environment eg. OS type where the build will run</li>
+<li>specify the destination image repo i.e. where the container image built will be stored</li>
+</ul>
+</li>
+<li>you can use CloudWatch to store logs</li>
+<li>configure the right permissions
+<ul>
+<li>Permissions are required for the build project to interact with other AWS services.
+To add permissions, create an inline policy in the IAM role used by the CodeBuild project. Permissions to interact with ECR eg. PutImage.</li>
+</ul>
+</li>
+<li>configure the build spec YAML file <code>buildspec.yml</code> with the various build steps.</li>
+</ul>
+<h3 id="automated-codebuild-process"><a class="header" href="#automated-codebuild-process">Automated CodeBuild process</a></h3>
+<p>Whenever code is commited to the code repo, an automated build pipeline will run to build the image and store it on ECR. This is done using CodePipeline.</p>
+<ul>
+<li>create new CodePipeline</li>
+<li>allow CodePipeline to create a new service role</li>
+<li>select a source i.e. the CodeCommit repo</li>
+<li>select a build provider i.e. CodeBuild where the build project exists</li>
+<li>artifacts are by default stored in S3</li>
+<li>you can have a step in the <code>post_build</code> stage to create a JSON file containing information about the image created. You can store this file in S3 and use it for the deployment step.</li>
+</ul>
+<p><strong>Add a deploy step to the pipeline</strong></p>
+<ul>
+<li>create an application load balancer, configure security groups and a target group</li>
+<li>create an ECS cluster, create a task and container definition. Use the image created the during code build stage.</li>
+<li>add a deploy stage in the CodePipeline pipeline. Use the image definitions JSON file containing information about the built image in this step.</li>
+</ul>
+<div align="center">
+    <img src="./images/codepipeline_example.png" alt="CodePipeline example" width="500" />
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cloudwatch"><a class="header" href="#cloudwatch">CloudWatch</a></h1>
+<p>Is a public service to ingest, store and manage logging data.</p>
+<p>It supports native ingests of logs from AWS services. The CloudWatch agent can be installed to bring in logs from systems or custom applications.</p>
+<h2 id="log-event"><a class="header" href="#log-event">Log event</a></h2>
+<p>A log event consists of 2 parts: the timestamp and a raw message.</p>
+<h2 id="log-stream"><a class="header" href="#log-stream">Log stream</a></h2>
+<p>Is a sequence of log events that share the same source.</p>
+<h2 id="log-group"><a class="header" href="#log-group">Log group</a></h2>
+<p>Contains several log streams and represents the thing being monitored eg. <code>var/log/messages</code>.</p>
+<p>Retention, access permissions and encryption are set on the log group level.</p>
+<p>A metric filter can also be defined on a log group and it looks for patterns in the log streams eg. a failed login attempt or an application crash. This allows creating metrics to that specific filter eg. the total failed login attempts which can trigger an alarm that can send notifications etc.</p>
+<h1 id="cloudtrail"><a class="header" href="#cloudtrail">CloudTrail</a></h1>
+<p>This product logs API calls or account activities as CloudTrail Events that are either management events or data events. By default, stores 90 day management event history. Data events need to be enabled and they come at an extra cost.</p>
+<p>You can create a trail and configure it to be stored in S3 or CLoudWatch logs.</p>
+<p>CloudTrail is not used for realtime logging, it has a 15 mins delay.</p>
+<h2 id="cloudtrail-log-file-integrity-validation"><a class="header" href="#cloudtrail-log-file-integrity-validation">CloudTrail log file integrity validation</a></h2>
+<p>The validation feature can be enabled on a trail which can direct CloudTrail to create and sign digest files.</p>
+<p>Digest files are found in a different folder and they contain a hash of every log file delivered in the last hour plus the signature of the log file before it. This ensures the integrity of the log files.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kinesis"><a class="header" href="#kinesis">Kinesis</a></h1>
+<p>Is a scalable realtime streaming service designed to ingest data from lots of devices or applications.</p>
+<p>Producers send data to Kinesis eg. EC2, IoT, applications, etc.</p>
+<p>The Kinesis stream ingests the data and the Consumers consume this data.</p>
+<p>The stream starts with 1 shard and increases the number of shards as it scales. A shard provides 1 MB/sec ingestion and 2 MB/sec consumption capacity.</p>
+<h2 id="amazon-kinesis-data-firehose"><a class="header" href="#amazon-kinesis-data-firehose">Amazon Kinesis Data Firehose</a></h2>
+<p>Is a fully-managed service that delivers data to supported services like S3 allowing data to be persisted beyond the rolling window of Kinesis data streams.</p>
+<p>It is a near-realtime service where data of size 1MB is buffered for 60 secs before delivery.</p>
+<p>Data Firehose can deliver data to HTTP endpoints, Splunk, Redshift, ElasticSearch and S3.</p>
+<p>Firehose can transform data using Lambda before delivering it.</p>
+<h2 id="amazon-kinesis-data-analytics"><a class="header" href="#amazon-kinesis-data-analytics">Amazon Kinesis Data Analytics</a></h2>
+<p>Is a service that provides realtime processing of data which flows through it using SQL.</p>
+<p>It ingests from Kinesis Data Streams or Firehose.</p>
+<p>The destination for the data can be Streams, Firehose or any of the services that Firehose supports.</p>
+<h2 id="amazon-emr-elastic-map-reduce"><a class="header" href="#amazon-emr-elastic-map-reduce">Amazon EMR (Elastic Map Reduce)</a></h2>
+<p>This service is a managed implementation of Apache Hadoop which is a framework for handling big data workloads using the map reduce framework.</p>
+<p>EMR runs in 1 AZ in a VPC and uses EC2 for compute. It can load input data from S3 into HDFS (Hadoop filesystem) and store output data in back to S3.</p>
+<p>The EMR cluster architecture consists of:</p>
+<ul>
+<li>The HDFS which runs alongside the cluster and is ephemeral i.e. linked to the lifetime of the cluster</li>
+<li>a master node which manages the cluster and can be ssh-ed to</li>
+<li>a number of core nodes that act as data nodes for HDFS and can run or track tasks</li>
+<li>task nodes that are optional and have no HDFS involvement, they just run tasks</li>
+<li>EMRFS is a filesystem that is backed by S3 and can persist beyond the lifetime of the EMR cluster</li>
+</ul>
+<h2 id="amazon-redshift"><a class="header" href="#amazon-redshift">Amazon Redshift</a></h2>
+<p>Is a petabyte-scale data warehouse where many different operational databases from across your business can pump data into for long-term analysis. It is designed for reporting and analytics not for operational-style usage.</p>
+<p>It is an OLAP (column-based) database and not OLTP (row/transaction).</p>
+<p>It lives in 1 AZ in a VPC. It includes a leader node and a compute node.</p>
+<p>It includes some useful features like:</p>
+<ul>
+<li>Redshift Spectrum which allows querying the data on S3 without loading it to Redshift</li>
+<li>Federated query which allows querying data in remote data sources</li>
+</ul>
+<h2 id="amazon-quicksight"><a class="header" href="#amazon-quicksight">Amazon QuickSight</a></h2>
+<p>Is a business analytics and intelligence service (BA/BI) used for visualisations and ad-hoc analysis of data.</p>
+<h2 id="amazon-athena"><a class="header" href="#amazon-athena">Amazon Athena</a></h2>
+<p>Is a serverless interactive querying service to perform ad-hoc queries on data in S3 where loading/transformation of data is not requried.</p>
+<p>It uses a process called schema-on-read which modifies data in-flight as it's read and translates it to a table-like schema.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h2>
+<p>Concepts:</p>
+<ul>
+<li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>
+<li>Patch Groups: act as grouping of compute resources i.e. what gets patched.</li>
+<li>Maintenance Windows: is the configuration item used to tie all this together.</li>
+<li>Run Command: <code>AWS-RunPatchbaseline</code> is defined within the maintenance window and is used to perform the task on the target group.</li>
+<li>Concurrency and Error Threshold</li>
+<li>Compliance</li>
+</ul>
+<h2 id="aws-inspector"><a class="header" href="#aws-inspector">AWS Inspector</a></h2>
+<p>Is an automated security assessment service that scans EC2 instance and container images for vulnerabilities and deviations from best practices.</p>
+<h2 id="aws-guardduty"><a class="header" href="#aws-guardduty">AWS GuardDuty</a></h2>
+<p>Is a threat detection service that continuously monitors AWS accounts, workloads and data for malicious activity and unauthorised behaviour. It uses machine learning and threat intelligence.</p>
+<div align="center">
+    <img src="./images/guardduty.png" alt="AWS GuardDuty" width="500" />
+</div>
+<h2 id="aws-trusted-advisor"><a class="header" href="#aws-trusted-advisor">AWS Trusted Advisor</a></h2>
+<p>Provides realtime guidance on provisioning resources according to AWS best practices.</p>
+<p>It provides a number of checks in 5 major areas:</p>
+<ul>
+<li>Cost optimisation</li>
+<li>Performance</li>
+<li>Security</li>
+<li>Fault tolerance</li>
+<li>Service limits</li>
+</ul>
+<p>It has 7 core checks that are free at a basic/developer tier:</p>
+<ul>
+<li>S3 bucket permissions check (not objects)</li>
+<li>Security groups check for ports with unrestricted access</li>
+<li>IAM use</li>
+<li>If root account has MFA enabled</li>
+<li>Checks permissions on EBS public snapshots</li>
+<li>Checks permissions o RDS public snapshots</li>
+<li>Identifies if you are over 80% usage of the 50 most common services</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="observability-questions-to-ask"><a class="header" href="#observability-questions-to-ask">Observability questions to ask</a></h2>
+<ul>
+<li>What is the average response time of the website over the last hour?</li>
+<li>Are there any error rate spikes?</li>
+<li>What specific endpoints are taking long to respond?</li>
+</ul>
+<p>These questions are answered through data provided by the application's logs, metrics, traces.</p>
+<p>Relevant metrics include:</p>
+<ul>
+<li>CPU usage</li>
+<li>memory usage</li>
+<li>response times</li>
+<li>database query execution time</li>
+<li>4xx and 5xx errors</li>
+</ul>
+<h2 id="observability-vs-monitoring"><a class="header" href="#observability-vs-monitoring">Observability Vs. Monitoring</a></h2>
+<ul>
+<li>
+<p>Monitoring tells you that a system has failed while observability helps you find out why that system failed.</p>
+</li>
+<li>
+<p>Monitoring is tooling that allows teams to watch and understand the state of their system via metrics and logs.</p>
+</li>
+<li>
+<p>Observability is not about knowing that something went wrong but about understanding why it went wrong. For example, a website slows down unexpectedly -&gt; analyse and review logs to identify a recent code deployment that caused a memory leak.</p>
+</li>
+</ul>
+<h2 id="resiliency"><a class="header" href="#resiliency">Resiliency</a></h2>
+<p>Is the ability of a workload to recover from infra, service or app disruption. Disaster recovery (DR) is part of the resiliency strategy and it concerns how the workload responds when a disaster strikes. This is based on RPO (recovery point objective) and RTO (recovery time objective).</p>
+<h3 id="rpo"><a class="header" href="#rpo">RPO</a></h3>
+<ul>
+<li>How much data a business can lose expressed in time</li>
+<li>Is determined using the time at which a successful backup of data occurs</li>
+<li>More frequent backups -&gt; lower RPO eg. a backup every 6 hours</li>
+<li>What is considered an acceptable loss of data is defined by the organisation</li>
+</ul>
+<h3 id="rto"><a class="header" href="#rto">RTO</a></h3>
+<ul>
+<li>The max tolerable length of time that a system can be down for after a failure occurs</li>
+<li>Can be reduced by effective monitoring, notification and processes</li>
+</ul>
+<h2 id="backup-and-recovery-strategies-on-cloud"><a class="header" href="#backup-and-recovery-strategies-on-cloud">Backup and recovery strategies on cloud</a></h2>
+<p>By deploying across multiple AZs in a single AWS region, your workload is better protected against failure of a single (or even multiple) data centres. For extra assurance, you can back up data and configuration to another region.</p>
+<p>In addition to data, you must redeploy infrastructure, configuration and application code. To enable infrastructure to be redeployed quickly, you should always redeploy using IaC.</p>
+<p>In addition to user data, you should back up code and configuration including any machine images (AMI) used to create EC2 instances. The AMI can be created from snapshots of an EC2 instance.</p>
+<p>For S3, you can use CRR (Amazon S3 Cross-Region Replication) to asynchronously copy objects to an S3 bucket in the DR region continuously, while providing versioning for the stored objects so that you can choose your restoration point.</p>
+<p>Another strategy is to have active and passive regions. An active site in a region is used to host the workload and serve traffic. A passive site in another region is used for recovery. The passive site does not actively serve traffic until a failover event is triggered.</p>
+<p>You can use a warm standby approach where you have a fully scaled down but functional copy of production in another region. This approach decreases the time to recovery.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

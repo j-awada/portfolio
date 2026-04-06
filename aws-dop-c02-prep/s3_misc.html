@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>S3 misc. - AWS Professional DevOps Certificate Material</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AWS Professional DevOps Certificate Material</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="s3-misc"><a class="header" href="#s3-misc">S3 misc.</a></h1>
+<h2 id="s3-security"><a class="header" href="#s3-security">S3 security</a></h2>
+<p>S3 is private by default.</p>
+<p>An S3 bucket policy is a form of resource policy; it is like identity policies but attached to a bucket.</p>
+<p>Bucket policies can be complex for eg. deny access to an IP address range / if the identity using the bucket does not use MFA.</p>
+<p><strong>Access Control Lists (ACLs)</strong></p>
+<p>Are legacy and not recommended to use by AWS but they are used to apply security to objects or buckets.</p>
+<h2 id="s3-static-website-hosting"><a class="header" href="#s3-static-website-hosting">S3 static website hosting</a></h2>
+<p>It allows access via standard HTTP by individuals using a web browser.</p>
+<p>When you enable this, you have to set an index and an error document.</p>
+<h2 id="s3-bucket-object-versioning"><a class="header" href="#s3-bucket-object-versioning">S3 bucket object versioning</a></h2>
+<p>By default, this is disabled. Once enabled, it can not be disabled again. The bucket however can be suspended and the versions deleted then re-enabled.</p>
+<p>Versioning lets you store multiple versions of an object in a bucket.</p>
+<p>An object has a key (name) and an ID (used for versioning). When versioning is disabled, the ID is null. But when versioning is enabled and an object is accessed without specifying an ID, the latest object is assumed.</p>
+<p>When an object is deleted without specifying a version, a Delete Marker is added which is a special version of an object which hides all previous versions of that object. The Delete Marker can be deleted and the object can be active again.</p>
+<p>To fully delete an object, you need to specify a version.</p>
+<h2 id="s3-bucket-upload"><a class="header" href="#s3-bucket-upload">S3 bucket upload</a></h2>
+<p>By default, data is uploaded to S3 in a single blob of data in a <strong>single stream</strong>. A file is uploaded using the <code>s3:PutObject</code> action and put into a bucket.</p>
+<p>But if a stream fails, the upload fails and nothing is uploaded. And a PUT upload is limited to 5GB of data in a single stream.</p>
+<p><strong>Multipart upload</strong> however improves the speed and reliability of uploads to S3. It does this by breaking data down into various blobs. The minimum size of the data uploaded should be 100MB.</p>
+<p>An upload can be split into a max of 10,000 parts and each part can range in size from 5MB to 5GB. Unlike single stream upload, each part can fail in isolation and restart in isolation. Transfer rate; which is the speed of all parts, is therefore improved.</p>
+<h2 id="s3-accelerated-transfer"><a class="header" href="#s3-accelerated-transfer">S3 Accelerated Transfer</a></h2>
+<p>Data can take inefficient routes to reach its destination especially if travelling from country to another. This can slow down data transfer due to this low performance.</p>
+<p>Transfer acceleration for S3 uses the network of AWS edge locations located globally in convenient locations. This is by default switched off and needs to be enabled given certain restrictions.</p>
+<p>The AWS network is purposely build to connect regions with one another.</p>
+<h2 id="s3-server-side-encryption"><a class="header" href="#s3-server-side-encryption">S3 server-side encryption</a></h2>
+<p>Buckets are not encrypted, objects are. Objects can use different encryption settings.</p>
+<p>Knowing that data to and from S3 is encrypted in transit, encryption at rest i.e. how data is stored on disk can be:</p>
+<p><strong>client-side encryption:</strong></p>
+<p>Data is encrypted at the client side and S3 receives data that is already encrypted. The client is responsible for the encryption keys and for the encryption process. Here, S3 is just used for storage.</p>
+<p><strong>server-side encryption:</strong></p>
+<p>Data is not encrypted on the client side but when it reaches S3 it gets encrypted. FYI encryption at rest is mandatory on S3.</p>
+<p>Serve-side encryption for S3 objects has 3 types:</p>
+<ol>
+<li>SSE-C (server-side encryption with customer-provided keys)</li>
+</ol>
+<p>The customer is responsible for the keys but S3 handles the cryptographic operation.</p>
+<ol start="2">
+<li>SSE-S3 (server-side encryption with Amazon S3-managed keys)</li>
+</ol>
+<p>This is the default. S3 provides the key and the encryption process.</p>
+<ol start="3">
+<li>SSE-KMS (server-side encryption with KMS keys stored in AWS KMS)</li>
+</ol>
+<p>Here, the KMS service is involved. The client has control over the KMS key. S3 handles the encryption process.</p>
+<h2 id="s3-bucket-keys"><a class="header" href="#s3-bucket-keys">S3 bucket keys</a></h2>
+<p>This helps S3 scale and reduce cost when using KMS encryption.</p>
+<p>Usually every object requires a unique KMS key to get encrypted. Which means that for every S3 object, a unique KMS key is needed. This increases cost due to the many requests to KMS, it might also be subject to throttling restrictions.</p>
+<p>With bucket keys, instead of the KMS key being used to generate many data encryption keys, it is used to generate a time-limited bucket key. The bucket key is then used to generate data encryption keys for objects in the bucket. This reduces KMS API calls, reduces cost and improves scalability.</p>
+<h2 id="object-storage-classes"><a class="header" href="#object-storage-classes">Object storage classes</a></h2>
+<p><strong>1. S3 Standard</strong></p>
+<p>This is the default class where objects are replicated across at least 3 AZs. It can cope with AZ failure. It provides 11 nines (9s) of durability. The replication uses Content-MD5 Checksums and Cyclic Redundancy Checks (CRCs) to detect and fix any data corruption.</p>
+<p>Billing is 1 GB per month fee for data stored. A $ per GB charge for transfer OUT (IN is free) and a price per 1,000 requests. No retrieval fee.</p>
+<p>This class should be used for frequently accessed data which is important and non-replaceable.</p>
+<p><strong>2. S3 Standard-IA (infrequent access)</strong></p>
+<p>Shares most of the architecture of S3 Standard however it is much cheaper than S3 Standard.</p>
+<p>It has a retrieval fee per GB of data, it is therefore designed for minimally accessed data.</p>
+<p>It has a minimum duration charge of 30 days.</p>
+<p>This class should be used for long-lived data which is important but where access is infrequent.</p>
+<p><strong>3. S3 One Zone-IA</strong></p>
+<p>This is cheaper than Standard and Standard-IA but with some compromise.</p>
+<p>Shares most of the features of Standard-IA but data is not replicated and is stored in 1 AZ only.</p>
+<p>This class should be used for long-lived data which is not critical and replaceable and where access is infrequent.</p>
+<p><strong>4. S3 Glacier Instant Retrieval</strong></p>
+<p>Is like S3 Standard-IA but has cheaper storage, more expensive retrieval and longer minimum storage duration of 90 days instead of 30.</p>
+<p>Although it costs more to access the data, instant data access is still an option here.</p>
+<p><strong>5. S3 Glacier Flexible Retrieval</strong></p>
+<p>This allows storing data in a chilled state.</p>
+<p>Similar to S3 Standard but with a storage cost 1 sixth of the cost of S3 Standard. It is therefore cost-effective but with some tradeoff.</p>
+<p>Objects stored here are cold and not immediately available. Objects cannot be made publicly available and to gain access, a retrieval operation needs to be performed.
+You pay for object retrieval and they are stored in the S3 Standard class on a temporary basis. They are removed once accessed.</p>
+<p>Retrieval can be <strong>expedited</strong> (1-5 minutes), <strong>standard</strong> (3-5 hours) and <strong>bulk</strong> (5-12 hours). The faster, the more expensive. Objects have a first byte latency in minutes or hours so this is not ideal for static website hosting.</p>
+<p>Some limitations here are a 40KB minimum billable size and a 90 day minimum billable duration.</p>
+<p>This class is ideal for archival data where frequent or real-time access is not needed.</p>
+<p><strong>6. S3 Glacier Deep Archive</strong></p>
+<p>Is the cheapest storage class and allows storing data in frozen state. It also has 40KB minimum billable size and 180 day minimum billable duration.</p>
+<p>Similar to Glacier Flexible, objects are not publicly available and a retrieval job is needed to access the data.</p>
+<p>Data is temporarily retrieved to S3 Standard-IA which takes 12 hours and Bulk up to 48 hours.</p>
+<p>First byte latency is in hours or days.</p>
+<p><strong>7. S3 Intelligent-Tiering</strong></p>
+<p>Is a storage class that contains 5 different storage tiers:</p>
+<ul>
+<li>Frequent access</li>
+<li>Infrequent access</li>
+<li>Archive instant access</li>
+<li>Archive access</li>
+<li>Deep archive</li>
+</ul>
+<p>The system monitors the usage of an object and moves it for you into the right tier based on frequency of access.</p>
+<p>This class is good for data where the access pattern changes or is not known.</p>
+<h2 id="s3-lifecycle-configuration"><a class="header" href="#s3-lifecycle-configuration">S3 lifecycle configuration</a></h2>
+<p>You can create lifecycle rules on S3 buckets which can automatically transition or expire objects in the bucket.</p>
+<p>Lifecycle configuration is a set of rules that consist of actions which apply based on criteria i.e. do X if Y. They can be applied on a bucket or a group of objects in that bucket defined by prefix or tags.</p>
+<p>Actions can be of 2 types:</p>
+<ul>
+<li>Transition actions: they can change the storage class of an object eg. from S3 Standard to S3 Standard-IA.</li>
+</ul>
+<p>Note this exception: objects in S3 One Zone-IA can transition into S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive but not S3 Glacier Instant Retrieval.</p>
+<div align="center">
+    <img src="./images/s3-storage-class-transition.png" alt="s3 storage class transition" width="500" />
+</div>
+<p>Transition can not happen in an upward direction, only downward.</p>
+<p>Note that if an object is stored in S3 Standard, it requires to have been there for a minimum of 30 days before transitioning to an infrequent access tier like S3 Standard-IA or S3 One Zone-IA.</p>
+<p>A duration of 30 days is required if objects were to transition further from IA tiers to Glacier classes.</p>
+<ul>
+<li>Expiration actions: they can delete objects or object versions.</li>
+</ul>
+<h2 id="s3-replication"><a class="header" href="#s3-replication">S3 Replication</a></h2>
+<p>Replicating objects between a source and destination S3 bucket. 2 types of replication are supported by S3:</p>
+<ol>
+<li>Cross-Region Replication (CRR)</li>
+</ol>
+<p>Allows replication of objects from a source bucket to 1 or more destination buckets in different AWS regions.</p>
+<ol start="2">
+<li>Same-Region Replication (SRR)</li>
+</ol>
+<p>The same process but where the source and destination buckets are in the same region.</p>
+<p>An IAM role is configured to allow the S3 service to use it. The premissions on this role allows it to read data on the source bucket and replicate them on the destination bucket.</p>
+<p>In case of replication between different AWS accounts, a bucket policy on the destination bucket is needed to allow the IAM roles to replicate data into it.
+Replication between bucket of the same account do not need this policy because the destination bucket trusts the source bucket.</p>
+<p>You can replicate all objects or a subset and you can choose the storage class to be used. You can also define ownership of the objects eg. owned by the account of the destination bucket. You can also define a Replication Time Control (RTC) between the source and destination bucket.</p>
+<h3 id="notes-in-replication"><a class="header" href="#notes-in-replication">Notes in replication</a></h3>
+<p>By default, replication is not retroactive i.e. objects that were already there are not replicated. Batch replication can be used to replicate existing objects.</p>
+<p>Versioning needs to be ON on both source and destination buckets.</p>
+<p>Replication is one-way and is not bi-directional.</p>
+<p>Replication is able to handle objects that are unencrypted, SSE-S3, SSE-KMS and SSE-C.</p>
+<p>Replication can not happen on objects in Glacier or Glacier Deep Archive.</p>
+<h2 id="s3-pre-signed-urls"><a class="header" href="#s3-pre-signed-urls">S3 Pre-signed URLs</a></h2>
+<p>Used to give another person access to objects in an S3 bucket using your credentials and in a secure way.</p>
+<p>Example: an IAM admin can make a request to S3 to generate a pre-signed URL while providing security credentials, bucket name, object key and expiry datetime and how the object will be accessed. The URL returned has encoded in it all the information provided.
+The unauthenticated user using the pre-signed URL interacts with the object as the preson who generated it.</p>
+<h2 id="exam-powerups"><a class="header" href="#exam-powerups">Exam powerups</a></h2>
+<ul>
+<li>A pre-signed URL can be created for an object you don't have access to</li>
+<li>The premissions used when an object is accessed via a pre-signed URL match the identity which generated it</li>
+<li>Authentication to an object in a bucket can be provided via a token in the URL</li>
+<li>You can generate a pre-signed URL for an object that does not exist</li>
+<li>You can create a pre-signed URL using the CLI <code>aws s3 presign &lt;options&gt;</code></li>
+</ul>
+<h2 id="s3-select-and-glacier-select"><a class="header" href="#s3-select-and-glacier-select">S3 Select and Glacier Select</a></h2>
+<p>These 2 services can store objects with huge size (up to 5TB). Sometimes you do not want to retrieve an entire object and you want to instead filter it on the bucket side. S3 and Glacier Select services allow you to create a SQL-like statement to retrieve partial objects.
+The S3 service can use the SQL-like statement and apply it to the raw data in S3 to filter it down.</p>
+<p>File formats include CSV, JSON, Parquet BZIP2 compression for CSV and JSON.</p>
+<h2 id="s3-events"><a class="header" href="#s3-events">S3 Events</a></h2>
+<p>This feature allows you to create event configurations on a bucket. When enabled, a notification is generated when an event occurs in a bucket. Events can be delivered to different destinations eg. SNS, SQS and Lambda functions.</p>
+<p>Eg. on object creation, restores, replications or deletion. The events themselves are JSON objects.</p>
+<p>EventBridge is an alternative and it supports more types of events and more services.</p>
+<h2 id="s3-access-logs"><a class="header" href="#s3-access-logs">S3 Access Logs</a></h2>
+<p>Helps understand what types of accesses are occurring on a source bucket. The logs are stored in a target bucket.</p>
+<p>This feature needs to be enabled on the source bucket. Loggin is managed by a system called the S3 Log Delivery Groups. This group needs to be given access to the target bucket via an ACL.</p>
+<h2 id="s3-object-lock"><a class="header" href="#s3-object-lock">S3 Object Lock</a></h2>
+<p>This feature is enabled on new buckets along with versioning. Once enabled, it can not be disabled.</p>
+<p>Object Lock implements a Write-Once-Read-Many (WORM) architecture where objects versions can't be overwritten or deleted.</p>
+<p>Has 2 types:</p>
+<ol>
+<li>S3 object lock retention</li>
+</ol>
+<p>When you create the object lock, you specify the retention period in days or years.</p>
+<p>This has 2 modes:</p>
+<ul>
+<li>Compliance mode: an object can not be adjusted deleted or overwritten during the retention period. And no change is possible to the retention period settings.</li>
+</ul>
+<p>Eg. used for medical or financial data.</p>
+<ul>
+<li>Governance mode: same, but special permissions can be granted to allow lock settings to be adjusted. This is done using this permission <code>s3:BypassGovernanceRetention</code>.</li>
+</ul>
+<ol start="2">
+<li>S3 object local legal hold</li>
+</ol>
+<p>A retention period is not set here and instead legal hold is set to be ON or OFF. There is no concept of retention.</p>
+<p>Here you can not delete ot change the object version. The <code>s3:PutObjectLegalHold</code> permission allows you to add or remove the legal hold feature.</p>
+<div align="center">
+    <img src="./images/s3-object-lock.png" alt="s3 object lock" width="500" />
+</div>
+<h2 id="s3-access-points"><a class="header" href="#s3-access-points">S3 Access Points</a></h2>
+<p>Features that improves the accessibility of S3 buckets, it simplifies the access to S3 buckets and objects.</p>
+<p>Every access point can have an endpoint and can be used from within different networks.</p>
+<p>Extra reading: https://docs.aws.amazon.com/AmazonS3/latest/dev/creating-access-points.html#access-points-policies</p>
+<h2 id="s3-inventory"><a class="header" href="#s3-inventory">S3 Inventory</a></h2>
+<p>Helps you manage your storage within S3 buckets. Can be configured to generate inventory reports based on a specific frequency, eg. daily or weekly.</p>
+<p>Output is generated in 1 of these 3 formats: CSV, ORC, Parquet.</p>
+<p>The reports are stored in the target bucket.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="elastic_block_storage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="dynamodb.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="elastic_block_storage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="dynamodb.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
