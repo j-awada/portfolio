@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Disaster Recovery - AWS Professional DevOps Certificate Material</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">AWS Professional DevOps Certificate Material</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="disaster-recovery"><a class="header" href="#disaster-recovery">Disaster Recovery</a></h1>
+<h2 id="storage-dr"><a class="header" href="#storage-dr">Storage DR</a></h2>
+<p>DR is based on different types of storage that in turn have different levels of resiliency.</p>
+<h3 id="1-instance-store-volumes"><a class="header" href="#1-instance-store-volumes">1. Instance store volumes</a></h3>
+<p>Those are physical storage attached to EC2 hosts that can run EC2 instances. This is viewed as temporary and unreliable storage.</p>
+<h3 id="2-ebs-elastic-block-store"><a class="header" href="#2-ebs-elastic-block-store">2. EBS: Elastic Block Store</a></h3>
+<p>Allows creating volumes that can be presented to EC2 instances. Those are not replicated across AZs.</p>
+<h3 id="3-s3-simple-storage-service"><a class="header" href="#3-s3-simple-storage-service">3. S3: Simple Storage Service</a></h3>
+<p>This is replicated across multiple AZs in a region. So you can create a snapshot of an EBS volumes and store that in an S3 bucket.</p>
+<h3 id="4-efs-elastic-file-system"><a class="header" href="#4-efs-elastic-file-system">4. EFS: Elastic File System</a></h3>
+<p>This is replicated across multiple AZs in a single region. It can tolerate the failure of an AZ.</p>
+<div align="center">
+    <img src="./images/dr_storage.png" alt="dr storage" width="500" />
+</div>
+<h2 id="compute-dr"><a class="header" href="#compute-dr">Compute DR</a></h2>
+<p>There are no truely global compute services available from AWS. So the focus for compute will be in 1 particular region.</p>
+<h3 id="1-ec2"><a class="header" href="#1-ec2">1. EC2</a></h3>
+<p>EC2 instances are not too reliable since they are meant to exist in 1 AZ and there is always a chance that the EC2 host they run on fails. If it is a host failure, the EC2 instance can be recreated in the same region on a new host.</p>
+<p>An ASG (Auto Scaling Group) can be set to run between 2 AZs. This increases reliability.</p>
+<h3 id="2-ecs"><a class="header" href="#2-ecs">2. ECS</a></h3>
+<p>ECS (Elastic Container Service) clusters can be in EC2 mode or Fargate mode. In EC2 mode, they have DR characteristics same as EC2 i.e. AZ failure means ECS container host failure.</p>
+<p>ECS in Fargate mode achieve similar characteristics as ASG i.e. the architecture can span across 2 AZs.</p>
+<h3 id="3-lambda"><a class="header" href="#3-lambda">3. Lambda</a></h3>
+<p>Lambda is not a VPC-based service and can run in private or public mode (default). It would take the failure of an entire region to affect the service of a Lambda function.</p>
+<h2 id="database-dr"><a class="header" href="#database-dr">Database DR</a></h2>
+<h3 id="1-custom-db"><a class="header" href="#1-custom-db">1. Custom DB</a></h3>
+<p>A custom database running on an EC2 instance will have resiliency level dependant on the EC2 host and AZ. Snapshotting the database improves resiliance.</p>
+<h3 id="2-dynamodb"><a class="header" href="#2-dynamodb">2. DynamoDB</a></h3>
+<p>DynamoDB is a public database replicated between multiple nodes in multiple AZs. A DynamoDB database is affected by an entire AWS region failing. This means that it is a highly resiliant service and no DR measures are needed at a regional level.</p>
+<h3 id="3-rds"><a class="header" href="#3-rds">3. RDS</a></h3>
+<p>RDS instances can run across multiple subnets in multiple AZs. There are typically primary and standby instances with their own storage each pair existing in an AZ.</p>
+<p>RDS offers cross-region read replicas but this places a load on the RDS instances since replication is not done at the storage layer.</p>
+<h3 id="4-aurora"><a class="header" href="#4-aurora">4. Aurora</a></h3>
+<p>Aurora is not limited to primary and standby instances, it can have 1 or more replicas in every AZ. This makes it's availability subject to the number of AZs in the region.</p>
+<p>Aurora is the most resiliant RDS available from AWS.</p>
+<h3 id="bonus-dynamodb-and-aurora"><a class="header" href="#bonus-dynamodb-and-aurora">Bonus: DynamoDB and Aurora</a></h3>
+<p>Both database types have global level resiliance.</p>
+<p>The default behaviour of DynamoDB is to offer a table located in a single AWS region. However, global tables in other regions can be created where data can be replicated amongst them.</p>
+<p>DynamoDB offers multi-master replication.</p>
+<p>With Aurora, you can have a read/write cluster in 1 region and a read-only cluster in another region.</p>
+<p>Replication for Aurora happens at the storage level and no load is placed on the database instances for that. However unlike DynamoDB, writes are only allowed in the primary cluster.</p>
+<h2 id="networking-dr"><a class="header" href="#networking-dr">Networking DR</a></h2>
+<p>VPCs are regional resiliant, the entire region failing will affect the VPC service.</p>
+<p>Subnets in a VPC are tied to an AZ so if an AZ fails the subnet fails.</p>
+<p>This is mitigated by using Elastic Load Balancers which are regional services. They direct traffic to various AZs so if an AZ fails, traffic is redirected to another.</p>
+<h3 id="example-scenario"><a class="header" href="#example-scenario">Example scenario</a></h3>
+<p>If you have 3 different regions each with VPC components and  load balancers, you can use a global service like Route53 which has 1 database as an entry point to those 3 regions.</p>
+<p>This way, if a region fails, other regions will be available.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="kinesis.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ae_example_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="kinesis.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ae_example_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
