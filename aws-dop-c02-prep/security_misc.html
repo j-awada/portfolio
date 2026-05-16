@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Security practices - AWS Professional DevOps Certificate Material</title>
+        <title>Security practices and automation - AWS Professional DevOps Certificate Material</title>
 
 
         <!-- Custom HTML head -->
@@ -175,9 +175,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="security-practices"><a class="header" href="#security-practices">Security practices</a></h1>
-<h2 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h2>
-<p>Concepts:</p>
+                        <h1 id="security-practices-and-automation"><a class="header" href="#security-practices-and-automation">Security practices and automation</a></h1>
+<h2 id="aws-systems-manager-ssm"><a class="header" href="#aws-systems-manager-ssm">AWS Systems Manager (SSM)</a></h2>
+<p>Can be used to configure, schedule, automate and execute operations on AWS resources. Resources include IAM users, groups and roles as well as Lambda functions, EC2 ASG and S3 buckets.</p>
+<p>To use SSM, the host needs to have the SSM-agent installed along with proper IAM permissions.</p>
+<p>SSM can automate common and repetitive IT operations and management tasks across AWS resources. This can be done using JSON documents or on-demand using the <code>RUN</code> command.</p>
+<h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
+<p>SSM allows managing instances at scale without the need for bastions, SSH or remote sessions.</p>
+<h3 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h3>
+<p>Enables configuration management such that EC2 instances or on-prem instances are consistently configrued.</p>
+<h3 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h3>
+<p>Allows applying OS or software patches to a large group of EC2 or on-prem instances.</p>
 <ul>
 <li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>
 <li>Patch Groups: act as grouping of compute resources i.e. what gets patched.</li>
