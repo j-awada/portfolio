@@ -178,6 +178,7 @@
                         <h1 id="step-functions"><a class="header" href="#step-functions">Step Functions</a></h1>
 <p>AWS Step Function is a long-running serverless workflow with a start, state and end. It builds upon the concept of <em>state machines</em>. A state machine; which is an abstract concept, has some internal state that can be changed in response to an external event. A state represents a step in the Step function workflow.</p>
 <p>Step functions address some of the limitations or design decisions of Lambda functions. Eg. 15 minutes max and stateless runtime. The state machines of a Step function have a max execution duration of 1 year. They can be configured using a JSON template called Amazon States Language (ASL).</p>
+<p>In other words, a Step Function lets you coordinate multiple AWS services into serverless workflows. It allows you to design and run workflows that stitch together services such as Lambda, Fargate, etc.</p>
 <p>Step functions can have asynchronous and synchronous processes. They can include several steps to form a complete workflow or pipeline.</p>
 <h2 id="2-types-of-workflows"><a class="header" href="#2-types-of-workflows">2 types of workflows:</a></h2>
 <p><strong>Standard</strong>: is the default with 1 year execution limit.</p>

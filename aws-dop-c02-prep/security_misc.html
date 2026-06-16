@@ -178,6 +178,7 @@
                         <h1 id="security-practices-and-automation"><a class="header" href="#security-practices-and-automation">Security practices and automation</a></h1>
 <h2 id="aws-systems-manager-ssm"><a class="header" href="#aws-systems-manager-ssm">AWS Systems Manager (SSM)</a></h2>
 <p>Can be used to configure, schedule, automate and execute operations on AWS resources. Resources include IAM users, groups and roles as well as Lambda functions, EC2 ASG and S3 buckets.</p>
+<p>A Systems Manager Automation document defines the Automation workflow (the actions that Systems Manager performs on the managed instances and AWS resources). These documents can perform common tasks such as restarting 1 or more EC2 instances or creating Amazon Machine Images (AMI). Documents use JSON or YAML and include steps that run in sequential order.</p>
 <p>To use SSM, the host needs to have the SSM-agent installed along with proper IAM permissions.</p>
 <p>SSM can automate common and repetitive IT operations and management tasks across AWS resources. This can be done using JSON documents or on-demand using the <code>RUN</code> command.</p>
 <h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>

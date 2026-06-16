@@ -239,6 +239,7 @@
 <li><a href="./kinesis.html">Kinesis</a></li>
 <li><a href="./dr.html">Disaster Recovery</a></li>
 <li><a href="./ae_example_1.html">Architecture evolution example 1</a></li>
+<li><a href="./final_exam_notes.html">Final exam notes</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="background"><a class="header" href="#background">Background</a></h1>
 <ul>
@@ -637,7 +638,7 @@ Container 1 | Container 2 | ... | Container N
 <h2 id="codebuild"><a class="header" href="#codebuild">CodeBuild</a></h2>
 <p>Is a build-as-a-service product that lets you manage a build environment where you pay for the resources consumed during builds. It is also used during the test stage.</p>
 <p>CodeBuild is a CI service that can compile source code, run tests and produce software packages ready to deploy. It manages the build servers.</p>
-<p>It gets the source code from GitHub, CodeCommit, BitBucket, S3 and GitHub Enterprise and can integrate with open source tools like Jenkins and Spinnaker.</p>
+<p>It accepts source code from GitHub, CodeCommit, BitBucket, S3 and GitHub Enterprise and can integrate with open source tools like Jenkins and Spinnaker. CodeBuild supports webhooks when the source repository is GitHub which means that webhooks can be used to rebuild the source code every time a code change is pushed to the repo.</p>
 <p>It offers pre-configured environments but also allows customised envs as Docker containers.</p>
 <p>Can log output to S3 and CloudWatch Logs. Can also push events to EventBridge.</p>
 <h3 id="the-build-file"><a class="header" href="#the-build-file">The build file</a></h3>
@@ -922,6 +923,16 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>Lambda sends execution logs to Cloudwatch logs <code>/aws/lambda/&lt;function name&gt;</code> log group but the STDOUT/STDERR can also be viewed in the function itself.</p>
 <p>To log, the Lambda function needs permissions provided via the execution role.</p>
 <p>XRay shows requests to the function and Active Tracing can be enabled on the function.</p>
+<h3 id="lambda-extensions"><a class="header" href="#lambda-extensions">Lambda Extensions</a></h3>
+<p>Allows users to easily integrate tools for monitoring, observability, security and governance without complex installation or configuration management. Extensions can run in 2 modes:</p>
+<ul>
+<li>
+<p>Internal extensions run as part of the runtime process, in-process with the Lambda code.</p>
+</li>
+<li>
+<p>External extensions run in a separate process from the runtime but within the execution environment as the Lambda function. External extensions can start before the runtime process and can continue after the runtime shuts down.</p>
+</li>
+</ul>
 <h3 id="lambda-layers"><a class="header" href="#lambda-layers">Lambda layers</a></h3>
 <p>This groups similar libraries into layers that can be shared between Lambda functions instead of including those libraries in every function. You can create layers or use pre-existing ones provided by AWS.</p>
 <h3 id="lambda-container-images"><a class="header" href="#lambda-container-images">Lambda container images</a></h3>
@@ -935,6 +946,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <div style="break-before: page; page-break-before: always;"></div><h1 id="step-functions"><a class="header" href="#step-functions">Step Functions</a></h1>
 <p>AWS Step Function is a long-running serverless workflow with a start, state and end. It builds upon the concept of <em>state machines</em>. A state machine; which is an abstract concept, has some internal state that can be changed in response to an external event. A state represents a step in the Step function workflow.</p>
 <p>Step functions address some of the limitations or design decisions of Lambda functions. Eg. 15 minutes max and stateless runtime. The state machines of a Step function have a max execution duration of 1 year. They can be configured using a JSON template called Amazon States Language (ASL).</p>
+<p>In other words, a Step Function lets you coordinate multiple AWS services into serverless workflows. It allows you to design and run workflows that stitch together services such as Lambda, Fargate, etc.</p>
 <p>Step functions can have asynchronous and synchronous processes. They can include several steps to form a complete workflow or pipeline.</p>
 <h2 id="2-types-of-workflows"><a class="header" href="#2-types-of-workflows">2 types of workflows:</a></h2>
 <p><strong>Standard</strong>: is the default with 1 year execution limit.</p>
@@ -1373,7 +1385,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 </li>
 </ol>
 <h2 id="lambda-at-the-edge"><a class="header" href="#lambda-at-the-edge">Lambda at the Edge</a></h2>
-<p>Allows you to run lightweight Lambda functions at edge locations. They don't have the full Lambda feature set.</p>
+<p>Lambda@Edge is a feature of Amazon CloudFront that lets you run code closer to users of your application which improves performance and reduces latency. It allows you to run lightweight Lambda functions at edge locations. They don't have the full Lambda feature set.</p>
 <p>Use cases include:</p>
 <ul>
 <li>A/B testing using a Viewer Request function</li>
@@ -1394,7 +1406,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <h2 id="aws-secrets-manager"><a class="header" href="#aws-secrets-manager">AWS Secrets Manager</a></h2>
 <p>It shares functionality with Paramter Store but is designed specifically for storing secrets (passowrds, API keys).</p>
 <p>It can be used via the Console, CLI, API or SDK i.e. used from within applications. It supports the automatic rotation of secrets (via Lambda) and directly integrates with some AWS products for eg. when a secret is rotated, it is changed also inside an RDS (Relational Database Service).</p>
-<p>Secrets Manager integrates with IAM and its secrets are encrypted using KMS.</p>
+<p>Secrets Manager integrates with IAM and its secrets are encrypted using KMS. It can store secrets up to 12 Kb in size each.</p>
 <div align="center">
     <img src="./images/secrets_manager.png" alt="cloud services" width="500" />
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="key-management-service"><a class="header" href="#key-management-service">Key Management Service</a></h1>
@@ -1410,6 +1422,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <div style="break-before: page; page-break-before: always;"></div><h1 id="security-practices-and-automation"><a class="header" href="#security-practices-and-automation">Security practices and automation</a></h1>
 <h2 id="aws-systems-manager-ssm"><a class="header" href="#aws-systems-manager-ssm">AWS Systems Manager (SSM)</a></h2>
 <p>Can be used to configure, schedule, automate and execute operations on AWS resources. Resources include IAM users, groups and roles as well as Lambda functions, EC2 ASG and S3 buckets.</p>
+<p>A Systems Manager Automation document defines the Automation workflow (the actions that Systems Manager performs on the managed instances and AWS resources). These documents can perform common tasks such as restarting 1 or more EC2 instances or creating Amazon Machine Images (AMI). Documents use JSON or YAML and include steps that run in sequential order.</p>
 <p>To use SSM, the host needs to have the SSM-agent installed along with proper IAM permissions.</p>
 <p>SSM can automate common and repetitive IT operations and management tasks across AWS resources. This can be done using JSON documents or on-demand using the <code>RUN</code> command.</p>
 <h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
@@ -1830,6 +1843,9 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Contains several log streams and represents the thing being monitored eg. <code>var/log/messages</code>.</p>
 <p>Retention, access permissions and encryption are set on the log group level.</p>
 <p>A metric filter can also be defined on a log group and it looks for patterns in the log streams eg. a failed login attempt or an application crash. This allows creating metrics to that specific filter eg. the total failed login attempts which can trigger an alarm that can send notifications etc.</p>
+<h1 id="eventbridge"><a class="header" href="#eventbridge">EventBridge</a></h1>
+<p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events.</p>
+<p>It makes it easier to connect applications such that events can be ingested, filtered, transformed and delivered without writing custom code.</p>
 <h1 id="cloudtrail"><a class="header" href="#cloudtrail">CloudTrail</a></h1>
 <p>This product logs API calls or account activities as CloudTrail Events that are either management events or data events. By default, stores 90 day management event history. Data events need to be enabled and they come at an extra cost.</p>
 <p>You can create a trail and configure it to be stored in S3 or CLoudWatch logs.</p>
@@ -2001,6 +2017,349 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 </li>
 <li>
 <p>An alarm from CloudWatch can be set for when CPU usage exceeds a limit.</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="final-exam-notes"><a class="header" href="#final-exam-notes">Final exam notes</a></h1>
+<h2 id="cicd"><a class="header" href="#cicd">CI/CD</a></h2>
+<h3 id="codebuild-1"><a class="header" href="#codebuild-1">CodeBuild</a></h3>
+<ul>
+<li>
+<p>For the CodeBuild service to properly download encrypted files from an S3 bucket, the CodeBuild service should have the right role permissions for the KMS key used for encryption.</p>
+</li>
+<li>
+<p>CodeBuild supports local caching of dependency directories (eg. <code>.npm</code>, <code>pip</code>) to speed up builds by avoiding redownloading packages.</p>
+</li>
+<li>
+<p>Parameter masking in CodeBuild redacts environment variables marked as secrets, preventing them from being displayed in logs or console output.</p>
+</li>
+</ul>
+<h3 id="codedeploy-1"><a class="header" href="#codedeploy-1">CodeDeploy</a></h3>
+<ul>
+<li>
+<p>To verify the health of a Fargate application, look for CodeDeploy successfully deploying as well as no errors in the CloudWatch alarms.</p>
+</li>
+<li>
+<p>A pre-traffic hook in a blue/green CodeDeploy deployment allows you to run logic (eg. tests or config checks) before shifting any traffic to the new environment.</p>
+</li>
+<li>
+<p>A CodeDeploy strategy that is efficient for updating thousands of EC2 instances with minimal service disruption is the rolling update strategy.</p>
+<p>Rolling deployments divide EC2 instances into batches, updating them incrementally to ensure that the application remains available during the rollout.</p>
+</li>
+<li>
+<p>Registering on-prem servers with CodeDeploy:</p>
+<ul>
+<li>Create an IAM role that the on-prem instances will assume</li>
+<li>Generate temporary credentials for individual instances using AWS STS</li>
+<li>Set up a Cron job to refresh those credentials regularly</li>
+<li>Install CodeDeploy agent on the on-prem servers</li>
+<li>Register the on-prem servers with CodeDeploy</li>
+<li>Create tags for the on-prem servers</li>
+<li>Set up a deployment group based on the tags</li>
+</ul>
+</li>
+<li>
+<p>CodeDeploy is not a destination for SNS messages. However a deployment group can be configured to monitor an alarm. If the alarm enters the ALARM state, the deployment will automatically fail and roll back.</p>
+</li>
+<li>
+<p>CodeDeploy offers 3 deployment types for Lambda functions:</p>
+<ul>
+<li>Canary</li>
+<li>Linear</li>
+<li>All-at-once</li>
+</ul>
+</li>
+<li>
+<p>The application specification file (AppSpec file) is a YAML or JSON file used by CodeDeploy to manage a deployment.</p>
+<p>The <code>BeforeAllowTraffic</code> and <code>AfterAllowTraffic</code> lifecycle hooks of the <code>AppSpec.yaml</code> file allow you to use Lambda functions to validate service activity during deployment.</p>
+</li>
+<li>
+<p>CodeDeploy deployments can be monitored using the following CloudWatch tools:</p>
+<ul>
+<li>Amazon EventBridge (formerly CloudWatch Events)</li>
+<li>CloudWatch alarms</li>
+<li>CloudWatch Logs</li>
+</ul>
+<p>As part of CodeDeploy operations, EventBridge can be set up with the following targets:</p>
+<ul>
+<li>Lambda functions (eg. pass notifications to Slack when deployment fails)</li>
+<li>Kinesis streams (eg. for realtime status monitoring)</li>
+<li>SQS queues</li>
+<li>SNS topics</li>
+<li>built-in targets like CloudWatch alarm actions (eg. CloudWatch alarm actions used to automatically stop, terminate, reboot or recover EC2 instances upon a specific event)</li>
+</ul>
+</li>
+</ul>
+<h3 id="codepipeline-1"><a class="header" href="#codepipeline-1">CodePipeline</a></h3>
+<ul>
+<li>
+<p>For a CI/CD pipeline to deploy resources in multiple AWS accounts, create a cross-account IAM role in the target account that trusts the pipeline account. Also update the pipeline to assume the cross-account role in the target account.</p>
+</li>
+<li>
+<p>Manual approval actions pause a CodePipeline pipeline such that a human can approve a release to prod.</p>
+</li>
+<li>
+<p>AWS CloudTrail records API-level actions including pipeline stage executions, approvals and deployment events enabling full auditability of the CI/CD flow.</p>
+</li>
+<li>
+<p>Canary deployment helps minimise risk by routing a small portion of the traffic to the new version before scaling up.</p>
+</li>
+<li>
+<p>CodePipeline offers a feature to retry individual failed stages allowing developers to fix and resume deployments without re-running the full pipeline workflow.</p>
+</li>
+<li>
+<p>CodePipeline integrates with external systems using SNS or Lambda allowing teams to implement Slack, Jira or custom approval workflows between pipeline stages.</p>
+</li>
+<li>
+<p>CodePipeline can only have one source stage. To trigger CodePipeline when code is pushed in more than 1 repo, an EventBridge rule can be created for each repo that can trigger the same CodePipeline.</p>
+</li>
+</ul>
+<h3 id="iac"><a class="header" href="#iac">IaC</a></h3>
+<ul>
+<li>
+<p>To prevent accidental <em>replacement</em> of an RDS instance during a CloudFormation stack update, use CloudFormation Stack Policy to prevent updating the database.</p>
+</li>
+<li>
+<p>Terraform is cloud-agnostic and supports multiple providers incl. AWS, Azure and on-prem. It's the most flexible IaC tool in hybrid cloud or multi-cloud scenarios.</p>
+</li>
+<li>
+<p>Terraform workspaces can isolate environments and <code>assume_role</code> allows secure cross-account access using STS.</p>
+</li>
+<li>
+<p>Remote state locking in Terraform prevents simultaneous apply operations from different sources avoiding race condition and corrupted infrastructure state.</p>
+</li>
+<li>
+<p>To scan IaC templates for security misconfigurations before deployment, use static analysis tools like tfsec (Terraform) and cfn-nag (CloudFormation) to scan for vulnerabilities, missing encryption, open ports or IAM risks.</p>
+</li>
+<li>
+<p>During IaC migration, the Terraform <code>import</code> command lets you bring manually created or existing AWS resources under Terraform management without recreating or destroying them.</p>
+</li>
+</ul>
+<h2 id="lambda"><a class="header" href="#lambda">Lambda</a></h2>
+<ul>
+<li>
+<p>Lambda functions are region-based and automatically use multiple AZs.</p>
+</li>
+<li>
+<p>For non-zero downtime when deploying Lambda updates, use a weighted alias that allows controlling traffic, shifting to new Lambda versions and reducing deployment risks.</p>
+</li>
+<li>
+<p>To implement canary deployment for a Lambda function, CodeDeploy natively supports Lambda canary deployments with built-in traffic shifting and automatic rollback based on CloudWatch alarms. The <code>Canary10Percent5Minutes</code> perference shifts 10% of traffic initially then completes the deployment after 5 minutes if no alarms trigger.</p>
+</li>
+</ul>
+<h2 id="roles-and-organisations"><a class="header" href="#roles-and-organisations">Roles and organisations</a></h2>
+<ul>
+<li>
+<p>To deploy standardised IAM roles to all current and future accounts within an organisation, deploy a CloudFormation StackSet targeting the organisaton root.</p>
+<p>A StackSet is like a stack but it deploys accross multiple regions and accounts.</p>
+</li>
+<li>
+<p>A Permission Set is a template that you create and maintain that defines a collection of 1 or more IAM policies. You can assign a Permission Set to users or groups.</p>
+<p>SCPs (Service Control Policies) restrict access to AWS services and actions across AWS accounts. SCPs apply to users, roles and groups in member accounts not to management accounts.</p>
+<p>A Permission Set policy will override an SCP for a group (or other) in a management account.</p>
+</li>
+</ul>
+<h2 id="s3"><a class="header" href="#s3">S3</a></h2>
+<ul>
+<li>
+<p>S3 Event Notifications: is a feature to receive notifications when certain events happen in the S3 bucket.</p>
+</li>
+<li>
+<p>S3 Lifecycle policy configuration or rules allow you to define actions that you want S3 to take during an object's lifetime eg. deleting objects after a period of time.</p>
+</li>
+</ul>
+<h2 id="automation"><a class="header" href="#automation">Automation</a></h2>
+<ul>
+<li>
+<p>To manage security patches for EC2 instances and on-prem servers, install the AWS Systems Manager agent and create a Hybrid Activation.</p>
+</li>
+<li>
+<p>State Manager allows adminstrators to apply and maintain consistent configurations using pre-defined or custom SSM documents ensuring automated and continuous compliance across accounts.</p>
+</li>
+<li>
+<p>Amazon ECR supports image scanning via Amazon Inspector or other integrated tools to detect known vulnerabilities in containers before deployment.</p>
+</li>
+<li>
+<p>A conformance pack is a collection of AWS Config rules and remediation actions that can be deployed as a single entity in an account, region or across an organisation. They can ensure that all deployed infrastructure meets compliance and security standards automatically.</p>
+</li>
+<li>
+<p>EC2 Auto Recovery monitors health and recovers the instance in the same AZ. It ensures quick recovery without manual intervention.</p>
+</li>
+<li>
+<p>An ECS service maintains the desired task count and automatically replaces failed tasks when integrated with health checks.</p>
+</li>
+<li>
+<p>Elastic Disaster Recovery (DRS) can be set up on source servers to initiate secure data replication. This minimises downtime and data loss reducing both RTO and RPO significantly.</p>
+</li>
+<li>
+<p>Route53 health checks with latency routing provide automated failover and route users to the nearest healthy region.</p>
+</li>
+<li>
+<p>Note that AWS Config evaluates periodically and not in real-time. It continuously evaluates resources against rules. It triggers automatic remediation using an SSM Automation document.</p>
+</li>
+<li>
+<p>AWS Config can not be used to perform emergency maintenance on instances.</p>
+</li>
+<li>
+<p>To ensure that an application does not experience downtime during database credentials rotation, a multi-user rotation strategy is used where the Secrets Manager creates 2 database users and alternates between them during rotation.</p>
+</li>
+<li>
+<p>A Lifecycle hook can be used to provide feedback to the auto-scaling group about the success or failure of a custom script. The ASG uses this information to either start sending traffic to the new EC2 instance or to terminate it.</p>
+</li>
+<li>
+<p>Elastic Beanstalk configuration files <code>.ebextensions</code> have higher precendence than default values. Values that are specified as arguments to the EB CLI cannot be overriden by <code>.ebextensions</code> file.</p>
+<p>Instance type (aka flavor) can be overwritten by the <code>.ebextensions</code> file.</p>
+</li>
+<li>
+<p>In API Gateway, you can create a canary release deployment when deploying the API with canary settings.</p>
+<p>There is no canary routing option in an ALB.</p>
+<p>NLB does not support weighted target groups, unlike ALB.</p>
+</li>
+<li>
+<p>Elastic Beanstalk provides those deployment policies:</p>
+<ul>
+<li>All-at-once (default)</li>
+<li>Rolling (default for EB CLI)</li>
+<li>Rolling with additional batch</li>
+<li>Blue/green</li>
+<li>Immutable</li>
+</ul>
+<p>Immutable launches a new set of instances running the new version of the application in a separate ASG alongside the instances running the old version.</p>
+<p>Immutable deployments can prevent issues caused by partially completed rolling deployments. The original instances remain untouched in case of any failure.</p>
+</li>
+</ul>
+<h2 id="security"><a class="header" href="#security">Security</a></h2>
+<ul>
+<li>
+<p>For a web app to maintain performance during a DDoS attack, CloudFront with WAF can be used to filter malicious traffic.</p>
+</li>
+<li>
+<p>Unlike an Internet Gateway (IGW) which allows both inbound and outbound IPv4 traffic, an egress-only Internet Gateway allows only outbound IPv6 traffic.</p>
+<p>A VPC can have only 1 IGW attached at any given time.</p>
+</li>
+</ul>
+<h2 id="monitoring-and-logging-1"><a class="header" href="#monitoring-and-logging-1">Monitoring and Logging</a></h2>
+<ul>
+<li>
+<p>Memory metrics are not available by default in CloudWatch for EC2 instances. A CloudWatch agent must be installed and configured on the instance to obtain internal metrics like memory utilisation, disk usage, process health, etc.</p>
+</li>
+<li>
+<p>X-Ray helps trace and visualise requests across microservices providing insight into performance bottlenecks and dependencies.</p>
+</li>
+<li>
+<p>CloudWatch Logs Insights allows teams to query logs and detect anomalies using pattern recognition and statistical analysis.</p>
+</li>
+<li>
+<p>CloudWatch log subscriptions can be used to route logs from multiple accounts to a centralised logging account for auditing and analysis.</p>
+</li>
+<li>
+<p>CloudWatch Container Insights provides granular metrics like memory and CPU for ECS tasks, making it suitable for memory-related monitoring.</p>
+</li>
+<li>
+<p>CloudWatch Anomaly Detection uses ML models to baseline normal metrics behaviour and detect outliers without static thresholds.</p>
+</li>
+<li>
+<p>To collect application logs and metrics from all containers, install Fuent Bit which can aggregate and forward logs and metrics from containers to CloudWatch enabling centralised logging.</p>
+</li>
+<li>
+<p>VPC Flow Logs is a feature that can be enabled on a VPC, subnet or Elastic Network Interface (ENI) so that network traffic can be logged to CloudWatch Logs.</p>
+</li>
+<li>
+<p>To improve observability, use X-Ray and OpenTelemetry (OTel) which provide deep observability for distributed services and improve trace analysis.</p>
+</li>
+<li>
+<p>In case of a custom application metric that is not supported natively in CloudWatch but needs to be monitored, the metric can be published from the application using the CloudWatch <code>PutMetricData</code> API.</p>
+</li>
+<li>
+<p>CodeGuru Profiler collects runtime performance data from live applications and provides recommendations to help improve the code to improve performance. It focusses on code optimisation.</p>
+</li>
+<li>
+<p>CodeGuru Reviewer uses program analysis and ML to detect potential defects and issues in the code. It also provides guidelines for best practices in Java and Python code.</p>
+<p>CodeGuru Reviewer should be associated with a Git repo and is not integrated with CodeBuild.</p>
+</li>
+<li>
+<p>EventBridge can monitor AWS service events such as EC2 instance state changes. A rule in EventBridge can be set up that matches specific EC2 state changes, matching events can then be routed to a Lambda function.</p>
+</li>
+<li>
+<p>SNS integrates directly with CloudWatch alarms. Alarms can trigger SNS to notify teams instantly.</p>
+</li>
+<li>
+<p>Amazon Data Firehose is a fully managed service that delivers real-time streaming data to various destinations. It allows you to capture, transform and load streaming data into data stores and analytics tools.</p>
+<p>A Firehose stream is the underlying entity of Amazon Data Firehose. You use Amazon Data Firehose by creating a Firehose stream and then sending data to it. In the Firehose stream, you can configure the source of the streaming data, optionally add data transformation steps and destination for the data.</p>
+<p>Lambda functions can transform and process data as it flows through a Firehose stream.</p>
+</li>
+<li>
+<p>Although CloudWatch Logs allow you to filter and transform log data before delivering it to a destination, they are not designed for complex transformations of data like geolocation and IP enrichment.</p>
+<p>CloudWatch Logs centralises logs from various sources and includes metric filters that allow you to extract specific data from log events and record it as a CloudWatch metric. The metrics can be used for monitoring and alerting.</p>
+<p>CloudWatch Anomaly Detection uses ML to identify unusual patterns in your metrics.</p>
+</li>
+<li>
+<p>You can load streaming data into your Amazon OpenSearch service for many different sources.</p>
+<p>Amazon Data Firehose and CloudWatch Logs have built-in support for OpenSearch service (formely aka ElasticSearch).</p>
+<p>S3, Kinesis Data Streams and DynamoDB use Lambda functions as event handlers.</p>
+<p>Kinesis streams are currently the only source supported as a destination for cross-account subscriptions.</p>
+  <div align="center">
+      <img src="./images/opensearch.png" alt="Amazon OpenSearch" width="500" />
+  </div>
+</li>
+<li>
+<p>AWS Health provides ongoing visibility into the state of your AWS resources, services and accounts. The service delivers alerts and notifications triggered by changes in the health of AWS resources so that you get near-instant event visibility and guidance to help accelerate troubleshooting.</p>
+<p>The Personal Health Dashboard (PHD) can be used which is powered by the AWS Health API.</p>
+<p>CloudWatch Events can be used to detect and react to changes in the status of AWS PHD events. Then, based on the rules defined, CloudWatch Events invokes 1 or more target actions when an event matches the value specified in the rule.</p>
+</li>
+<li>
+<p>AWS Trusted Advisor inspects your AWS environment and then makes recommendations when possible to save money, improve system availability and performance or help close security gaps.</p>
+<p>Trusted Advisor is integrated with the Amazon EventBridge and CloudWatch services.</p>
+</li>
+<li>
+<p>The ability to search and filter the log data arriving at CloudWatch Logs is achieved by creating one or more metric filters.</p>
+<p>Metric filters define the terms and patterns to look for in log data as it is sent to CloudWatch Logs.</p>
+</li>
+</ul>
+<h2 id="disaster-recovery-1"><a class="header" href="#disaster-recovery-1">Disaster recovery</a></h2>
+<ul>
+<li>
+<p>Application Recovery Controller (ARC) is a service that simplifies and automates the recovery of applications deployed across multiple AZs and regions. It enhances application resilience by managing failover and recovery during outages.</p>
+<p>ARC integrates with services like Route53 and Elastic Load Balancing.</p>
+<p>Zonal shift is a feature in Route53 ARC that can temporarily shift traffic from an impaired AZ to a healthy one.</p>
+<p>Disabling cross-zone load balancing on an ALB means that each load balancer node in an AZ routes requests only to targets within the same AZ.</p>
+</li>
+</ul>
+<h2 id="configuration-management"><a class="header" href="#configuration-management">Configuration management</a></h2>
+<ul>
+<li>
+<p>Patch Manager uses patch baselines, which include rules for auto-approving patches within days of their release.</p>
+<p>Patches can be installed by scheduling them to run as a Systems Manager maintenance window task. Patches can be installed individually or to large groups of instances by using EC2 tags.</p>
+</li>
+<li>
+<p>With AWS Config, you can:</p>
+<ul>
+<li>Evaluate AWS resource configurations for desired settings</li>
+<li>Get a snapshot of current configurations</li>
+<li>Retrieve historical configurations of 1 or more resources</li>
+<li>Receive a notification whenever a resource is created, modified or deleted</li>
+<li>View relationships between resources</li>
+</ul>
+</li>
+<li>
+<p>An aggregator is an AWS Config resource type that collects AWS Config configuration and compliance data from:</p>
+<ul>
+<li>multiple accounts and multiple regions</li>
+<li>single account and multiple regions</li>
+<li>an organisation in AWS Organizations and all the accounts in that organisation</li>
+</ul>
+</li>
+<li>
+<p>AWS Application Discovery Service helps you plan your migration to the AWS cloud by collecting usage and configuration data about your on-prem servers. Application Discovery Service is integrated with AWS Migration Hub.</p>
+<p>Application Discovery Service offers 2 ways of performing discovery and collecting data about your on-prem servers:</p>
+<ul>
+<li>
+<p>Agentless discovery: performed by deploying the AWS Agentless Discovery Connector (OVA file) through your VMware vCenter.</p>
+<p>The Agentless discovery uses the AWS Discovery Connector which is a VMware appliance that can collect information only about VMware virtual machines (VMs). This mode does not require you to install a connector on each host. You install the Discovery Connector as a VM in your VMware vCenter Server environment using an Open Virtualisation Archive (OVA) file.</p>
+</li>
+<li>
+<p>Agent-based discovery: done by deploying the AWS Application Discovery Agent on each VM and physical server.</p>
+</li>
+</ul>
 </li>
 </ul>
 

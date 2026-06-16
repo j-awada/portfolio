@@ -238,6 +238,16 @@
 <p>Lambda sends execution logs to Cloudwatch logs <code>/aws/lambda/&lt;function name&gt;</code> log group but the STDOUT/STDERR can also be viewed in the function itself.</p>
 <p>To log, the Lambda function needs permissions provided via the execution role.</p>
 <p>XRay shows requests to the function and Active Tracing can be enabled on the function.</p>
+<h3 id="lambda-extensions"><a class="header" href="#lambda-extensions">Lambda Extensions</a></h3>
+<p>Allows users to easily integrate tools for monitoring, observability, security and governance without complex installation or configuration management. Extensions can run in 2 modes:</p>
+<ul>
+<li>
+<p>Internal extensions run as part of the runtime process, in-process with the Lambda code.</p>
+</li>
+<li>
+<p>External extensions run in a separate process from the runtime but within the execution environment as the Lambda function. External extensions can start before the runtime process and can continue after the runtime shuts down.</p>
+</li>
+</ul>
 <h3 id="lambda-layers"><a class="header" href="#lambda-layers">Lambda layers</a></h3>
 <p>This groups similar libraries into layers that can be shared between Lambda functions instead of including those libraries in every function. You can create layers or use pre-existing ones provided by AWS.</p>
 <h3 id="lambda-container-images"><a class="header" href="#lambda-container-images">Lambda container images</a></h3>
