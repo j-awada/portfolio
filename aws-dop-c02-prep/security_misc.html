@@ -176,27 +176,17 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="security-practices-and-automation"><a class="header" href="#security-practices-and-automation">Security practices and automation</a></h1>
-<h2 id="aws-systems-manager-ssm"><a class="header" href="#aws-systems-manager-ssm">AWS Systems Manager (SSM)</a></h2>
-<p>Can be used to configure, schedule, automate and execute operations on AWS resources. Resources include IAM users, groups and roles as well as Lambda functions, EC2 ASG and S3 buckets.</p>
-<p>A Systems Manager Automation document defines the Automation workflow (the actions that Systems Manager performs on the managed instances and AWS resources). These documents can perform common tasks such as restarting 1 or more EC2 instances or creating Amazon Machine Images (AMI). Documents use JSON or YAML and include steps that run in sequential order.</p>
-<p>To use SSM, the host needs to have the SSM-agent installed along with proper IAM permissions.</p>
-<p>SSM can automate common and repetitive IT operations and management tasks across AWS resources. This can be done using JSON documents or on-demand using the <code>RUN</code> command.</p>
-<h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
-<p>SSM allows managing instances at scale without the need for bastions, SSH or remote sessions.</p>
-<h3 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h3>
-<p>Enables configuration management such that EC2 instances or on-prem instances are consistently configrued.</p>
-<h3 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h3>
-<p>Allows applying OS or software patches to a large group of EC2 or on-prem instances.</p>
-<ul>
-<li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>
-<li>Patch Groups: act as grouping of compute resources i.e. what gets patched.</li>
-<li>Maintenance Windows: is the configuration item used to tie all this together.</li>
-<li>Run Command: <code>AWS-RunPatchbaseline</code> is defined within the maintenance window and is used to perform the task on the target group.</li>
-</ul>
-<h2 id="aws-inspector"><a class="header" href="#aws-inspector">AWS Inspector</a></h2>
-<p>Is an automated security assessment service that scans EC2 instance and container images for vulnerabilities and deviations from best practices.</p>
+<h2 id="amazon-inspector"><a class="header" href="#amazon-inspector">Amazon Inspector</a></h2>
+<p>Is an automated security assessment service that scans EC2 instance and container images for vulnerabilities and deviations from best practices. After performing an assessment, Amazon Inspector produces a detailed list of security findings prioritised by level of severity.</p>
+<p>Amazon Inspector security assessment helps check for unintended network accessibility of EC2 instances and for vulnerabilities on those EC2 instances. Assessments are offered as pre-defined rules packages mapped to common security best practices and vulnerability definitions. Examples of built-in rules include checking for access to EC2 instances from the internet, remote root login being enabled, or vulnerable software versions installed.</p>
+<h2 id="aws-shield"><a class="header" href="#aws-shield">AWS Shield</a></h2>
+<p>Is a service suited for preventing DDoS attacks on AWS resources. It is available in 2 tiers: Standard and Advanced. AWS Shield Standard is included automatically and transparently in your Elastic Load Balancing load balancers, CloudFront and Route 53 at no additional costs.</p>
+<h2 id="amazon-macie"><a class="header" href="#amazon-macie">Amazon Macie</a></h2>
+<p>Is an ML-powered security service that helps you prevent data loss by automatically discovering, classifying and protecting sensitive data stored in Amazon S3. Macie uses machine learning to recognise sensitive data such as personally identifiable information (PII) or intellectual property. It provides visibility into where this data is stored and how it is being used in your organisation.</p>
 <h2 id="aws-guardduty"><a class="header" href="#aws-guardduty">AWS GuardDuty</a></h2>
-<p>Is a threat detection service that continuously monitors AWS accounts, workloads and data for malicious activity and unauthorised behaviour. It uses machine learning and threat intelligence.</p>
+<p>Is a threat detection service that continuously monitors AWS accounts, workloads and data for malicious activity and unauthorised behaviour. It uses machine learning and threat intelligence. GuardDuty generates a finding whenever it detects unexpected and potentially malicious activity in the AWS environment.</p>
+<p>Findings from Amazon GuardDuty can be published to Amazon EventBridge as events that can be used to trigger a Lambda function which will send notifications to the external messaging platform.</p>
+<p>Amazon Detective can provide analysis information related to a given finding.</p>
 <div align="center">
     <img src="./images/guardduty.png" alt="AWS GuardDuty" width="500" />
 </div>
@@ -221,14 +211,40 @@
 <li>Identifies if you are over 80% usage of the 50 most common services</li>
 </ul>
 <h2 id="waf-web-application-firewall"><a class="header" href="#waf-web-application-firewall">WAF (Web Application Firewall)</a></h2>
-<p>Is the AWS implementation of Layer 7 web application firewall; capable of understanding HTTP(S). It helps protect your web applications from common web exploits that could affect application availability, compromise security, or consume excessive resources.</p>
+<p>A WAF can protect the following resource types:</p>
+<ul>
+<li>CloudFront distribution</li>
+<li>API Gateway REST API</li>
+<li>Application Load Balancer (ALB)</li>
+<li>AppSync GraphQL API</li>
+<li>Cognito user pool</li>
+<li>App Runner service</li>
+<li>Bedrock AgentCore Gateway</li>
+<li>Verified Access instance</li>
+<li>Amplify</li>
+</ul>
+<p>For Amplify and CloudFront, the web ACL protecting a global distribution must be created in the <code>us-east-1 (N. Virginia)</code> region. For ALBs, API Gateway and AWS AppSync, the web ACL must match the specific deployment region.</p>
+<h3 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h3>
+<p>WAF lets you control access to your content based on criteria such as IP address.</p>
+<p>WAF is the AWS implementation of Layer 7 web application firewall; capable of understanding HTTP(S). It helps protect your web applications from common web exploits that could affect application availability, compromise security, or consume excessive resources.</p>
 <p>WAF can protect global services like CloudFront but also regional services like ALB (Application Load Balancer).</p>
 <p>Web ACL is associated with a WAF distribution and has Rules and Rule Groups that control how the WAF reacts.</p>
-<h2 id="aws-network-firewall"><a class="header" href="#aws-network-firewall">AWS Network Firewall</a></h2>
-<p>It defines the VPC, Subnets and Firewall Policy.</p>
+<p>AWS WAF provides control over which traffic to allow or block to a web application by defining customisable web security rules. This includes blocking common attacks like SQL injections or cross-site scripting. New rules can be deployed within minutes.</p>
 <div align="center">
     <img src="./images/network_firewall.png" alt="AWS Network Firewall" width="500" />
 </div>
+<p>Note that WAF is the first line of defense against web exploits. When WAF is enabled, its rules are evaluated before other access control features such as resource policies, IAM policies, Lambda authorizers and Cognito authorizers. WAF takes precedence over the latter.</p>
+<h3 id="sending-waf-logs-to-cloudwatch-logs"><a class="header" href="#sending-waf-logs-to-cloudwatch-logs">Sending WAF logs to CloudWatch Logs</a></h3>
+<p>A CloudWatch Log group needs to be created with the name starting with <code>aws-waf-logs-</code>. Logging is then enabled in WAF and the log group is provided as logging destination.</p>
+<p>The log group for the WAF protection pack (web ACL) is configured in the same region as the protection pack (web ACL) and using the same account.</p>
+<p>This option has the lowest operational overhead but comes at a higher cost. Logs are typically queried using CloudWatch Logs Insights. Automated alerting is easy to integrate based on metric filters.</p>
+<h3 id="sending-waf-logs-to-an-s3-bucket"><a class="header" href="#sending-waf-logs-to-an-s3-bucket">Sending WAF logs to an S3 bucket</a></h3>
+<p>An S3 bucket needs to be set up from the same account as the protection pack (web ACL). The bucket name for WAF must start with <code>aws-waf-logs-</code>. Logging is enabled in WAF and the bucket is provided as destination.</p>
+<p>Logs are published to the S3 bucket at 5-minute intervals and the log files are compressed.</p>
+<p>This option has the lowest operational overhead and cheapest cost. Logs can be queried using Amazon Athena.</p>
+<h3 id="sending-waf-logs-to-a-data-firehose-stream"><a class="header" href="#sending-waf-logs-to-a-data-firehose-stream">Sending WAF logs to a Data Firehose stream</a></h3>
+<p>A Data Firehose delivery stream is first configured in the same region as the protection pack (web ACL) and then provided as logging destination for WAF using the Firehose HTTPS endpoint. The Data Firehose stream name should start with <code>aws-waf-logs-</code>.</p>
+<p>This option has medium operational overhead and cost depending on throughput. Firehose also allows data manipulation before ingestion. Tools used to query the logs include Splunk and Datadog.</p>
 
                     </main>
 

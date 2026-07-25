@@ -190,12 +190,12 @@
 <li>CodeDeploy which supports code deployment within AWS</li>
 </ul>
 <p>These AWS tools are isolated but they can be configured together using AWS CodePipeline which orchestrates the development pipeline.</p>
-<p>A pipeline is linked to 1 branch in a repository eg. a <code>main</code> pipeline and a <code>dev</code> pipeline.</p>
+<p>A pipeline is linked to 1 branch in a repository eg. a <code>main</code> pipeline or a <code>dev</code> pipeline.</p>
 <h2 id="codecommit"><a class="header" href="#codecommit">CodeCommit</a></h2>
 <p>A source control service that hosts private Git repos. It uses HTTPS and SSH for file transfer; repos are encrypted at rest with AWS KMS.</p>
 <p>On the backend, it uses S3 and DynamoDB to store repos. It can recieve notifications from Amazon SNS and repos can send notifications with Amazon SNS or invoke AWS Lambda functions.</p>
 <h2 id="codeartifact"><a class="header" href="#codeartifact">CodeArtifact</a></h2>
-<p>Is a service used to securely store, publish and share software packages. It can be configured to automatically fetch public packages and dependencies.</p>
+<p>Is a service used to securely store, publish and share software packages. It can be configured to automatically fetch public packages and dependencies using popular package managers and build tools like Maven, Gradle, npm, Yarn, Twine, pip and NuGet.</p>
 <h2 id="codebuild"><a class="header" href="#codebuild">CodeBuild</a></h2>
 <p>Is a build-as-a-service product that lets you manage a build environment where you pay for the resources consumed during builds. It is also used during the test stage.</p>
 <p>CodeBuild is a CI service that can compile source code, run tests and produce software packages ready to deploy. It manages the build servers.</p>
@@ -217,6 +217,8 @@
 <p>Is a code deployment as-a-service product. It deploys code not resources i.e. a web application and not a fleet of EC2 instances. It automates deployment to compute services like EC2, Fargate, Elastic Beanstalk, Lambda and on-premises servers.</p>
 <p>A CodeDeploy agent needs to be installed which communicates with the product and implements instructions.</p>
 <p>It can be used to deploy using CloudFormation and it integrates with tools like CodePipeline, GitHub and Jenkins.</p>
+<h3 id="blueinstanceterminationoption"><a class="header" href="#blueinstanceterminationoption">BlueInstanceTerminationOption</a></h3>
+<p>Is an option within CodeDeploy to determine whether instances in the original environment are terminated when a blue/green deployment is successful. <code>BlueInstanceTerminationOption</code> does not apply to Lambda deployments.</p>
 <h3 id="the-appspec-file"><a class="header" href="#the-appspec-file">The appspec file</a></h3>
 <p>CodeDeploy is customised using <code>appspec.yml</code> or <code>appspec.json</code> files.</p>
 <p>This file contains configuration + lifecycle event hooks.</p>
@@ -227,9 +229,22 @@
 <li>resources (for ECS/Lambda): for Lambda it contains the information about the Lambda function used during deployment. For ECS, it contains things like task definitions or container information.</li>
 <li>permissions (for EC2/on-premise): details any special permissions that need to be applied on parts of the filesystem.</li>
 </ul>
+<p>The<code>AppSpec</code> file has a hooks section. A Lambda function can be specified for the lifecycle hook you want to test. If the test fails, the deployment stops, rolled back and marked as failed. For example, the <code>AfterAllowTestTraffic</code> hook can be used to validate deployment using test traffic with traffic served to a test listener. If validation succeeds, the deployment continues to the <code>BeforeAllowTraffic</code> hook.</p>
+<p><strong>Some hooks:</strong></p>
+<div align="center">
+    <img src="./images/hooks.png" alt="AppSpec hooks" width="500" />
+</div>
+<h3 id="aws-serverless-application-model-sam"><a class="header" href="#aws-serverless-application-model-sam">AWS Serverless Application Model (SAM)</a></h3>
+<p>This comes built-in with CodeDeploy to provide gradual AWS Lambda deployments. It does the following:</p>
+<ul>
+<li>Deploys new versions of a Lambda function and automatically creates aliases that point to the new version</li>
+<li>Gradually shifts customer traffic to the new version until the decision to shift all traffic</li>
+<li>Defines pre-traffic and post-traffic test functions to verify that the newly deployed code is configured correctly</li>
+</ul>
 <h2 id="codepipeline"><a class="header" href="#codepipeline">CodePipeline</a></h2>
 <p>Is a continuous delivery tool designed to control the flow from source code through build and finally deployment. It is the glue that holds things together. It is a service used to model, visualise and automate the steps required to release a software.</p>
-<p>Pipelines are built from Stages which contain sequential or parallel actions. The output of one action can be the input of another action.</p>
+<p>Pipelines are built from Stages (eg. Build stage) which contain sequential or parallel actions. The output of one action can be the input of another action.</p>
+<p>A single pipeline structure is hosted in a single region; however, individual Actions within a stage can execute in a different target region. When you configure a cross-region action, CodePipeline requires an S3 artifact bucket in every target region where an action takes place.</p>
 <div align="center">
     <img src="./images/code_pipeline.png" alt="CodePipeline" width="500" />
 </div>
@@ -287,7 +302,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="advanced_identity_and_permissions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="cognito.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -301,7 +316,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="advanced_identity_and_permissions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="cognito.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

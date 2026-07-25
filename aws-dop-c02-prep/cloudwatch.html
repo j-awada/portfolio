@@ -177,6 +177,11 @@
                     <main>
                         <h1 id="cloudwatch"><a class="header" href="#cloudwatch">CloudWatch</a></h1>
 <p>Is a public service to ingest, store and manage logging data. It supports native ingests of logs from AWS services. The CloudWatch agent can be installed to bring in logs from systems or custom applications.</p>
+<p>Note that the CloudWatch Dashboard is primarily used to monitor AWS resources and not AWS configuration.</p>
+<h2 id="alarms"><a class="header" href="#alarms">Alarms</a></h2>
+<p>The ability to search and filter log data arriving at CloudWatch Logs is achieved by creating 1 or more <strong>metric filters</strong>.</p>
+<p>Metric filters define the terms and patterns to look for in log data as it is sent to CloudWatch Logs. CloudWatch Logs uses these metric filters to turn log data into numerical CloudWatch metrics that you can graph or set an alarm on.</p>
+<p>A CloudWatch alarm can be created and used in <code>CodeDeploy</code> operations. The alarm watches a single metric over time and performs 1 or more actions based on the value of the metric relative to the given threshold over time. With <code>CodeDeploy</code>, you can configure a deployment group to stop when the alarm gets activated.</p>
 <h2 id="log-event"><a class="header" href="#log-event">Log event</a></h2>
 <p>A log event consists of 2 parts: the timestamp and a raw message.</p>
 <h2 id="log-stream"><a class="header" href="#log-stream">Log stream</a></h2>
@@ -185,12 +190,15 @@
 <p>Contains several log streams and represents the thing being monitored eg. <code>var/log/messages</code>.</p>
 <p>Retention, access permissions and encryption are set on the log group level.</p>
 <p>A metric filter can also be defined on a log group and it looks for patterns in the log streams eg. a failed login attempt or an application crash. This allows creating metrics to that specific filter eg. the total failed login attempts which can trigger an alarm that can send notifications etc.</p>
+<h2 id="subscription-filters"><a class="header" href="#subscription-filters">Subscription Filters</a></h2>
+<p>Are a feature of CloudWatch Logs that allow you to distribute log data from one log group to other AWS services or destinations such as Data Firehose or AWS Lambda but not directly with S3.</p>
 <h1 id="eventbridge"><a class="header" href="#eventbridge">EventBridge</a></h1>
-<p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events.</p>
+<p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events. It is used to monitor AWS resources and the applications running on AWS to detect and react to changes based on rules you create that EventBridge can invoke eg. sending notifications, taking a corrective action or other.</p>
 <p>It makes it easier to connect applications such that events can be ingested, filtered, transformed and delivered without writing custom code.</p>
 <h1 id="cloudtrail"><a class="header" href="#cloudtrail">CloudTrail</a></h1>
 <p>This product logs API calls or account activities as CloudTrail Events that are either management events or data events. By default, stores 90 day management event history. Data events need to be enabled and they come at an extra cost.</p>
 <p>You can create a trail and configure it to be stored in S3 or CLoudWatch logs.</p>
+<p>CloudTrail offers a log file integrity validation feature where any tampering of the log files gets detected. When this feature is enabled, CloudTrail creates a hash for every log file that it delivers. Every hour, CloudTrail also creates and delivers a file that references the log files for the last hour and contains a hash of each. This file is called a digest file. CloudTrail signs each digest file using the private key of a public and private key pair. The public key can be used to validate the digest file.</p>
 <p>CloudTrail is not used for realtime logging, it has a 15 mins delay.</p>
 <h2 id="cloudtrail-log-file-integrity-validation"><a class="header" href="#cloudtrail-log-file-integrity-validation">CloudTrail log file integrity validation</a></h2>
 <p>The validation feature can be enabled on a trail which can direct CloudTrail to create and sign digest files.</p>

@@ -178,6 +178,7 @@
                         <h1 id="elastic-container-service"><a class="header" href="#elastic-container-service">Elastic Container Service</a></h1>
 <p>Is a fully managed container orchestration service that helps deploy, manage and scale containerised applications. It is configured using a service definition where you define how the task should scale.</p>
 <p>A load balancer can be deployed with the service for load distribution.</p>
+<p>You can also configure containers in your tasks to send log information to CloudWatch Logs.</p>
 <h2 id="2-cluster-modes"><a class="header" href="#2-cluster-modes">2 Cluster modes</a></h2>
 <p><strong>1. EC2 mode</strong></p>
 <ul>
@@ -192,6 +193,8 @@
 <li>You don't have to manage EC2 instances as container hosts</li>
 <li>The difference with Fargate is how containers are actually hosted. AWS maintains a shared Fargate infrastructure platform, which is offered to all users of Fargate. You still make use of VPC.</li>
 </ul>
+<p>AWS Fargate platform versions are used to refer to a specific runtime environment for Fargate task infrastructure. It is a combination of the kernel and container runtime versions. New platform versions are released as the runtime environment evolves, for example if there are kernel or operating system updates, new features, bug fixes or security updates.</p>
+<p>To change the platform version that is being used, you can do a <strong>Force new deployment</strong> which allows a Fargate task to use a more current platform version when <strong>LATEST</strong> is used.</p>
 <h2 id="elastic-container-registry-ecr"><a class="header" href="#elastic-container-registry-ecr">Elastic Container Registry (ECR)</a></h2>
 <p>Is a managed container image registry service. Registries can be public or private. A registry can contain many repositories.</p>
 <p>ECR is integrated with IAM. It comes with image scanning, basic and enhanced.</p>
@@ -205,7 +208,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="routing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="eks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -219,7 +222,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="routing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="eks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

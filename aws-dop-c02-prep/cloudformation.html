@@ -181,6 +181,14 @@
 <p>Templates can take parameters i.e. they accept input. Parameters are defined in the template and can have a type for eg. an EC2 image. Pseudo parameters are defined by AWS. They are injected by AWS into the template eg. Region, stack ID, stack name, account ID, etc.</p>
 <p>Cloudformation does things in parallel which is why directives like <code>DependsOn</code> can be used to define an order of execution.</p>
 <p>Cloudformation can be configured to wait until a number of signals are successful before returning the <code>CreateComplete</code> signal.</p>
+<h3 id="dynamic-references"><a class="header" href="#dynamic-references">Dynamic references</a></h3>
+<p>Provide a compact and powerful way to specify external values that are stored and managed in other services such as the Systems Manager Parameter Store, in your stack templates. When dynamic references are used, CloudFormation retrieves the value of the specified reference when necessary during stack and change set operations.</p>
+<p>CloudFormation currently supports the following dynamic reference patterns:</p>
+<ul>
+<li>ssm, for plaintext values stored in AWS Systems Manager Parameter Store</li>
+<li>ssm-secure, for secure strings stored in AWS Systems Manager Parameter Store</li>
+<li>secretsmanager, for entire secrets or specific secret values that are stored in AWS Secrets Manager</li>
+</ul>
 <h3 id="intrinsic-functions"><a class="header" href="#intrinsic-functions">Intrinsic functions</a></h3>
 <ul>
 <li>Allow you to gain access to data at runtime i.e. when the template is being used to create a stack, for example:
@@ -272,7 +280,7 @@
 <li>CFN doesn't support creating all AWS products</li>
 <li>Use custom resources to compensate for what CFN does not support natively
 <ul>
-<li>eg. a Lambda function used to populate or remove items from a bucket. This is because CFN can't delete buckets that have objects in them. The Lambda function receives a CREATE or DELETE event and then uploads or deletes bucket items. The custom resource references both the Lambda function and then bucket</li>
+<li>eg. a Lambda function used to populate or remove items from a bucket. This is because CFN can't delete buckets that have objects in them. The Lambda function receives a CREATE or DELETE event and then uploads or deletes bucket items. The custom resource references both the Lambda function and then bucket.</li>
 </ul>
 </li>
 </ul>
@@ -284,6 +292,21 @@
 <ul>
 <li>removing the logical resources while keeping the physical resources in place and then importing those physical resources to bring back into sync the relationship between logical and physical resources</li>
 </ul>
+</li>
+</ul>
+<h3 id="exam-notes"><a class="header" href="#exam-notes">Exam notes</a></h3>
+<ul>
+<li>
+<p>If a multi-region deployment via StackSets fails in the first region and the engineer wants to ensure that future failures stop the rollout immediately, the <code>FailureTolerance</code> parameter can be decreased to 0 or 1 so that a single failure terminates the entire global deployment execution loop.</p>
+</li>
+<li>
+<p>If a CloudFormation stack deployment fails and gets permanently stuck in <code>UPDATE_ROLLBACK_FAILED</code> because an S3 bucket was manually deleted, execute the <code>ContinueUpdateRollback</code> action via the CLI/Console, specify skipping the deleted S3 bucket and let the stack reach a stable state then manually remove it from the template.</p>
+</li>
+<li>
+<p>To create a decoupled, shareable infrastructure without hardlocking stacks, do not use <code>Fn::ImportValue</code>. Instead, publish the variable into SSM Parameter Store using a strict naming pattern and have the application stack read the values dynamically using Dynamic References. This helps avoid locked dependencies.</p>
+</li>
+<li>
+<p>If a custom resource in a CFN stack is used to invoke a Lambda function, the request will include a pre-signed URL. The Lambda function is responsible for returning a response to this pre-signed URL to indicate if the resource creation was successful or not. If the Lambda function fails to respond to the pre-signed URL, the CloudFormation stack will remain in the <code>CREATE_IN_PROGRESS</code> state.</p>
 </li>
 </ul>
 

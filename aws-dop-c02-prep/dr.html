@@ -207,8 +207,14 @@
 <h3 id="3-rds"><a class="header" href="#3-rds">3. RDS</a></h3>
 <p>RDS instances can run across multiple subnets in multiple AZs. There are typically primary and standby instances with their own storage each pair existing in an AZ.</p>
 <p>RDS offers cross-region read replicas but this places a load on the RDS instances since replication is not done at the storage layer.</p>
+<p>Amazon RDS uses the Amazon SNS (Simple Notification Service) to provide notification when an Amazon RDS event occurs via email, text message or a call to an HTTP endpoint.</p>
+<p><strong>RDS snapshots</strong></p>
+<p>The first copy is a full snapshot copy which contains all of the data and metadata required to restore the DB instance. After this first snapshot, incremental snapshots can be taken of the DB instance where only data that has changed after the most recent snapshot gets copied.</p>
+<p>Incremental snapshot copying is faster and results in lower storage costs than full snapshot copying.</p>
 <h3 id="4-aurora"><a class="header" href="#4-aurora">4. Aurora</a></h3>
 <p>Aurora is not limited to primary and standby instances, it can have 1 or more replicas in every AZ. This makes it's availability subject to the number of AZs in the region.</p>
+<p>Aurora Global Database lets you create read replicas in multiple AWS regions with replication latency typically under 1 second. This allows a single database to serve users worldwide with low latency and provides resilience in case of regional failures. Aurora Global Database is a single-writer design meaning that only the primary region accepts writes and all secondary regions must route write traffic cross-region to the primary instance introducing latency.</p>
+<p>Aurora Global Database does not support the Aurora Parallel Query feature. Parallel query works best with Aurora MySQL DB clusters that have tables with millions of rows and analytical queries that take minutes or hours to complete. Parallel query is an optimisation that parallelises some of the I/O and computation involved in processing data-intensive queries.</p>
 <p>Aurora is the most resiliant RDS available from AWS.</p>
 <h3 id="bonus-dynamodb-and-aurora"><a class="header" href="#bonus-dynamodb-and-aurora">Bonus: DynamoDB and Aurora</a></h3>
 <p>Both database types have global level resiliance.</p>
@@ -228,7 +234,7 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="kinesis.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="config.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -242,7 +248,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="kinesis.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="config.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

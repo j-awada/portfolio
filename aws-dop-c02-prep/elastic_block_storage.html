@@ -226,6 +226,7 @@
 <p>This is best used for object storage, storing unstructured data (images, logs, etc.) in S3. It links on-prem file storage and S3.</p>
 <p>Mount points are created locally and are available via 2 protocols NFS (Linux) or SMB (Windows). It allows 10 bucket shares pre File Gateway.</p>
 <p>File Gateway does not support object locking in the case of multiple file share to a bucket.</p>
+<p>The <code>RefreshCache</code> command refreshes the cached inventory of objects for the specified file share. This operation finds objects in the Amazon S3 bucket that were added, removed or replaced since the gateway last listed the bucket's contents and cached the results.</p>
 <p><strong>2. FSx File Gateway</strong></p>
 <p>Used for configuration or file data. Offers low overhead for accessing files.</p>
 <p><strong>3. Volume Gateway</strong></p>

@@ -181,8 +181,11 @@
 <h2 id="dynamodb-tables"><a class="header" href="#dynamodb-tables">DynamoDB tables</a></h2>
 <p>A table is a grouping of items that share a primary key. The number of items is infinite but the max size of an item is 400KB.</p>
 <p>A primary key can be simple (Partition) aka <code>pk</code> or composite which is a combination of the <code>pk</code> and the <code>sk</code> (Sort key).</p>
+<h2 id="dynamodb-global-tables"><a class="header" href="#dynamodb-global-tables">DynamoDB global tables</a></h2>
+<p>This is a fully managed solution for deploying a multi-region, multi-active database without having to build and maintain your own replication solution. You can specify the AWS regions where you want the tables to be available and DynamoDB will propagate ongoing data changes to all of them.</p>
 <h2 id="point-in-time-recovery-pitr"><a class="header" href="#point-in-time-recovery-pitr">Point-in-time Recovery (PITR)</a></h2>
-<p>Is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35-day recovery window.</p>
+<p>Provides continuous backups with per-second recovery precision. It is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35-day recovery window.</p>
+<p>Enabling PITR does not consume any table provisioned throughput (RCUs/WCUs) and has zero impact on application performance.</p>
 <h2 id="access"><a class="header" href="#access">Access</a></h2>
 <p>DynamoDB can be accessed via the console, CLI or API.</p>
 <h2 id="capacity"><a class="header" href="#capacity">Capacity</a></h2>
@@ -207,21 +210,57 @@
 <p>They help improve the efficiency of data retrieval and are of 2 types of indexes:</p>
 <p><strong>Local Secondary Indexes (LSI)</strong></p>
 <p>They must be created when the base table is created and they allow for an alternative sort key <code>sk</code> on the table.</p>
+<ul>
+<li>Partition key: same as the table</li>
+<li>Sort key: different from the table</li>
+<li>Supports strongly consistent reads (i.e. the latest version of the data after a write) and is used for sorting/querying items within the same partition key</li>
+</ul>
 <p><strong>Global Secondary Indexes (GSI)</strong></p>
 <p>They can be created at any time with a default limit of 20 per base table.</p>
 <p>It allows for creating an alternative view of the table using a different partition key and sort key.</p>
+<ul>
+<li>Partition key: can be different from the table.</li>
+<li>Sort key: can also be different</li>
+<li>Does not support strongly consistent reads (i.e. the latest version of the data after a write) and is used to query the data using a completely different key</li>
+</ul>
 <h2 id="streams-and-triggers"><a class="header" href="#streams-and-triggers">Streams and Triggers</a></h2>
 <p><strong>Streams</strong></p>
-<p>Is a time ordered list of item changes in a table with a 24-hour rolling window. Changes include inserts, updates and deletes.</p>
+<p>Amazon DynamoDB Streams is a feature of AWS DynamoDB that captures a time-ordered sequence of changes (inserts, updates and deletes) to a DynamoDB table. This enables applications to react to data changes in real time. Streams have a 24-hour rolling window.</p>
+<p>Stream records are organised into groups or "shards".</p>
 <p><strong>Triggers</strong></p>
 <p>Allow for actions to take place upon a change in the data. Actions can be via a Lambda function.</p>
+<p><strong>Example case</strong></p>
+<p>A user updates a row in DynamoDB -&gt; DynamoDB instantly writes this change into a Stream Shard -&gt; this gets polled internally by AWS -&gt; the Lambda function set as trigger gets invoked.</p>
+<p>The Lambda function should have a proper IAM Execution role <code>AWSLambdaDynamoDBExecutionRole</code>.</p>
+<p>In case the Lambda function needs to write to a private database inside a VPC, the Lambda function must be configured with VPC membership.</p>
 <h2 id="dynamodb-accelerator-dax"><a class="header" href="#dynamodb-accelerator-dax">DynamoDB Accelerator (DAX)</a></h2>
-<p>Is an in-memory cache for DynamoDB that improves performance.</p>
+<p>DAX is a DynamoDB-compatible caching service that enables you to benefit from fast in-memory performance for demanding applications. DAX addresses three core scenarios:</p>
+<ul>
+<li>
+<p>As an in-memory cache, DAX reduces the response times of eventually consistent read workloads by an order of magnitude, from single-digit milliseconds to microseconds.</p>
+</li>
+<li>
+<p>DAX reduces operational and application complexity by providing a managed service that is API-compatible with DynamoDB. Therefore, it requires only minimal functional changes to use with an existing application.</p>
+</li>
+<li>
+<p>For read-heavy or bursty workloads, DAX provides increased throughput and potential operational cost savings by reducing the need to over-provision read capacity units. This is especially beneficial for applications that require repeated reads for individual keys</p>
+</li>
+</ul>
 <p>The interaction with the DynamoDB database is handled by the DAX SDK rather than the user application itself.</p>
 <h2 id="global-tables"><a class="header" href="#global-tables">Global Tables</a></h2>
 <p>Provides a multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
 <h2 id="ttl"><a class="header" href="#ttl">TTL</a></h2>
 <p>Used to set a timestamp for automatic delete of items. Useful for items that lose relevance after a period of time.</p>
+<h2 id="exam-notes"><a class="header" href="#exam-notes">Exam notes</a></h2>
+<ul>
+<li>
+<p>In DynamoDB, writes to a main table are replicated asynchronously to its GSIs. If a GSI cannot keep up with the write volume because its WCUs are capped, DynamoDB will purposefully throttle the writes on the main table to prevent the index from falling too far behind. Increasing the GSI's auto-scaling upper limit removes this backpressure.</p>
+<p>This manifests as a <code>ProvisionedThroughputExceededException</code> error on the user side.</p>
+</li>
+<li>
+<p>Native DynamoDB backup is regional. For centralised, use AWS Backup for cross-account automated governance.</p>
+</li>
+</ul>
 
                     </main>
 
@@ -231,7 +270,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="sns_and_sqs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="elasticache.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -245,7 +284,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="sns_and_sqs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="elasticache.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

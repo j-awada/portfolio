@@ -196,9 +196,20 @@
 </ul>
 </li>
 </ul>
+<p>The <code>AWS::AutoScaling::AutoScalingGroup</code> resource uses the UpdatePolicy attribute to define how an Auto Scaling group resource is updated when the AWS CloudFormation stack is updated. This policy supports several configuration options amongst which are:</p>
+<ul>
+<li><code>WaitOnResourceSignals</code> and <code>PauseTime</code>: when CloudFormation waits to receive a success signal until the maximum time specified by PauseTime value. If a signal is not received, CloudFormation cancels the update and rolls back the stack.</li>
+<li><code>MinSuccessfulInstancesPercent</code>: prevents CloudFormation from rolling back the entire stack if only a single instance fails to launch</li>
+</ul>
+<h2 id="instance-lifecycle"><a class="header" href="#instance-lifecycle">Instance lifecycle</a></h2>
+<p>When EC2 Auto Scaling responds to a scale out event, it launches one or more instances. These instances start in the <code>Pending</code> state. If a lifecycle hook <code>autoscaling:EC2_INSTANCE_LAUNCHING</code> is added to the Auto Scaling group, the instance will move from the <code>Pending</code> state to the <code>Pending:Wait</code> state. After the lifecycle action is complete, the instance will enter the <code>Pending:Proceed</code> state. When fully configured and attached, the instance will enter the <code>InService</code> state.</p>
+<p>Similary on a scale in event, the instance is detached form the Auto Scaling group and enters the <code>Terminating</code> state. Upon adding a <code>autoscaling:EC2_INSTANCE_TERMINATING</code> lifecycle hook, the instance will move from <code>Terminating</code> to <code>Terminating:Wait</code> state. After the hook is complete, the instance will enter the <code>Terminating:Proceed</code> state and eventually <code>Terminated</code>.</p>
+<h2 id="single-ec2-instance-fault-tolerance"><a class="header" href="#single-ec2-instance-fault-tolerance">Single EC2 instance fault tolerance</a></h2>
+<p>You can create an Amazon CloudWatch alarm that monitors an Amazon EC2 instance and automatically recovers the instance if it becomes impaired due to underlying hardware failure or other.</p>
+<p>The built-in instance recovery failure feature for Amazon EC2 does not apply to instances using store volumes.</p>
 <h2 id="asg-lifecycle-hooks"><a class="header" href="#asg-lifecycle-hooks">ASG Lifecycle Hooks</a></h2>
 <p>Hooks enable configuring custom actions on instances to get executed for eg. during instance launch or termination.</p>
-<p>This can be integrated with EventBridge or SNS notifications to allow event-driven processing based on launch or temination of EC2 instances within an ASG.</p>
+<p>This can be integrated with EventBridge, SNS notifications or SQS to allow event-driven processing based on launch or temination of EC2 instances within an ASG. A Lambda function on its own can not be used as a notification target for the lifecycle hook of an ASG.</p>
 <h2 id="asg-health-checks"><a class="header" href="#asg-health-checks">ASG Health Checks</a></h2>
 <p>EC2 instance health is evaluated in 3 ways:</p>
 <ul>
@@ -212,6 +223,28 @@
 <p>Custom: where an external system can be integrated to mark instances as healthy or not.</p>
 </li>
 </ul>
+<h2 id="ec2rescue"><a class="header" href="#ec2rescue">EC2Rescue</a></h2>
+<p>Is a tool that can help diagnose and troubleshoot problems on EC2 Linux and Windows Server instances. You can run the tool manually or run it automatically by using Systems Manager Automation and the AWSSupport-ExecuteEC2Rescue document.</p>
+<h2 id="vm-importexport"><a class="header" href="#vm-importexport">VM Import/Export</a></h2>
+<p>Enables you to easily import virtual machine images from your existing envrionment to Amazon EC2 instances and export them back to your on-prem environment.</p>
+<p>VM Import will convert the VM image to Amazon EC2 AMI which can be used to run EC2 instances. An image can be exported to an S3 bucket.</p>
+<p>One use-case can be: launch an EC2 instance with the latest Linux OS in AWS. Use the AWS VM Import/Export service to import the EC2 image, export it to a VMware ISO in an Amazon S3 bucket and then import the ISO to an on-premises server.</p>
+<p>It is worth noting that there is no way to directly download an ISO image from Amazon.</p>
+<h2 id="neworking"><a class="header" href="#neworking">Neworking</a></h2>
+<ul>
+<li>
+<p><strong>Security groups</strong>: act as a firewall for associated Amazon EC2 instances controlling both inbound and outbound traffic at the instance level. When you launch an instance, you can associate it with one or more security groups that you've created. Each instance in your VPC could belong to a different set of security groups. If you don't specify a security group when you launch an instance, the instance is automatically associated with the default security group of the VPC.</p>
+</li>
+<li>
+<p><strong>Network access control lists (ACLs)</strong>: act as a firewall for associated subnets, controlling both inbound and outbound traffic at the subnet level.</p>
+</li>
+<li>
+<p><strong>Flow logs</strong>: capture information about the IP traffic going to and from network interfaces in your VPC. You can create a flow log for a VPC, subnet or individual network interface. Flow log data is published to CloudWatch Logs or Amazon S3 and can help in diagnosis.</p>
+</li>
+</ul>
+<div align="center">
+    <img src="./images/asg-networking.png" alt="security groups" width="500" />
+</div>
 
                     </main>
 

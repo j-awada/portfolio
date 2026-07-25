@@ -177,7 +177,6 @@
                     <main>
                         <h1 id="content-delivery-network"><a class="header" href="#content-delivery-network">Content Delivery Network</a></h1>
 <p>CloudFront is a content delivery network, used to improve the delivery of content to the viewers. It does so by caching and by using an efficient global network.</p>
-<p>CloudFront is for download operations only, and uploads are done directly to the origin. CloudFront does read-only caching.</p>
 <p><strong>Some terms:</strong></p>
 <ul>
 <li>
@@ -220,11 +219,24 @@
 </ul>
 </li>
 </ol>
+<h2 id="cloudfront-continuous-deployment"><a class="header" href="#cloudfront-continuous-deployment">CloudFront continuous deployment</a></h2>
+<p>The primary distribution is the 1 serving production traffic. You create a staging distribution which is a copy of the primary 1.</p>
+<p>Viewers cannot send requests directly to a staging distribution using a DNS name, IP address or CNAME. Instead, viewers send requests to the primary (production) distibution and CloudFront routes some of those requests to the staging distribution based on the traffic configuration settings in the continuous deployment policy.</p>
+<p>CloudFront will route some viewer requests to the staging distribution based on 1 of 2 traffic configurations:</p>
+<ul>
+<li>
+<p>Weight-based: this option routes the specified percentage of viewer requests to the staging distribution. Session stickiness is used with this option which helps CloudFront treat requests from the same viewer as part of a single session.</p>
+</li>
+<li>
+<p>Header-based: this option routes traffic to the staging distribution when the viewer request contains a specific HTTP header (you specify the header and the value). This is useful for local testing.</p>
+</li>
+</ul>
 <h2 id="cloudfront-behaviours"><a class="header" href="#cloudfront-behaviours">CloudFront Behaviours</a></h2>
 <p>The Behaviour can be configured from the Distribution. There is a default behaviour (*) which matches all patterns.</p>
 <p>Behaviour configurations include the origin source, protocol and methods, viewer access, Lambda function association, caching and TTL controls.</p>
 <h2 id="cloudfront-and-origin-failover"><a class="header" href="#cloudfront-and-origin-failover">CloudFront and origin failover</a></h2>
 <p>For high availability, CloudFront can be configured with origin failover by creating an origin group with 2 origins; a primary and a secondary. If the primary origin is unavailable, CloudFront switched to the secondary origin.</p>
+<p>Failover happens per-request and not globally i.e. when a primary returns 200 for 1 request and 502 for another, only the failing request goes to the secondary. A practical pattern is to fail over to a static S3 bucket with a custom maintenance page.</p>
 <h2 id="ttl-and-invalidation"><a class="header" href="#ttl-and-invalidation">TTL and invalidation</a></h2>
 <p>When the data on the edge location becomes stale and needs to be refreshed.</p>
 <p>The source could return a status 304 when the object is not expired and 200 status in case it needs to be refreshed along with the latest object.</p>
@@ -245,7 +257,9 @@
 <p>If the origin is S3, S3 handles certificates natively and nothing needs to be done.</p>
 <h2 id="cloudfront-and-sni"><a class="header" href="#cloudfront-and-sni">CloudFront and SNI</a></h2>
 <p>In the past, every SSL-enabled website needed its own IP address. It is however possible to host 2 domains on the same server. The latter is achieved using a header in the request to indicate which website is requested.</p>
-<p>In 2023, SNI (Serve Name Indication) appeared which is a TLS extention that allows a client to tell the server which domain it is trying to access. This occurs within the TLS handshake before HTTP. This allows 1 server to host several websites. The issue is that older browser do not support SNI. Hence why CLoudFront supports both SNI but also IP per server at an extra cost.</p>
+<p>In 2023, SNI (Server Name Indication) appeared which is a TLS extention that allows a client to tell the server which domain it is trying to access. This occurs within the TLS handshake before HTTP. This allows 1 server to host several websites. The issue is that older browser do not support SNI. Hence why CLoudFront supports both SNI but also IP per server at an extra cost.</p>
+<h2 id="cloudfront-and-security-headers"><a class="header" href="#cloudfront-and-security-headers">CloudFront and security headers</a></h2>
+<p>Amazon CloudFront supports adding HTTP security headers using response headers policies. This feature allows configuring CloudFront to include headers like <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code> and <code>X-XSS-Protection</code> in HTTP responses. These headers can be attached by creating a custom policy or using an AWS-managed policy such as <code>SecurityHeadersPolicy</code>.</p>
 <h2 id="origin-types"><a class="header" href="#origin-types">Origin types</a></h2>
 <p>Origins are where CloudFront goes to get content. Origins are selected from the Behaviour section and they can be:</p>
 <ul>
@@ -259,16 +273,18 @@
 <p>From the AWS console and in a distribution, under the invalidations tag, you can create a new invalidation. An invalidation is an operation which sends a directive to every edge location to invalidate 1 or more objects.</p>
 <h2 id="securing-the-cf-content-delivery-path"><a class="header" href="#securing-the-cf-content-delivery-path">Securing the CF content delivery path</a></h2>
 <p>How to make sure that a customer does not bypass CloudFront to access data in the origin directly.</p>
-<h3 id="oai-origin-access-identity"><a class="header" href="#oai-origin-access-identity">OAI (Origin Access Identity)</a></h3>
-<p>CloudFront Origin Access Identity (OAI) is an AWS feature that links CloudFront to a private S3 bucket. It is only applicable to S3 origins and not S3 static websites used as origin.</p>
-<p>Is a type of identity that can be associated with a CloudFront distribution where when the distribution is trying to access data, it becomes the OAI.</p>
-<p>The OAI can be used within bucket policy eg. DENY all except the OAI. This way a direct access to origin is denied.</p>
+<h3 id="oai-origin-access-identity---legacy-not-recommended"><a class="header" href="#oai-origin-access-identity---legacy-not-recommended">OAI (Origin Access Identity) - <em>Legacy, not recommended</em></a></h3>
+<p>CloudFront Origin Access Identity (OAI) is an AWS feature that links CloudFront to a private S3 bucket. It is only applicable to S3 origins and not S3 static websites used as origin. Is a type of identity that can be associated with a CloudFront distribution where when the distribution is trying to access data, it becomes the OAI. The OAI can be used within bucket policy eg. DENY all except the OAI. This way a direct access to origin is denied.</p>
+<p>OAI does not support AWS KMS encrypted S3 buckets, POST/PUT requests or fine-grained IAM policies. This option is therefore legacy due to its limitations and AWS recommends migrating to OAC instead.</p>
+<h3 id="oac-origin-access-control"><a class="header" href="#oac-origin-access-control">OAC (Origin Access Control)</a></h3>
+<p>OAC helps secure the origin such as S3. It supports features like S3 buckets in multiple regions, S3 server-side encryption with AWS KMS and dynamic requests (PUT and DELETE) to S3.</p>
+<p>OAC allows you to restrict access to your origin resources ensuring that they can only be accessed through the CloudFront distributions. This can be done by creating an OAC setting in the CloudFront distribution and updating the S3 bucket policy to grant access only to the CloudFront OAC, preventing direct access to the S3 bucket from any source including direct S3 URLs.</p>
 <h3 id="access-identity-for-non-s3-origin"><a class="header" href="#access-identity-for-non-s3-origin">Access identity for non-S3 origin</a></h3>
 <p>There are 2 ways around this:</p>
 <ol>
 <li>
 <p>Custom headers</p>
-<p>Configure CloudFront to send a custom header to the origin. Since this is over HTTPS, the headers are not be visible and can not be immitated.</p>
+<p>Configure CloudFront to send a custom header to the origin. Since this is over HTTPS, the headers are not visible and cannot be immitated.</p>
 <p>If the header is missing, the origin will refuse the request.</p>
 </li>
 <li>
@@ -290,6 +306,11 @@
 <p>The signed cookie is generated via a Lambda function after authentication is done. This cookie is returned back to the user which will use it with the request sent to the CF distribution. Access to resources is then granted.</p>
 </li>
 </ol>
+<h2 id="secure-end-to-end-connections"><a class="header" href="#secure-end-to-end-connections">Secure end-to-end connections</a></h2>
+<p>You can already configure CloudFront to help enforce secure end-to-end connections to origin servers by using HTTPS. Field-level encryption adds an additional layer of security along with HTTPS and lets you protect specific data such that only certain applications can see it.</p>
+<p>Field-levels encryption allows you to securely upload user-submitted sensitive information to your web servers.</p>
+<p>To use field-level encryption, you configure your CloudFront distribution to specify the set of fields in POST requests that you want to be encrypted, and the public key to use to encrypt them. You can encrypt up to 10 data fields in a request.</p>
+<p>CloudFront field-level encryption uses asymmetric encryption, also known as public key encryption. You provide a public key to CloudFront, and all sensitive data that you specify is encrypted automatically. The key you provide to CloudFront cannot be used to decrypt the encrypted values; only your private key can do that.</p>
 <h2 id="cloudfront-geo-restriction"><a class="header" href="#cloudfront-geo-restriction">CloudFront Geo Restriction</a></h2>
 <p>Determines which areas of the planet can access content delivered via CF.</p>
 <p>It has 2 types:</p>
@@ -311,12 +332,22 @@
 </ol>
 <h2 id="lambda-at-the-edge"><a class="header" href="#lambda-at-the-edge">Lambda at the Edge</a></h2>
 <p>Lambda@Edge is a feature of Amazon CloudFront that lets you run code closer to users of your application which improves performance and reduces latency. It allows you to run lightweight Lambda functions at edge locations. They don't have the full Lambda feature set.</p>
+<p>Lambda@Edge supports Node.js and Python runtime and can query services like DynamoDB and Secrets Manager.</p>
 <p>Use cases include:</p>
 <ul>
+<li>Triggering a Lambda function to execute a user authentication process in a specific AWS location proximate to the user</li>
 <li>A/B testing using a Viewer Request function</li>
 <li>As part of the Origin request eg. migration between S3 origins</li>
 <li>Customise behaviour based on the device type of a customer</li>
 <li>Vary the content displayed by country</li>
+</ul>
+<h2 id="cloudfront-functions"><a class="header" href="#cloudfront-functions">CloudFront Functions</a></h2>
+<p>Similar to Lambda@Edge, CloudFront Functions provide a way to run code in response to CloudFront events.</p>
+<p>CloudFront Functions has a Javascript-only runtime and it cannot call APIs or external databases.</p>
+<p>It is ideal for short-running functions such as:</p>
+<ul>
+<li>Transforming an attribute in a HTTP request header</li>
+<li>Request authorisation</li>
 </ul>
 
                     </main>

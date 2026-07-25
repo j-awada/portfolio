@@ -193,6 +193,7 @@
 <li><a href="./iam.html">IAM</a></li>
 <li><a href="./aws_organisations.html">AWS organisations</a></li>
 <li><a href="./advanced_identity_and_permissions.html">Advanced Identity and Permissions</a></li>
+<li><a href="./cognito.html">Amazon Cognito</a></li>
 </ul>
 </li>
 <li><a href="./sdlc_automation.html">SDLC Automation</a></li>
@@ -209,6 +210,7 @@
 <li><a href="./asg.html">Auto-Scaling Group</a></li>
 <li><a href="./elastic_beanstalk.html">Elasic Beanstalk</a></li>
 <li><a href="./ecs.html">Elastic Container Service</a></li>
+<li><a href="./eks.html">Elastic Kubernetes Service</a></li>
 </ul>
 </li>
 <li><a href="./routing.html">Routing, balancing and DNS</a>
@@ -221,7 +223,7 @@
 </li>
 <li><a href="./secrets_and_keys.html">Secrets and Keys</a>
 <ul>
-<li><a href="./credentials_and_secrets.html">Credentials and Secrets</a></li>
+<li><a href="./ssm.html">AWS Systems Manager (SSM)</a></li>
 <li><a href="./kms.html">Key Management Service</a></li>
 </ul>
 </li>
@@ -232,11 +234,13 @@
 <li><a href="./efs.html">Elastic File System</a></li>
 <li><a href="./s3_misc.html">S3 Object Storage</a></li>
 <li><a href="./dynamodb.html">DynamoDB</a></li>
+<li><a href="./elasticache.html">ElastiCache</a></li>
 </ul>
 </li>
 <li><a href="./sns_and_sqs.html">SNS and SQS</a></li>
 <li><a href="./cloudwatch.html">CloudWatch</a></li>
 <li><a href="./kinesis.html">Kinesis</a></li>
+<li><a href="./config.html">AWS Config</a></li>
 <li><a href="./dr.html">Disaster Recovery</a></li>
 <li><a href="./ae_example_1.html">Architecture evolution example 1</a></li>
 <li><a href="./final_exam_notes.html">Final exam notes</a></li>
@@ -489,6 +493,7 @@ Container 1 | Container 2 | ... | Container N
 <li><a href="./iam.html">IAM</a></li>
 <li><a href="./aws_organisations.html">AWS organisations</a></li>
 <li><a href="./advanced_identity_and_permissions.html">Advanced Identity and Permissions</a></li>
+<li><a href="./cognito.html">Amazon Cognito</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="iam-identity-and-access-management"><a class="header" href="#iam-identity-and-access-management">IAM (Identity and Access Management)</a></h2>
 <p>An AWS account is a container for identities and resources. Every AWS account has a unique email which is that of the root user of the account.</p>
@@ -614,6 +619,13 @@ Container 1 | Container 2 | ... | Container N
 <p>Identity-based policies attached to user or role.</p>
 </li>
 </ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="amazon-cognito"><a class="header" href="#amazon-cognito">Amazon Cognito</a></h1>
+<p>Helps implement secure sign-in and access control for users, AI agents and microservices in minutes.</p>
+<p>It supports login with social identity providers and passwordless login using WebAuthn passkeys or SMS and email one-time passwords.</p>
+<p>Cognito enables identity federation where you don't need to create custom sign-in code or manage user identities. Users can instead sign in using an external identity provider (IdP) such as Login with Amazon, Facebook, Google or another OpenID Connect (OIDC)-compatible IdP. They can receive an authentication token and exchange the token for temporary security credentials in AWS that map to an IAM role with permissions to use resources in an AWS account.</p>
+<h2 id="how-it-works--use-case"><a class="header" href="#how-it-works--use-case">How it works / use case</a></h2>
+<p>To enable the mobile app to access your AWS resources, you should first register for a developer ID with your chosen IdPs. You can also configure the application with each of these providers. In your AWS account that contains the Amazon S3 bucket and DynamoDB table for the game, you should use Amazon Cognito to create IAM roles that precisely define permissions that the game needs. If you are using an OIDC IdP, you can also create an IAM OIDC identity provider entity to establish trust between your AWS account and the IdP.</p>
+<p>In the app’s code, you can call the sign-in interface for the IdP that you configured previously. The IdP handles all the details of letting the user sign in, and the app gets an OAuth access token or OIDC ID token from the provider. Your mobile app can trade this authentication information for a set of temporary security credentials that consist of an AWS access key ID, a secret access key, and a session token. The app can then use these credentials to access web services offered by AWS. The app is limited to the permissions that are defined in the role that it assumes.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sdlc-automation"><a class="header" href="#sdlc-automation">SDLC Automation</a></h1>
 <p>A development pipeline can be generally broken down to the following stages:</p>
 <ol>
@@ -629,12 +641,12 @@ Container 1 | Container 2 | ... | Container N
 <li>CodeDeploy which supports code deployment within AWS</li>
 </ul>
 <p>These AWS tools are isolated but they can be configured together using AWS CodePipeline which orchestrates the development pipeline.</p>
-<p>A pipeline is linked to 1 branch in a repository eg. a <code>main</code> pipeline and a <code>dev</code> pipeline.</p>
+<p>A pipeline is linked to 1 branch in a repository eg. a <code>main</code> pipeline or a <code>dev</code> pipeline.</p>
 <h2 id="codecommit"><a class="header" href="#codecommit">CodeCommit</a></h2>
 <p>A source control service that hosts private Git repos. It uses HTTPS and SSH for file transfer; repos are encrypted at rest with AWS KMS.</p>
 <p>On the backend, it uses S3 and DynamoDB to store repos. It can recieve notifications from Amazon SNS and repos can send notifications with Amazon SNS or invoke AWS Lambda functions.</p>
 <h2 id="codeartifact"><a class="header" href="#codeartifact">CodeArtifact</a></h2>
-<p>Is a service used to securely store, publish and share software packages. It can be configured to automatically fetch public packages and dependencies.</p>
+<p>Is a service used to securely store, publish and share software packages. It can be configured to automatically fetch public packages and dependencies using popular package managers and build tools like Maven, Gradle, npm, Yarn, Twine, pip and NuGet.</p>
 <h2 id="codebuild"><a class="header" href="#codebuild">CodeBuild</a></h2>
 <p>Is a build-as-a-service product that lets you manage a build environment where you pay for the resources consumed during builds. It is also used during the test stage.</p>
 <p>CodeBuild is a CI service that can compile source code, run tests and produce software packages ready to deploy. It manages the build servers.</p>
@@ -656,6 +668,8 @@ Container 1 | Container 2 | ... | Container N
 <p>Is a code deployment as-a-service product. It deploys code not resources i.e. a web application and not a fleet of EC2 instances. It automates deployment to compute services like EC2, Fargate, Elastic Beanstalk, Lambda and on-premises servers.</p>
 <p>A CodeDeploy agent needs to be installed which communicates with the product and implements instructions.</p>
 <p>It can be used to deploy using CloudFormation and it integrates with tools like CodePipeline, GitHub and Jenkins.</p>
+<h3 id="blueinstanceterminationoption"><a class="header" href="#blueinstanceterminationoption">BlueInstanceTerminationOption</a></h3>
+<p>Is an option within CodeDeploy to determine whether instances in the original environment are terminated when a blue/green deployment is successful. <code>BlueInstanceTerminationOption</code> does not apply to Lambda deployments.</p>
 <h3 id="the-appspec-file"><a class="header" href="#the-appspec-file">The appspec file</a></h3>
 <p>CodeDeploy is customised using <code>appspec.yml</code> or <code>appspec.json</code> files.</p>
 <p>This file contains configuration + lifecycle event hooks.</p>
@@ -666,9 +680,22 @@ Container 1 | Container 2 | ... | Container N
 <li>resources (for ECS/Lambda): for Lambda it contains the information about the Lambda function used during deployment. For ECS, it contains things like task definitions or container information.</li>
 <li>permissions (for EC2/on-premise): details any special permissions that need to be applied on parts of the filesystem.</li>
 </ul>
+<p>The<code>AppSpec</code> file has a hooks section. A Lambda function can be specified for the lifecycle hook you want to test. If the test fails, the deployment stops, rolled back and marked as failed. For example, the <code>AfterAllowTestTraffic</code> hook can be used to validate deployment using test traffic with traffic served to a test listener. If validation succeeds, the deployment continues to the <code>BeforeAllowTraffic</code> hook.</p>
+<p><strong>Some hooks:</strong></p>
+<div align="center">
+    <img src="./images/hooks.png" alt="AppSpec hooks" width="500" />
+</div>
+<h3 id="aws-serverless-application-model-sam"><a class="header" href="#aws-serverless-application-model-sam">AWS Serverless Application Model (SAM)</a></h3>
+<p>This comes built-in with CodeDeploy to provide gradual AWS Lambda deployments. It does the following:</p>
+<ul>
+<li>Deploys new versions of a Lambda function and automatically creates aliases that point to the new version</li>
+<li>Gradually shifts customer traffic to the new version until the decision to shift all traffic</li>
+<li>Defines pre-traffic and post-traffic test functions to verify that the newly deployed code is configured correctly</li>
+</ul>
 <h2 id="codepipeline"><a class="header" href="#codepipeline">CodePipeline</a></h2>
 <p>Is a continuous delivery tool designed to control the flow from source code through build and finally deployment. It is the glue that holds things together. It is a service used to model, visualise and automate the steps required to release a software.</p>
-<p>Pipelines are built from Stages which contain sequential or parallel actions. The output of one action can be the input of another action.</p>
+<p>Pipelines are built from Stages (eg. Build stage) which contain sequential or parallel actions. The output of one action can be the input of another action.</p>
+<p>A single pipeline structure is hosted in a single region; however, individual Actions within a stage can execute in a different target region. When you configure a cross-region action, CodePipeline requires an S3 artifact bucket in every target region where an action takes place.</p>
 <div align="center">
     <img src="./images/code_pipeline.png" alt="CodePipeline" width="500" />
 </div>
@@ -727,6 +754,14 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>Templates can take parameters i.e. they accept input. Parameters are defined in the template and can have a type for eg. an EC2 image. Pseudo parameters are defined by AWS. They are injected by AWS into the template eg. Region, stack ID, stack name, account ID, etc.</p>
 <p>Cloudformation does things in parallel which is why directives like <code>DependsOn</code> can be used to define an order of execution.</p>
 <p>Cloudformation can be configured to wait until a number of signals are successful before returning the <code>CreateComplete</code> signal.</p>
+<h3 id="dynamic-references"><a class="header" href="#dynamic-references">Dynamic references</a></h3>
+<p>Provide a compact and powerful way to specify external values that are stored and managed in other services such as the Systems Manager Parameter Store, in your stack templates. When dynamic references are used, CloudFormation retrieves the value of the specified reference when necessary during stack and change set operations.</p>
+<p>CloudFormation currently supports the following dynamic reference patterns:</p>
+<ul>
+<li>ssm, for plaintext values stored in AWS Systems Manager Parameter Store</li>
+<li>ssm-secure, for secure strings stored in AWS Systems Manager Parameter Store</li>
+<li>secretsmanager, for entire secrets or specific secret values that are stored in AWS Secrets Manager</li>
+</ul>
 <h3 id="intrinsic-functions"><a class="header" href="#intrinsic-functions">Intrinsic functions</a></h3>
 <ul>
 <li>Allow you to gain access to data at runtime i.e. when the template is being used to create a stack, for example:
@@ -818,7 +853,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <li>CFN doesn't support creating all AWS products</li>
 <li>Use custom resources to compensate for what CFN does not support natively
 <ul>
-<li>eg. a Lambda function used to populate or remove items from a bucket. This is because CFN can't delete buckets that have objects in them. The Lambda function receives a CREATE or DELETE event and then uploads or deletes bucket items. The custom resource references both the Lambda function and then bucket</li>
+<li>eg. a Lambda function used to populate or remove items from a bucket. This is because CFN can't delete buckets that have objects in them. The Lambda function receives a CREATE or DELETE event and then uploads or deletes bucket items. The custom resource references both the Lambda function and then bucket.</li>
 </ul>
 </li>
 </ul>
@@ -830,6 +865,21 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <ul>
 <li>removing the logical resources while keeping the physical resources in place and then importing those physical resources to bring back into sync the relationship between logical and physical resources</li>
 </ul>
+</li>
+</ul>
+<h3 id="exam-notes"><a class="header" href="#exam-notes">Exam notes</a></h3>
+<ul>
+<li>
+<p>If a multi-region deployment via StackSets fails in the first region and the engineer wants to ensure that future failures stop the rollout immediately, the <code>FailureTolerance</code> parameter can be decreased to 0 or 1 so that a single failure terminates the entire global deployment execution loop.</p>
+</li>
+<li>
+<p>If a CloudFormation stack deployment fails and gets permanently stuck in <code>UPDATE_ROLLBACK_FAILED</code> because an S3 bucket was manually deleted, execute the <code>ContinueUpdateRollback</code> action via the CLI/Console, specify skipping the deleted S3 bucket and let the stack reach a stable state then manually remove it from the template.</p>
+</li>
+<li>
+<p>To create a decoupled, shareable infrastructure without hardlocking stacks, do not use <code>Fn::ImportValue</code>. Instead, publish the variable into SSM Parameter Store using a strict naming pattern and have the application stack read the values dynamically using Dynamic References. This helps avoid locked dependencies.</p>
+</li>
+<li>
+<p>If a custom resource in a CFN stack is used to invoke a Lambda function, the request will include a pre-signed URL. The Lambda function is responsible for returning a response to this pre-signed URL to indicate if the resource creation was successful or not. If the Lambda function fails to respond to the pre-signed URL, the CloudFormation stack will remain in the <code>CREATE_IN_PROGRESS</code> state.</p>
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="aws-opsworks"><a class="header" href="#aws-opsworks">AWS OpsWorks</a></h1>
@@ -922,7 +972,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <h3 id="logging-and-tracing"><a class="header" href="#logging-and-tracing">Logging and tracing</a></h3>
 <p>Lambda sends execution logs to Cloudwatch logs <code>/aws/lambda/&lt;function name&gt;</code> log group but the STDOUT/STDERR can also be viewed in the function itself.</p>
 <p>To log, the Lambda function needs permissions provided via the execution role.</p>
-<p>XRay shows requests to the function and Active Tracing can be enabled on the function.</p>
+<p>X-Ray shows requests to the function and Active Tracing can be enabled on the function. To set up an application running on ECS to use X-Ray, the application's Docker image should run the X-Ray daemon. The port mapping and network settings can be configured in the task definition to allow traffic at UDP port 2000.</p>
 <h3 id="lambda-extensions"><a class="header" href="#lambda-extensions">Lambda Extensions</a></h3>
 <p>Allows users to easily integrate tools for monitoring, observability, security and governance without complex installation or configuration management. Extensions can run in 2 modes:</p>
 <ul>
@@ -980,6 +1030,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <li><a href="./asg.html">Auto-Scaling Group</a></li>
 <li><a href="./elastic_beanstalk.html">Elasic Beanstalk</a></li>
 <li><a href="./ecs.html">Elastic Container Service</a></li>
+<li><a href="./eks.html">Elastic Kubernetes Service</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="auto-scaling-group"><a class="header" href="#auto-scaling-group">Auto-Scaling Group</a></h1>
 <p>Auto-scaling allows EC2 to scale automatically based on demand placed on the system. Together with Elastic Load Balancers, Auto-scaling Groups (ASG) are used to deliver an elastic architecture.</p>
@@ -1002,9 +1053,20 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 </ul>
 </li>
 </ul>
+<p>The <code>AWS::AutoScaling::AutoScalingGroup</code> resource uses the UpdatePolicy attribute to define how an Auto Scaling group resource is updated when the AWS CloudFormation stack is updated. This policy supports several configuration options amongst which are:</p>
+<ul>
+<li><code>WaitOnResourceSignals</code> and <code>PauseTime</code>: when CloudFormation waits to receive a success signal until the maximum time specified by PauseTime value. If a signal is not received, CloudFormation cancels the update and rolls back the stack.</li>
+<li><code>MinSuccessfulInstancesPercent</code>: prevents CloudFormation from rolling back the entire stack if only a single instance fails to launch</li>
+</ul>
+<h2 id="instance-lifecycle"><a class="header" href="#instance-lifecycle">Instance lifecycle</a></h2>
+<p>When EC2 Auto Scaling responds to a scale out event, it launches one or more instances. These instances start in the <code>Pending</code> state. If a lifecycle hook <code>autoscaling:EC2_INSTANCE_LAUNCHING</code> is added to the Auto Scaling group, the instance will move from the <code>Pending</code> state to the <code>Pending:Wait</code> state. After the lifecycle action is complete, the instance will enter the <code>Pending:Proceed</code> state. When fully configured and attached, the instance will enter the <code>InService</code> state.</p>
+<p>Similary on a scale in event, the instance is detached form the Auto Scaling group and enters the <code>Terminating</code> state. Upon adding a <code>autoscaling:EC2_INSTANCE_TERMINATING</code> lifecycle hook, the instance will move from <code>Terminating</code> to <code>Terminating:Wait</code> state. After the hook is complete, the instance will enter the <code>Terminating:Proceed</code> state and eventually <code>Terminated</code>.</p>
+<h2 id="single-ec2-instance-fault-tolerance"><a class="header" href="#single-ec2-instance-fault-tolerance">Single EC2 instance fault tolerance</a></h2>
+<p>You can create an Amazon CloudWatch alarm that monitors an Amazon EC2 instance and automatically recovers the instance if it becomes impaired due to underlying hardware failure or other.</p>
+<p>The built-in instance recovery failure feature for Amazon EC2 does not apply to instances using store volumes.</p>
 <h2 id="asg-lifecycle-hooks"><a class="header" href="#asg-lifecycle-hooks">ASG Lifecycle Hooks</a></h2>
 <p>Hooks enable configuring custom actions on instances to get executed for eg. during instance launch or termination.</p>
-<p>This can be integrated with EventBridge or SNS notifications to allow event-driven processing based on launch or temination of EC2 instances within an ASG.</p>
+<p>This can be integrated with EventBridge, SNS notifications or SQS to allow event-driven processing based on launch or temination of EC2 instances within an ASG. A Lambda function on its own can not be used as a notification target for the lifecycle hook of an ASG.</p>
 <h2 id="asg-health-checks"><a class="header" href="#asg-health-checks">ASG Health Checks</a></h2>
 <p>EC2 instance health is evaluated in 3 ways:</p>
 <ul>
@@ -1018,6 +1080,28 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>Custom: where an external system can be integrated to mark instances as healthy or not.</p>
 </li>
 </ul>
+<h2 id="ec2rescue"><a class="header" href="#ec2rescue">EC2Rescue</a></h2>
+<p>Is a tool that can help diagnose and troubleshoot problems on EC2 Linux and Windows Server instances. You can run the tool manually or run it automatically by using Systems Manager Automation and the AWSSupport-ExecuteEC2Rescue document.</p>
+<h2 id="vm-importexport"><a class="header" href="#vm-importexport">VM Import/Export</a></h2>
+<p>Enables you to easily import virtual machine images from your existing envrionment to Amazon EC2 instances and export them back to your on-prem environment.</p>
+<p>VM Import will convert the VM image to Amazon EC2 AMI which can be used to run EC2 instances. An image can be exported to an S3 bucket.</p>
+<p>One use-case can be: launch an EC2 instance with the latest Linux OS in AWS. Use the AWS VM Import/Export service to import the EC2 image, export it to a VMware ISO in an Amazon S3 bucket and then import the ISO to an on-premises server.</p>
+<p>It is worth noting that there is no way to directly download an ISO image from Amazon.</p>
+<h2 id="neworking"><a class="header" href="#neworking">Neworking</a></h2>
+<ul>
+<li>
+<p><strong>Security groups</strong>: act as a firewall for associated Amazon EC2 instances controlling both inbound and outbound traffic at the instance level. When you launch an instance, you can associate it with one or more security groups that you've created. Each instance in your VPC could belong to a different set of security groups. If you don't specify a security group when you launch an instance, the instance is automatically associated with the default security group of the VPC.</p>
+</li>
+<li>
+<p><strong>Network access control lists (ACLs)</strong>: act as a firewall for associated subnets, controlling both inbound and outbound traffic at the subnet level.</p>
+</li>
+<li>
+<p><strong>Flow logs</strong>: capture information about the IP traffic going to and from network interfaces in your VPC. You can create a flow log for a VPC, subnet or individual network interface. Flow log data is published to CloudWatch Logs or Amazon S3 and can help in diagnosis.</p>
+</li>
+</ul>
+<div align="center">
+    <img src="./images/asg-networking.png" alt="security groups" width="500" />
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="elasic-beanstalk-eb"><a class="header" href="#elasic-beanstalk-eb">Elasic Beanstalk (EB)</a></h1>
 <p>Is a PaaS i.e. the vendor handles the infrastructure and the user provides the application code. It is developer-focussed because it provides managed environments for developer applications.</p>
 <p>An EB "Application" is a contianer containing everything related to the application eg. infrastructure, app code, environments, versions, etc. However it is considered a best practice to keep the database deployment outside of EB.</p>
@@ -1044,6 +1128,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-container-service"><a class="header" href="#elastic-container-service">Elastic Container Service</a></h1>
 <p>Is a fully managed container orchestration service that helps deploy, manage and scale containerised applications. It is configured using a service definition where you define how the task should scale.</p>
 <p>A load balancer can be deployed with the service for load distribution.</p>
+<p>You can also configure containers in your tasks to send log information to CloudWatch Logs.</p>
 <h2 id="2-cluster-modes"><a class="header" href="#2-cluster-modes">2 Cluster modes</a></h2>
 <p><strong>1. EC2 mode</strong></p>
 <ul>
@@ -1058,10 +1143,18 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <li>You don't have to manage EC2 instances as container hosts</li>
 <li>The difference with Fargate is how containers are actually hosted. AWS maintains a shared Fargate infrastructure platform, which is offered to all users of Fargate. You still make use of VPC.</li>
 </ul>
+<p>AWS Fargate platform versions are used to refer to a specific runtime environment for Fargate task infrastructure. It is a combination of the kernel and container runtime versions. New platform versions are released as the runtime environment evolves, for example if there are kernel or operating system updates, new features, bug fixes or security updates.</p>
+<p>To change the platform version that is being used, you can do a <strong>Force new deployment</strong> which allows a Fargate task to use a more current platform version when <strong>LATEST</strong> is used.</p>
 <h2 id="elastic-container-registry-ecr"><a class="header" href="#elastic-container-registry-ecr">Elastic Container Registry (ECR)</a></h2>
 <p>Is a managed container image registry service. Registries can be public or private. A registry can contain many repositories.</p>
 <p>ECR is integrated with IAM. It comes with image scanning, basic and enhanced.</p>
 <p>ECR offers replication of container images that can be cross-region or cross-account.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-kubernetes-service"><a class="header" href="#elastic-kubernetes-service">Elastic Kubernetes Service</a></h1>
+<p>Is a fully managed service that simplifies running, securing and scaling Kubernetes applications on AWS without needing to install or maintain your own control plane. It eliminates operational overhead by automatically managing and scaling the Kubernetes master nodes.</p>
+<p>The control plance is distibuted and managed across multiple AZs for high availability. Compute options include running workloads using EC2, Fargate or with EKS Auto Mode.</p>
+<h2 id="storage-permissions"><a class="header" href="#storage-permissions">Storage permissions</a></h2>
+<p>In EKS, persistent storage is often provisioned using Elastic Block Store (EBS) volumes. The EBS Container Storage Interface (CSI) driver is responsible for integrating Kubernetes with EBS enabling dynamic provisioning and management of volumes as per application requirements.</p>
+<p>The EBS CSI driver requires appropriate permissions to dynamically provision and manage EBS volumes. These permissions are managed using an IAM role often attached to the driver itself. AWS recommends assigning an IAM role to the EBS CSI driver with the necessary permissions to provision and manager EBS volumes. This ensures that the driver can perform operations such as creating volumes, attaching them to nodes and managing lifecycle events.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="routing-balancing-and-dns"><a class="header" href="#routing-balancing-and-dns">Routing, balancing and DNS</a></h1>
 <ul>
 <li><a href="./load_balancers.html">Elastic Load Balancing</a></li>
@@ -1105,7 +1198,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>The PROXY protocol works at Layer 4 and is a <code>tcp</code> header.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="api-gateway"><a class="header" href="#api-gateway">API Gateway</a></h1>
 <p>Is a service for publishing, maintaining, securing and monitoring APIs at scale. It is an entry point to applications and acts as an intermediary between a client and the backend service.</p>
-<p>It is highly available, scalable and handles authorisation, throttling, caching, CORS, etc It is able to handle and process large volumes of API calls.</p>
+<p>It is highly available, scalable and handles authorisation, throttling, caching, CORS, etc. It is able to handle and process large volumes of API calls.</p>
 <p>It can be deployed as private, regional or edge-optimised using Cloudfront and it supports 3 types of APIs:</p>
 <ul>
 <li>REST API: using resources and methods and is feature-rich</li>
@@ -1116,7 +1209,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>API Gateway supports a range of authentication methods:</p>
 <ul>
 <li>Cognito user pools where the client receives a token in return.</li>
-<li>Lambda-based authorisation where the client passes a bearer token to the API Gateway and Lambda validates the request.</li>
+<li>Lambda-based authorisation where the client passes a bearer token to the API Gateway and Lambda validates the request. This can be OAuth or JWT verification.</li>
 </ul>
 <h2 id="error-codes-generated-by-api-gateway"><a class="header" href="#error-codes-generated-by-api-gateway">Error codes generated by API Gateway</a></h2>
 <ul>
@@ -1139,6 +1232,19 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 </ul>
 <h2 id="api-gateway-stage"><a class="header" href="#api-gateway-stage">API Gateway stage</a></h2>
 <p>Is a logical reference to a lifecycle state of your API eg. dev, prod, beta, v2, etc. It is a named reference to a deployment of the API and is made available in the URL eg. <code>&lt;API Gateway URL&gt;/&lt;stage&gt;/&lt;endpoint&gt;</code>.</p>
+<h2 id="stage-variables"><a class="header" href="#stage-variables">Stage variables</a></h2>
+<p>Stage variables let you define key/values pairs of configuration values associated with a stage. They are similar to environment variables. Use cases include: 1) specifying a different backend endpoint for eg. example.com for the prod stage and dev.example.com for the dev stage and 2) passing information using mapping templates which allows reusing the same Lambda function for multiple stages in the API.</p>
+<h2 id="bluegreen-deployment"><a class="header" href="#bluegreen-deployment">Blue/green deployment</a></h2>
+<p>An API mapping is used to specify an API, a stage and optionally a path that maps to a custom domain name. Traffic to that domain will therefore flow through that particular stage.</p>
+<p>The blue/green deployment strategy runs 2 identical production environments called "blue" and "green". At any given time, only 1 environment serves live production traffic while the other remains idle.</p>
+<p>Having 2 API endpoints one for each environment (blue/green), traffic can be switched from the blue environment to the green one by using API Gateway custom domain API mapping. This ensures that there is no change in the external-facing custom domain URL.</p>
+<h2 id="canary-deployment"><a class="header" href="#canary-deployment">Canary deployment</a></h2>
+<p>To deploy an API with a canary release, you create a canary release deployment by adding canary settings to the stage of a regular deployment. A canary release deployment uses the deployment stage for the production release of the base version of an API and attaches to the stage a canary release for the new versions. In the canary settings <code>canarySettings</code>, you specify things like:</p>
+<ul>
+<li>a deployment ID initially identical to the base version deployment</li>
+<li>a precentage of API traffic</li>
+<li>stage variables that can override production release stage variables</li>
+</ul>
 <h2 id="api-gateway-integrations"><a class="header" href="#api-gateway-integrations">API Gateway Integrations</a></h2>
 <p>API Gateway can take in a request and transform it to an integration request which is sent to the target backend service.</p>
 <p><strong>Types of integrations</strong></p>
@@ -1150,12 +1256,24 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <li>AWS proxy: uses Lambda and no mapping is requried</li>
 </ul>
 <p><strong>Mapping templates</strong></p>
-<p>are used for HTTP and AWS integration to modify or rename parameters, body, headers, etc. This is done using the Velocity Template Language (VTL).</p>
+<p>Are used for HTTP and AWS integration to modify or rename parameters, body, headers, etc. This is done using the Velocity Template Language (VTL).</p>
 <h2 id="openapi-specification-oas"><a class="header" href="#openapi-specification-oas">OpenAPI Specification (OAS)</a></h2>
 <p>Defines a standard, language-agnostic interface for RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation or through network traffic inspection.</p>
 <p>OAS was formally known as Swagger. Swagger is OpenAPI v2 and OpenAPI is now v3.</p>
 <p>It is an API description format for REST APIs eg. endpoints, input/output parameters, authentication.</p>
 <p>AWS API Gateway can export and import to Swagger/OAS.</p>
+<h2 id="logging"><a class="header" href="#logging">Logging</a></h2>
+<p>You can use CloudWatch Logs or Amazon Data Firehose to log requests to your APIs.</p>
+<p><strong>CloudWatch Logs</strong></p>
+<p>There are 2 types of API logging in CloudWatch: execution logging and access logging. In execution logging, API Gateway manages the CloudWatch Logs. Logs include all the API Gateway internal information as the request is processed. This is useful for debugging a specific request to trace down the issue.</p>
+<p>In access logging, the API developer would want to know who accessed the API and how the caller accessed it. Data here can be accessed inside the <code>$context</code> variable which contains information about the caller.</p>
+<p><strong>Data Firehose</strong></p>
+<p>API calls can be logged to Amazon Data Firehose. For access logging, you can only enable CloudWatch or Firehose - you can't enable both. You can enable CloudWatch for execution logging and Firehose for access logging.</p>
+<h2 id="useful-resources"><a class="header" href="#useful-resources">Useful resources</a></h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/security-best-practices.html">Best practices in Amazon API Gateway</a></li>
+<li><a href="https://aws.amazon.com/api-gateway/faqs/">FAQs</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="route53"><a class="header" href="#route53">Route53</a></h1>
 <p>Is AWS's managed DNS product which provides 2 main services:</p>
 <ul>
@@ -1252,7 +1370,6 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>When you register a domain outside of Route53, it does 1 of the 2 jobs.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="content-delivery-network"><a class="header" href="#content-delivery-network">Content Delivery Network</a></h1>
 <p>CloudFront is a content delivery network, used to improve the delivery of content to the viewers. It does so by caching and by using an efficient global network.</p>
-<p>CloudFront is for download operations only, and uploads are done directly to the origin. CloudFront does read-only caching.</p>
 <p><strong>Some terms:</strong></p>
 <ul>
 <li>
@@ -1295,11 +1412,24 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 </ul>
 </li>
 </ol>
+<h2 id="cloudfront-continuous-deployment"><a class="header" href="#cloudfront-continuous-deployment">CloudFront continuous deployment</a></h2>
+<p>The primary distribution is the 1 serving production traffic. You create a staging distribution which is a copy of the primary 1.</p>
+<p>Viewers cannot send requests directly to a staging distribution using a DNS name, IP address or CNAME. Instead, viewers send requests to the primary (production) distibution and CloudFront routes some of those requests to the staging distribution based on the traffic configuration settings in the continuous deployment policy.</p>
+<p>CloudFront will route some viewer requests to the staging distribution based on 1 of 2 traffic configurations:</p>
+<ul>
+<li>
+<p>Weight-based: this option routes the specified percentage of viewer requests to the staging distribution. Session stickiness is used with this option which helps CloudFront treat requests from the same viewer as part of a single session.</p>
+</li>
+<li>
+<p>Header-based: this option routes traffic to the staging distribution when the viewer request contains a specific HTTP header (you specify the header and the value). This is useful for local testing.</p>
+</li>
+</ul>
 <h2 id="cloudfront-behaviours"><a class="header" href="#cloudfront-behaviours">CloudFront Behaviours</a></h2>
 <p>The Behaviour can be configured from the Distribution. There is a default behaviour (*) which matches all patterns.</p>
 <p>Behaviour configurations include the origin source, protocol and methods, viewer access, Lambda function association, caching and TTL controls.</p>
 <h2 id="cloudfront-and-origin-failover"><a class="header" href="#cloudfront-and-origin-failover">CloudFront and origin failover</a></h2>
 <p>For high availability, CloudFront can be configured with origin failover by creating an origin group with 2 origins; a primary and a secondary. If the primary origin is unavailable, CloudFront switched to the secondary origin.</p>
+<p>Failover happens per-request and not globally i.e. when a primary returns 200 for 1 request and 502 for another, only the failing request goes to the secondary. A practical pattern is to fail over to a static S3 bucket with a custom maintenance page.</p>
 <h2 id="ttl-and-invalidation"><a class="header" href="#ttl-and-invalidation">TTL and invalidation</a></h2>
 <p>When the data on the edge location becomes stale and needs to be refreshed.</p>
 <p>The source could return a status 304 when the object is not expired and 200 status in case it needs to be refreshed along with the latest object.</p>
@@ -1320,7 +1450,9 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>If the origin is S3, S3 handles certificates natively and nothing needs to be done.</p>
 <h2 id="cloudfront-and-sni"><a class="header" href="#cloudfront-and-sni">CloudFront and SNI</a></h2>
 <p>In the past, every SSL-enabled website needed its own IP address. It is however possible to host 2 domains on the same server. The latter is achieved using a header in the request to indicate which website is requested.</p>
-<p>In 2023, SNI (Serve Name Indication) appeared which is a TLS extention that allows a client to tell the server which domain it is trying to access. This occurs within the TLS handshake before HTTP. This allows 1 server to host several websites. The issue is that older browser do not support SNI. Hence why CLoudFront supports both SNI but also IP per server at an extra cost.</p>
+<p>In 2023, SNI (Server Name Indication) appeared which is a TLS extention that allows a client to tell the server which domain it is trying to access. This occurs within the TLS handshake before HTTP. This allows 1 server to host several websites. The issue is that older browser do not support SNI. Hence why CLoudFront supports both SNI but also IP per server at an extra cost.</p>
+<h2 id="cloudfront-and-security-headers"><a class="header" href="#cloudfront-and-security-headers">CloudFront and security headers</a></h2>
+<p>Amazon CloudFront supports adding HTTP security headers using response headers policies. This feature allows configuring CloudFront to include headers like <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code> and <code>X-XSS-Protection</code> in HTTP responses. These headers can be attached by creating a custom policy or using an AWS-managed policy such as <code>SecurityHeadersPolicy</code>.</p>
 <h2 id="origin-types"><a class="header" href="#origin-types">Origin types</a></h2>
 <p>Origins are where CloudFront goes to get content. Origins are selected from the Behaviour section and they can be:</p>
 <ul>
@@ -1334,16 +1466,18 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>From the AWS console and in a distribution, under the invalidations tag, you can create a new invalidation. An invalidation is an operation which sends a directive to every edge location to invalidate 1 or more objects.</p>
 <h2 id="securing-the-cf-content-delivery-path"><a class="header" href="#securing-the-cf-content-delivery-path">Securing the CF content delivery path</a></h2>
 <p>How to make sure that a customer does not bypass CloudFront to access data in the origin directly.</p>
-<h3 id="oai-origin-access-identity"><a class="header" href="#oai-origin-access-identity">OAI (Origin Access Identity)</a></h3>
-<p>CloudFront Origin Access Identity (OAI) is an AWS feature that links CloudFront to a private S3 bucket. It is only applicable to S3 origins and not S3 static websites used as origin.</p>
-<p>Is a type of identity that can be associated with a CloudFront distribution where when the distribution is trying to access data, it becomes the OAI.</p>
-<p>The OAI can be used within bucket policy eg. DENY all except the OAI. This way a direct access to origin is denied.</p>
+<h3 id="oai-origin-access-identity---legacy-not-recommended"><a class="header" href="#oai-origin-access-identity---legacy-not-recommended">OAI (Origin Access Identity) - <em>Legacy, not recommended</em></a></h3>
+<p>CloudFront Origin Access Identity (OAI) is an AWS feature that links CloudFront to a private S3 bucket. It is only applicable to S3 origins and not S3 static websites used as origin. Is a type of identity that can be associated with a CloudFront distribution where when the distribution is trying to access data, it becomes the OAI. The OAI can be used within bucket policy eg. DENY all except the OAI. This way a direct access to origin is denied.</p>
+<p>OAI does not support AWS KMS encrypted S3 buckets, POST/PUT requests or fine-grained IAM policies. This option is therefore legacy due to its limitations and AWS recommends migrating to OAC instead.</p>
+<h3 id="oac-origin-access-control"><a class="header" href="#oac-origin-access-control">OAC (Origin Access Control)</a></h3>
+<p>OAC helps secure the origin such as S3. It supports features like S3 buckets in multiple regions, S3 server-side encryption with AWS KMS and dynamic requests (PUT and DELETE) to S3.</p>
+<p>OAC allows you to restrict access to your origin resources ensuring that they can only be accessed through the CloudFront distributions. This can be done by creating an OAC setting in the CloudFront distribution and updating the S3 bucket policy to grant access only to the CloudFront OAC, preventing direct access to the S3 bucket from any source including direct S3 URLs.</p>
 <h3 id="access-identity-for-non-s3-origin"><a class="header" href="#access-identity-for-non-s3-origin">Access identity for non-S3 origin</a></h3>
 <p>There are 2 ways around this:</p>
 <ol>
 <li>
 <p>Custom headers</p>
-<p>Configure CloudFront to send a custom header to the origin. Since this is over HTTPS, the headers are not be visible and can not be immitated.</p>
+<p>Configure CloudFront to send a custom header to the origin. Since this is over HTTPS, the headers are not visible and cannot be immitated.</p>
 <p>If the header is missing, the origin will refuse the request.</p>
 </li>
 <li>
@@ -1365,6 +1499,11 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>The signed cookie is generated via a Lambda function after authentication is done. This cookie is returned back to the user which will use it with the request sent to the CF distribution. Access to resources is then granted.</p>
 </li>
 </ol>
+<h2 id="secure-end-to-end-connections"><a class="header" href="#secure-end-to-end-connections">Secure end-to-end connections</a></h2>
+<p>You can already configure CloudFront to help enforce secure end-to-end connections to origin servers by using HTTPS. Field-level encryption adds an additional layer of security along with HTTPS and lets you protect specific data such that only certain applications can see it.</p>
+<p>Field-levels encryption allows you to securely upload user-submitted sensitive information to your web servers.</p>
+<p>To use field-level encryption, you configure your CloudFront distribution to specify the set of fields in POST requests that you want to be encrypted, and the public key to use to encrypt them. You can encrypt up to 10 data fields in a request.</p>
+<p>CloudFront field-level encryption uses asymmetric encryption, also known as public key encryption. You provide a public key to CloudFront, and all sensitive data that you specify is encrypted automatically. The key you provide to CloudFront cannot be used to decrypt the encrypted values; only your private key can do that.</p>
 <h2 id="cloudfront-geo-restriction"><a class="header" href="#cloudfront-geo-restriction">CloudFront Geo Restriction</a></h2>
 <p>Determines which areas of the planet can access content delivered via CF.</p>
 <p>It has 2 types:</p>
@@ -1386,23 +1525,73 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 </ol>
 <h2 id="lambda-at-the-edge"><a class="header" href="#lambda-at-the-edge">Lambda at the Edge</a></h2>
 <p>Lambda@Edge is a feature of Amazon CloudFront that lets you run code closer to users of your application which improves performance and reduces latency. It allows you to run lightweight Lambda functions at edge locations. They don't have the full Lambda feature set.</p>
+<p>Lambda@Edge supports Node.js and Python runtime and can query services like DynamoDB and Secrets Manager.</p>
 <p>Use cases include:</p>
 <ul>
+<li>Triggering a Lambda function to execute a user authentication process in a specific AWS location proximate to the user</li>
 <li>A/B testing using a Viewer Request function</li>
 <li>As part of the Origin request eg. migration between S3 origins</li>
 <li>Customise behaviour based on the device type of a customer</li>
 <li>Vary the content displayed by country</li>
 </ul>
+<h2 id="cloudfront-functions"><a class="header" href="#cloudfront-functions">CloudFront Functions</a></h2>
+<p>Similar to Lambda@Edge, CloudFront Functions provide a way to run code in response to CloudFront events.</p>
+<p>CloudFront Functions has a Javascript-only runtime and it cannot call APIs or external databases.</p>
+<p>It is ideal for short-running functions such as:</p>
+<ul>
+<li>Transforming an attribute in a HTTP request header</li>
+<li>Request authorisation</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="secrets-and-keys"><a class="header" href="#secrets-and-keys">Secrets and Keys</a></h1>
 <ul>
-<li><a href="./credentials_and_secrets.html">Credentials and Secrets</a></li>
+<li><a href="./ssm.html">AWS Systems Manager (SSM)</a></li>
 <li><a href="./kms.html">Key Management Service</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="credentials-and-secrets"><a class="header" href="#credentials-and-secrets">Credentials and Secrets</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="aws-systems-manager-ssm"><a class="header" href="#aws-systems-manager-ssm">AWS Systems Manager (SSM)</a></h1>
+<p>Can be used to configure, schedule, automate and execute operations on AWS resources. Resources include IAM users, groups and roles as well as Lambda functions, EC2 ASG and S3 buckets.</p>
+<p>A Systems Manager Automation document defines the Automation workflow (the actions that Systems Manager performs on the managed instances and AWS resources). These documents can perform common tasks such as restarting 1 or more EC2 instances or creating Amazon Machine Images (AMI). Documents use JSON or YAML and include steps that run in sequential order.</p>
+<p>SSM can automate common and repetitive IT operations and management tasks across AWS resources. This can be done using JSON documents or on-demand using the <code>RUN</code> command.</p>
+<h3 id="execution-permissions"><a class="header" href="#execution-permissions">Execution permissions</a></h3>
+<p>To use SSM, the host needs to have the SSM-agent installed along with proper IAM permissions. There are 2 specific roles:</p>
+<ul>
+<li>
+<p>Administration role (in the central account): authorises SSM to deploy the execution down to target accounts.</p>
+</li>
+<li>
+<p>Execution role (in the target accounts): is the <code>AWS-SystemsManager-AutomationExecutionRole</code> role which would have permissions to perform actions like patching or terminating instances.</p>
+</li>
+</ul>
+<h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
+<p>SSM allows managing instances at scale without the need for bastions, SSH or remote sessions. Session Manager is an alternative to traditional SSH or RDP.</p>
+<p>By default, AWS Systems Manager does not have permission to perform actions on your instances. You must grant access by using IAM. An instance profile that contains the AWS managed policy <code>AmazonSSMManagedInstanceCore</code> is needed to be attached to the EC2 instance for the Session Manager to work.</p>
+<h3 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h3>
+<p>Enables configuration management such that EC2 instances or on-prem instances are consistently configrued. It focusses on monitoring OS settings, installed applications and other software on a server.</p>
+<p>State Manager requires an SSM agent to be running inside the EC2 instance or the on-prem server.</p>
+<p>An example for using the State Manager is:</p>
+<ol>
+<li>
+<p>creating an Association between a configuration document (eg. SSM Document or Ansible Playbook) and a traget instance(s).</p>
+</li>
+<li>
+<p>defining a schedule for how often the State Manager should check the instance.</p>
+</li>
+<li>
+<p>in case the instance drifts from the defined configuration, the State Manager automatically re-runs the configuration to render the instance compliant.</p>
+</li>
+</ol>
+<h3 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h3>
+<p>Allows applying OS or software patches to a large group of EC2 or on-prem instances.</p>
+<ul>
+<li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>
+<li>Patch Groups: act as grouping of compute resources i.e. what gets patched.</li>
+<li>Maintenance Windows: is the configuration item used to tie all this together.</li>
+<li>Run Command: <code>AWS-RunPatchbaseline</code> is defined within the maintenance window and is used to perform the task on the target group.</li>
+</ul>
 <h2 id="parameter-store"><a class="header" href="#parameter-store">Parameter store</a></h2>
 <p>The Parameter Store is a sub product of the Systems Manager (SSM).</p>
 <p>You can create a standard-tier (up to 10,000 parameters at 4 Kb size) or advanced-tier (more than 10,000 parameters at 8 Kb size plus other features) parameter.</p>
 <p>You can create a parameter eg. <code>/app/app_username</code> of type String, StringList or Encrypted via the Key Management Service (KMS) that can be used to store configuration information.</p>
+<p>The Parameter Store does not provide dedicated storage with lifecycle management and key rotation, unlike the Secrets Manager. Parameters are also mostly used within a single account and they cannot be shared directly with another AWS account.</p>
 <h2 id="aws-secrets-manager"><a class="header" href="#aws-secrets-manager">AWS Secrets Manager</a></h2>
 <p>It shares functionality with Paramter Store but is designed specifically for storing secrets (passowrds, API keys).</p>
 <p>It can be used via the Console, CLI, API or SDK i.e. used from within applications. It supports the automatic rotation of secrets (via Lambda) and directly integrates with some AWS products for eg. when a secret is rotated, it is changed also inside an RDS (Relational Database Service).</p>
@@ -1420,27 +1609,17 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <h2 id="key-policy"><a class="header" href="#key-policy">Key policy</a></h2>
 <p>Every key has a key policy because you have to explicitly declare that the key trusts the identity using it.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="security-practices-and-automation"><a class="header" href="#security-practices-and-automation">Security practices and automation</a></h1>
-<h2 id="aws-systems-manager-ssm"><a class="header" href="#aws-systems-manager-ssm">AWS Systems Manager (SSM)</a></h2>
-<p>Can be used to configure, schedule, automate and execute operations on AWS resources. Resources include IAM users, groups and roles as well as Lambda functions, EC2 ASG and S3 buckets.</p>
-<p>A Systems Manager Automation document defines the Automation workflow (the actions that Systems Manager performs on the managed instances and AWS resources). These documents can perform common tasks such as restarting 1 or more EC2 instances or creating Amazon Machine Images (AMI). Documents use JSON or YAML and include steps that run in sequential order.</p>
-<p>To use SSM, the host needs to have the SSM-agent installed along with proper IAM permissions.</p>
-<p>SSM can automate common and repetitive IT operations and management tasks across AWS resources. This can be done using JSON documents or on-demand using the <code>RUN</code> command.</p>
-<h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
-<p>SSM allows managing instances at scale without the need for bastions, SSH or remote sessions.</p>
-<h3 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h3>
-<p>Enables configuration management such that EC2 instances or on-prem instances are consistently configrued.</p>
-<h3 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h3>
-<p>Allows applying OS or software patches to a large group of EC2 or on-prem instances.</p>
-<ul>
-<li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>
-<li>Patch Groups: act as grouping of compute resources i.e. what gets patched.</li>
-<li>Maintenance Windows: is the configuration item used to tie all this together.</li>
-<li>Run Command: <code>AWS-RunPatchbaseline</code> is defined within the maintenance window and is used to perform the task on the target group.</li>
-</ul>
-<h2 id="aws-inspector"><a class="header" href="#aws-inspector">AWS Inspector</a></h2>
-<p>Is an automated security assessment service that scans EC2 instance and container images for vulnerabilities and deviations from best practices.</p>
+<h2 id="amazon-inspector"><a class="header" href="#amazon-inspector">Amazon Inspector</a></h2>
+<p>Is an automated security assessment service that scans EC2 instance and container images for vulnerabilities and deviations from best practices. After performing an assessment, Amazon Inspector produces a detailed list of security findings prioritised by level of severity.</p>
+<p>Amazon Inspector security assessment helps check for unintended network accessibility of EC2 instances and for vulnerabilities on those EC2 instances. Assessments are offered as pre-defined rules packages mapped to common security best practices and vulnerability definitions. Examples of built-in rules include checking for access to EC2 instances from the internet, remote root login being enabled, or vulnerable software versions installed.</p>
+<h2 id="aws-shield"><a class="header" href="#aws-shield">AWS Shield</a></h2>
+<p>Is a service suited for preventing DDoS attacks on AWS resources. It is available in 2 tiers: Standard and Advanced. AWS Shield Standard is included automatically and transparently in your Elastic Load Balancing load balancers, CloudFront and Route 53 at no additional costs.</p>
+<h2 id="amazon-macie"><a class="header" href="#amazon-macie">Amazon Macie</a></h2>
+<p>Is an ML-powered security service that helps you prevent data loss by automatically discovering, classifying and protecting sensitive data stored in Amazon S3. Macie uses machine learning to recognise sensitive data such as personally identifiable information (PII) or intellectual property. It provides visibility into where this data is stored and how it is being used in your organisation.</p>
 <h2 id="aws-guardduty"><a class="header" href="#aws-guardduty">AWS GuardDuty</a></h2>
-<p>Is a threat detection service that continuously monitors AWS accounts, workloads and data for malicious activity and unauthorised behaviour. It uses machine learning and threat intelligence.</p>
+<p>Is a threat detection service that continuously monitors AWS accounts, workloads and data for malicious activity and unauthorised behaviour. It uses machine learning and threat intelligence. GuardDuty generates a finding whenever it detects unexpected and potentially malicious activity in the AWS environment.</p>
+<p>Findings from Amazon GuardDuty can be published to Amazon EventBridge as events that can be used to trigger a Lambda function which will send notifications to the external messaging platform.</p>
+<p>Amazon Detective can provide analysis information related to a given finding.</p>
 <div align="center">
     <img src="./images/guardduty.png" alt="AWS GuardDuty" width="500" />
 </div>
@@ -1465,20 +1644,47 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <li>Identifies if you are over 80% usage of the 50 most common services</li>
 </ul>
 <h2 id="waf-web-application-firewall"><a class="header" href="#waf-web-application-firewall">WAF (Web Application Firewall)</a></h2>
-<p>Is the AWS implementation of Layer 7 web application firewall; capable of understanding HTTP(S). It helps protect your web applications from common web exploits that could affect application availability, compromise security, or consume excessive resources.</p>
+<p>A WAF can protect the following resource types:</p>
+<ul>
+<li>CloudFront distribution</li>
+<li>API Gateway REST API</li>
+<li>Application Load Balancer (ALB)</li>
+<li>AppSync GraphQL API</li>
+<li>Cognito user pool</li>
+<li>App Runner service</li>
+<li>Bedrock AgentCore Gateway</li>
+<li>Verified Access instance</li>
+<li>Amplify</li>
+</ul>
+<p>For Amplify and CloudFront, the web ACL protecting a global distribution must be created in the <code>us-east-1 (N. Virginia)</code> region. For ALBs, API Gateway and AWS AppSync, the web ACL must match the specific deployment region.</p>
+<h3 id="how-it-works-2"><a class="header" href="#how-it-works-2">How it works</a></h3>
+<p>WAF lets you control access to your content based on criteria such as IP address.</p>
+<p>WAF is the AWS implementation of Layer 7 web application firewall; capable of understanding HTTP(S). It helps protect your web applications from common web exploits that could affect application availability, compromise security, or consume excessive resources.</p>
 <p>WAF can protect global services like CloudFront but also regional services like ALB (Application Load Balancer).</p>
 <p>Web ACL is associated with a WAF distribution and has Rules and Rule Groups that control how the WAF reacts.</p>
-<h2 id="aws-network-firewall"><a class="header" href="#aws-network-firewall">AWS Network Firewall</a></h2>
-<p>It defines the VPC, Subnets and Firewall Policy.</p>
+<p>AWS WAF provides control over which traffic to allow or block to a web application by defining customisable web security rules. This includes blocking common attacks like SQL injections or cross-site scripting. New rules can be deployed within minutes.</p>
 <div align="center">
     <img src="./images/network_firewall.png" alt="AWS Network Firewall" width="500" />
 </div>
+<p>Note that WAF is the first line of defense against web exploits. When WAF is enabled, its rules are evaluated before other access control features such as resource policies, IAM policies, Lambda authorizers and Cognito authorizers. WAF takes precedence over the latter.</p>
+<h3 id="sending-waf-logs-to-cloudwatch-logs"><a class="header" href="#sending-waf-logs-to-cloudwatch-logs">Sending WAF logs to CloudWatch Logs</a></h3>
+<p>A CloudWatch Log group needs to be created with the name starting with <code>aws-waf-logs-</code>. Logging is then enabled in WAF and the log group is provided as logging destination.</p>
+<p>The log group for the WAF protection pack (web ACL) is configured in the same region as the protection pack (web ACL) and using the same account.</p>
+<p>This option has the lowest operational overhead but comes at a higher cost. Logs are typically queried using CloudWatch Logs Insights. Automated alerting is easy to integrate based on metric filters.</p>
+<h3 id="sending-waf-logs-to-an-s3-bucket"><a class="header" href="#sending-waf-logs-to-an-s3-bucket">Sending WAF logs to an S3 bucket</a></h3>
+<p>An S3 bucket needs to be set up from the same account as the protection pack (web ACL). The bucket name for WAF must start with <code>aws-waf-logs-</code>. Logging is enabled in WAF and the bucket is provided as destination.</p>
+<p>Logs are published to the S3 bucket at 5-minute intervals and the log files are compressed.</p>
+<p>This option has the lowest operational overhead and cheapest cost. Logs can be queried using Amazon Athena.</p>
+<h3 id="sending-waf-logs-to-a-data-firehose-stream"><a class="header" href="#sending-waf-logs-to-a-data-firehose-stream">Sending WAF logs to a Data Firehose stream</a></h3>
+<p>A Data Firehose delivery stream is first configured in the same region as the protection pack (web ACL) and then provided as logging destination for WAF using the Firehose HTTPS endpoint. The Data Firehose stream name should start with <code>aws-waf-logs-</code>.</p>
+<p>This option has medium operational overhead and cost depending on throughput. Firehose also allows data manipulation before ingestion. Tools used to query the logs include Splunk and Datadog.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="storage"><a class="header" href="#storage">Storage</a></h1>
 <ul>
 <li><a href="./elastic_block_storage.html">Elastic Block Storage</a></li>
 <li><a href="./efs.html">Elastic File System</a></li>
 <li><a href="./s3_misc.html">S3 Object Storage</a></li>
 <li><a href="./dynamodb.html">DynamoDB</a></li>
+<li><a href="./elasticache.html">ElastiCache</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ebs-elastic-block-storage"><a class="header" href="#ebs-elastic-block-storage">EBS (Elastic Block Storage)</a></h1>
 <p>Is a service that provides block storage. Allocates raw physical disk as a volume. Volumes can be unencrypted or encrypted using KMS.</p>
@@ -1531,6 +1737,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>This is best used for object storage, storing unstructured data (images, logs, etc.) in S3. It links on-prem file storage and S3.</p>
 <p>Mount points are created locally and are available via 2 protocols NFS (Linux) or SMB (Windows). It allows 10 bucket shares pre File Gateway.</p>
 <p>File Gateway does not support object locking in the case of multiple file share to a bucket.</p>
+<p>The <code>RefreshCache</code> command refreshes the cached inventory of objects for the specified file share. This operation finds objects in the Amazon S3 bucket that were added, removed or replaced since the gateway last listed the bucket's contents and cached the results.</p>
 <p><strong>2. FSx File Gateway</strong></p>
 <p>Used for configuration or file data. Offers low overhead for accessing files.</p>
 <p><strong>3. Volume Gateway</strong></p>
@@ -1745,8 +1952,11 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <h2 id="dynamodb-tables"><a class="header" href="#dynamodb-tables">DynamoDB tables</a></h2>
 <p>A table is a grouping of items that share a primary key. The number of items is infinite but the max size of an item is 400KB.</p>
 <p>A primary key can be simple (Partition) aka <code>pk</code> or composite which is a combination of the <code>pk</code> and the <code>sk</code> (Sort key).</p>
+<h2 id="dynamodb-global-tables"><a class="header" href="#dynamodb-global-tables">DynamoDB global tables</a></h2>
+<p>This is a fully managed solution for deploying a multi-region, multi-active database without having to build and maintain your own replication solution. You can specify the AWS regions where you want the tables to be available and DynamoDB will propagate ongoing data changes to all of them.</p>
 <h2 id="point-in-time-recovery-pitr"><a class="header" href="#point-in-time-recovery-pitr">Point-in-time Recovery (PITR)</a></h2>
-<p>Is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35-day recovery window.</p>
+<p>Provides continuous backups with per-second recovery precision. It is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35-day recovery window.</p>
+<p>Enabling PITR does not consume any table provisioned throughput (RCUs/WCUs) and has zero impact on application performance.</p>
 <h2 id="access"><a class="header" href="#access">Access</a></h2>
 <p>DynamoDB can be accessed via the console, CLI or API.</p>
 <h2 id="capacity"><a class="header" href="#capacity">Capacity</a></h2>
@@ -1771,21 +1981,63 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>They help improve the efficiency of data retrieval and are of 2 types of indexes:</p>
 <p><strong>Local Secondary Indexes (LSI)</strong></p>
 <p>They must be created when the base table is created and they allow for an alternative sort key <code>sk</code> on the table.</p>
+<ul>
+<li>Partition key: same as the table</li>
+<li>Sort key: different from the table</li>
+<li>Supports strongly consistent reads (i.e. the latest version of the data after a write) and is used for sorting/querying items within the same partition key</li>
+</ul>
 <p><strong>Global Secondary Indexes (GSI)</strong></p>
 <p>They can be created at any time with a default limit of 20 per base table.</p>
 <p>It allows for creating an alternative view of the table using a different partition key and sort key.</p>
+<ul>
+<li>Partition key: can be different from the table.</li>
+<li>Sort key: can also be different</li>
+<li>Does not support strongly consistent reads (i.e. the latest version of the data after a write) and is used to query the data using a completely different key</li>
+</ul>
 <h2 id="streams-and-triggers"><a class="header" href="#streams-and-triggers">Streams and Triggers</a></h2>
 <p><strong>Streams</strong></p>
-<p>Is a time ordered list of item changes in a table with a 24-hour rolling window. Changes include inserts, updates and deletes.</p>
+<p>Amazon DynamoDB Streams is a feature of AWS DynamoDB that captures a time-ordered sequence of changes (inserts, updates and deletes) to a DynamoDB table. This enables applications to react to data changes in real time. Streams have a 24-hour rolling window.</p>
+<p>Stream records are organised into groups or "shards".</p>
 <p><strong>Triggers</strong></p>
 <p>Allow for actions to take place upon a change in the data. Actions can be via a Lambda function.</p>
+<p><strong>Example case</strong></p>
+<p>A user updates a row in DynamoDB -&gt; DynamoDB instantly writes this change into a Stream Shard -&gt; this gets polled internally by AWS -&gt; the Lambda function set as trigger gets invoked.</p>
+<p>The Lambda function should have a proper IAM Execution role <code>AWSLambdaDynamoDBExecutionRole</code>.</p>
+<p>In case the Lambda function needs to write to a private database inside a VPC, the Lambda function must be configured with VPC membership.</p>
 <h2 id="dynamodb-accelerator-dax"><a class="header" href="#dynamodb-accelerator-dax">DynamoDB Accelerator (DAX)</a></h2>
-<p>Is an in-memory cache for DynamoDB that improves performance.</p>
+<p>DAX is a DynamoDB-compatible caching service that enables you to benefit from fast in-memory performance for demanding applications. DAX addresses three core scenarios:</p>
+<ul>
+<li>
+<p>As an in-memory cache, DAX reduces the response times of eventually consistent read workloads by an order of magnitude, from single-digit milliseconds to microseconds.</p>
+</li>
+<li>
+<p>DAX reduces operational and application complexity by providing a managed service that is API-compatible with DynamoDB. Therefore, it requires only minimal functional changes to use with an existing application.</p>
+</li>
+<li>
+<p>For read-heavy or bursty workloads, DAX provides increased throughput and potential operational cost savings by reducing the need to over-provision read capacity units. This is especially beneficial for applications that require repeated reads for individual keys</p>
+</li>
+</ul>
 <p>The interaction with the DynamoDB database is handled by the DAX SDK rather than the user application itself.</p>
 <h2 id="global-tables"><a class="header" href="#global-tables">Global Tables</a></h2>
 <p>Provides a multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
 <h2 id="ttl"><a class="header" href="#ttl">TTL</a></h2>
 <p>Used to set a timestamp for automatic delete of items. Useful for items that lose relevance after a period of time.</p>
+<h2 id="exam-notes-1"><a class="header" href="#exam-notes-1">Exam notes</a></h2>
+<ul>
+<li>
+<p>In DynamoDB, writes to a main table are replicated asynchronously to its GSIs. If a GSI cannot keep up with the write volume because its WCUs are capped, DynamoDB will purposefully throttle the writes on the main table to prevent the index from falling too far behind. Increasing the GSI's auto-scaling upper limit removes this backpressure.</p>
+<p>This manifests as a <code>ProvisionedThroughputExceededException</code> error on the user side.</p>
+</li>
+<li>
+<p>Native DynamoDB backup is regional. For centralised, use AWS Backup for cross-account automated governance.</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="elasticache"><a class="header" href="#elasticache">ElastiCache</a></h1>
+<p>Is a serverless fully managed caching service delivering microsecond latency performance with full Valkey, Memcached and Redis OSS (Open Software Service) compatibility.</p>
+<p>It can be used as a distributed session cache such that users remain logged into their sessions when an application redeploys.</p>
+<div align="center">
+    <img src="./images/elasticache.png" alt="elasticache" width="500" />
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="sns-and-sqs"><a class="header" href="#sns-and-sqs">SNS and SQS</a></h1>
 <h2 id="simple-notification-service-sns"><a class="header" href="#simple-notification-service-sns">Simple Notification Service (SNS)</a></h2>
 <p>Is a public AWS service i.e. it can be accessed from public internet but also a VPC as well. It coordinates the sending and delivery of messages. The message payload is &lt;= 256 Kb.</p>
@@ -1835,6 +2087,11 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cloudwatch"><a class="header" href="#cloudwatch">CloudWatch</a></h1>
 <p>Is a public service to ingest, store and manage logging data. It supports native ingests of logs from AWS services. The CloudWatch agent can be installed to bring in logs from systems or custom applications.</p>
+<p>Note that the CloudWatch Dashboard is primarily used to monitor AWS resources and not AWS configuration.</p>
+<h2 id="alarms"><a class="header" href="#alarms">Alarms</a></h2>
+<p>The ability to search and filter log data arriving at CloudWatch Logs is achieved by creating 1 or more <strong>metric filters</strong>.</p>
+<p>Metric filters define the terms and patterns to look for in log data as it is sent to CloudWatch Logs. CloudWatch Logs uses these metric filters to turn log data into numerical CloudWatch metrics that you can graph or set an alarm on.</p>
+<p>A CloudWatch alarm can be created and used in <code>CodeDeploy</code> operations. The alarm watches a single metric over time and performs 1 or more actions based on the value of the metric relative to the given threshold over time. With <code>CodeDeploy</code>, you can configure a deployment group to stop when the alarm gets activated.</p>
 <h2 id="log-event"><a class="header" href="#log-event">Log event</a></h2>
 <p>A log event consists of 2 parts: the timestamp and a raw message.</p>
 <h2 id="log-stream"><a class="header" href="#log-stream">Log stream</a></h2>
@@ -1843,12 +2100,15 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Contains several log streams and represents the thing being monitored eg. <code>var/log/messages</code>.</p>
 <p>Retention, access permissions and encryption are set on the log group level.</p>
 <p>A metric filter can also be defined on a log group and it looks for patterns in the log streams eg. a failed login attempt or an application crash. This allows creating metrics to that specific filter eg. the total failed login attempts which can trigger an alarm that can send notifications etc.</p>
+<h2 id="subscription-filters"><a class="header" href="#subscription-filters">Subscription Filters</a></h2>
+<p>Are a feature of CloudWatch Logs that allow you to distribute log data from one log group to other AWS services or destinations such as Data Firehose or AWS Lambda but not directly with S3.</p>
 <h1 id="eventbridge"><a class="header" href="#eventbridge">EventBridge</a></h1>
-<p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events.</p>
+<p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events. It is used to monitor AWS resources and the applications running on AWS to detect and react to changes based on rules you create that EventBridge can invoke eg. sending notifications, taking a corrective action or other.</p>
 <p>It makes it easier to connect applications such that events can be ingested, filtered, transformed and delivered without writing custom code.</p>
 <h1 id="cloudtrail"><a class="header" href="#cloudtrail">CloudTrail</a></h1>
 <p>This product logs API calls or account activities as CloudTrail Events that are either management events or data events. By default, stores 90 day management event history. Data events need to be enabled and they come at an extra cost.</p>
 <p>You can create a trail and configure it to be stored in S3 or CLoudWatch logs.</p>
+<p>CloudTrail offers a log file integrity validation feature where any tampering of the log files gets detected. When this feature is enabled, CloudTrail creates a hash for every log file that it delivers. Every hour, CloudTrail also creates and delivers a file that references the log files for the last hour and contains a hash of each. This file is called a digest file. CloudTrail signs each digest file using the private key of a public and private key pair. The public key can be used to validate the digest file.</p>
 <p>CloudTrail is not used for realtime logging, it has a 15 mins delay.</p>
 <h2 id="cloudtrail-log-file-integrity-validation"><a class="header" href="#cloudtrail-log-file-integrity-validation">CloudTrail log file integrity validation</a></h2>
 <p>The validation feature can be enabled on a trail which can direct CloudTrail to create and sign digest files.</p>
@@ -1886,13 +2146,38 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <h2 id="amazon-quicksight"><a class="header" href="#amazon-quicksight">Amazon QuickSight</a></h2>
 <p>Is a business analytics and intelligence service (BA/BI) used for visualisations and ad-hoc analysis of data.</p>
 <h2 id="amazon-athena"><a class="header" href="#amazon-athena">Amazon Athena</a></h2>
-<p>Is a serverless interactive querying service to perform ad-hoc queries on data in S3 where loading/transformation of data is not requried.</p>
+<p>Is a serverless interactive querying service to perform ad-hoc queries on data in S3 where loading/transformation of data is not requried. Standard SQL is used to run queries and get results in seconds.</p>
 <p>It uses a process called schema-on-read which modifies data in-flight as it's read and translates it to a table-like schema.</p>
 <h2 id="streaming-data-to-opensearch-formerly-elasticsearch"><a class="header" href="#streaming-data-to-opensearch-formerly-elasticsearch">Streaming data to OpenSearch (formerly ElasticSearch)</a></h2>
 <p>You can stream data into OpenSearch from any service in AWS. Some services like Amazon Data Firehose and CloudWatch Logs have built-in support. Other services like Amazon S3, Kinesis Data Streams and Amazon DynamoDB use AWS Lambda functions as event handlers.</p>
 <div align="center">
     <img src="./images/opensearch.jpg" alt="opensearch" width="500" />
 </div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="aws-config"><a class="header" href="#aws-config">AWS Config</a></h1>
+<p>With AWS Config, you can:</p>
+<ul>
+<li>Evaluate AWS resource configurations for desired settings</li>
+<li>Stream configuration changes and notifications to an Amazon SNS topic</li>
+<li>Get a snapshot of current configurations</li>
+<li>Retrieve historical configurations of 1 or more resources</li>
+<li>Receive a notification whenever a resource is created, modified or deleted</li>
+<li>View relationships between resources</li>
+</ul>
+<p>An aggregator is an AWS Config resource type that collects AWS Config configuration and compliance data from:</p>
+<ul>
+<li>multiple accounts and multiple regions</li>
+<li>single account and multiple regions</li>
+<li>an organisation in AWS Organizations and all the accounts in that organisation</li>
+</ul>
+<p>When you add a rule to AWS Config, you can specify when you want it to evaluate the rule i.e. the trigger. There are 2 types of triggers:</p>
+<ol>
+<li>Configuration changes</li>
+<li>Periodic</li>
+</ol>
+<p>If both triggers are chosen, AWS Config invokes the Lambda function when it detects a configuration change and also at the frequency specified.</p>
+<p>Note that AWS Config evaluates periodically and not in real-time. It continuously evaluates resources against rules. It triggers automatic remediation using an SSM Automation document. There is a list of remediation actions to use or you can create custom remediation actions using AWS Systems Manager Automation documents.</p>
+<p>A conformance pack is a collection of AWS Config rules and remediation actions that can be deployed as a single entity in an account, region or across an organisation. They can ensure that all deployed infrastructure meets compliance and security standards automatically.</p>
+<p>AWS Config can not be used to perform emergency maintenance on instances.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="disaster-recovery"><a class="header" href="#disaster-recovery">Disaster Recovery</a></h1>
 <h2 id="storage-dr"><a class="header" href="#storage-dr">Storage DR</a></h2>
 <p>DR is based on different types of storage that in turn have different levels of resiliency.</p>
@@ -1925,8 +2210,14 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <h3 id="3-rds"><a class="header" href="#3-rds">3. RDS</a></h3>
 <p>RDS instances can run across multiple subnets in multiple AZs. There are typically primary and standby instances with their own storage each pair existing in an AZ.</p>
 <p>RDS offers cross-region read replicas but this places a load on the RDS instances since replication is not done at the storage layer.</p>
+<p>Amazon RDS uses the Amazon SNS (Simple Notification Service) to provide notification when an Amazon RDS event occurs via email, text message or a call to an HTTP endpoint.</p>
+<p><strong>RDS snapshots</strong></p>
+<p>The first copy is a full snapshot copy which contains all of the data and metadata required to restore the DB instance. After this first snapshot, incremental snapshots can be taken of the DB instance where only data that has changed after the most recent snapshot gets copied.</p>
+<p>Incremental snapshot copying is faster and results in lower storage costs than full snapshot copying.</p>
 <h3 id="4-aurora"><a class="header" href="#4-aurora">4. Aurora</a></h3>
 <p>Aurora is not limited to primary and standby instances, it can have 1 or more replicas in every AZ. This makes it's availability subject to the number of AZs in the region.</p>
+<p>Aurora Global Database lets you create read replicas in multiple AWS regions with replication latency typically under 1 second. This allows a single database to serve users worldwide with low latency and provides resilience in case of regional failures. Aurora Global Database is a single-writer design meaning that only the primary region accepts writes and all secondary regions must route write traffic cross-region to the primary instance introducing latency.</p>
+<p>Aurora Global Database does not support the Aurora Parallel Query feature. Parallel query works best with Aurora MySQL DB clusters that have tables with millions of rows and analytical queries that take minutes or hours to complete. Parallel query is an optimisation that parallelises some of the I/O and computation involved in processing data-intensive queries.</p>
 <p>Aurora is the most resiliant RDS available from AWS.</p>
 <h3 id="bonus-dynamodb-and-aurora"><a class="header" href="#bonus-dynamodb-and-aurora">Bonus: DynamoDB and Aurora</a></h3>
 <p>Both database types have global level resiliance.</p>
@@ -2112,6 +2403,28 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <li>
 <p>CodePipeline can only have one source stage. To trigger CodePipeline when code is pushed in more than 1 repo, an EventBridge rule can be created for each repo that can trigger the same CodePipeline.</p>
 </li>
+<li>
+<p>AWS CodePipeline includes a number of actions that help you configure build, test, and deploy resources for your automated release process. If your release process includes activities that are not included in the default actions, such as an internally developed build process or a test suite, you can create a custom action for that purpose and include it in your pipeline.</p>
+<p>You can create custom actions for the following AWS CodePipeline action categories:</p>
+<ul>
+<li>
+<p>A custom build action that builds or transforms the items</p>
+</li>
+<li>
+<p>A custom deploy action that deploys items to one or more servers, websites, or repositories</p>
+</li>
+<li>
+<p>A custom test action that configures and runs automated tests</p>
+</li>
+<li>
+<p>A custom invoke action that runs functions</p>
+</li>
+</ul>
+<p>When you create a custom action, you must also create a job worker that will poll CodePipeline for job requests for this custom action, execute the job, and return the status result to CodePipeline. This job worker can be located on any computer or resource as long as it has access to the public endpoint for CodePipeline. To easily manage access and security, you can host your job worker on an Amazon EC2 instance.</p>
+</li>
+<li>
+<p>If you define a CodePipeline structure using a JSON file, the default <code>runOrder</code> value for an action is 1 for sequential execution. To specify parallel actions, use the same integer/value for every action you want to run in parallel.</p>
+</li>
 </ul>
 <h3 id="iac"><a class="header" href="#iac">IaC</a></h3>
 <ul>
@@ -2132,6 +2445,14 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 </li>
 <li>
 <p>During IaC migration, the Terraform <code>import</code> command lets you bring manually created or existing AWS resources under Terraform management without recreating or destroying them.</p>
+</li>
+<li>
+<p>To specify how CloudFormation handles updating an ASG, you can add an <code>UpdatePolicy</code> attribute in the YAML or JSON. This attribute contains the <code>AutoScalingReplacingUpdate</code> policy which enables you to specify whether AWS CloudFormation replaces the ASG with a new one or replaces only the instances in the ASG.</p>
+<pre><code class="language-YAML">UpdatePolicy:
+    AutoScalingReplacingUpdate:
+        WillReplace: true
+</code></pre>
+<p>This configuration in the CFN YAML will allow it to retain the old group until it finishes creating the new one. If the update fails CFN can roll back to the old ASG and delete the new one.</p>
 </li>
 </ul>
 <h2 id="lambda"><a class="header" href="#lambda">Lambda</a></h2>
@@ -2179,9 +2500,6 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Amazon ECR supports image scanning via Amazon Inspector or other integrated tools to detect known vulnerabilities in containers before deployment.</p>
 </li>
 <li>
-<p>A conformance pack is a collection of AWS Config rules and remediation actions that can be deployed as a single entity in an account, region or across an organisation. They can ensure that all deployed infrastructure meets compliance and security standards automatically.</p>
-</li>
-<li>
 <p>EC2 Auto Recovery monitors health and recovers the instance in the same AZ. It ensures quick recovery without manual intervention.</p>
 </li>
 <li>
@@ -2192,12 +2510,6 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 </li>
 <li>
 <p>Route53 health checks with latency routing provide automated failover and route users to the nearest healthy region.</p>
-</li>
-<li>
-<p>Note that AWS Config evaluates periodically and not in real-time. It continuously evaluates resources against rules. It triggers automatic remediation using an SSM Automation document.</p>
-</li>
-<li>
-<p>AWS Config can not be used to perform emergency maintenance on instances.</p>
 </li>
 <li>
 <p>To ensure that an application does not experience downtime during database credentials rotation, a multi-user rotation strategy is used where the Secrets Manager creates 2 database users and alternates between them during rotation.</p>
@@ -2226,6 +2538,9 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Immutable launches a new set of instances running the new version of the application in a separate ASG alongside the instances running the old version.</p>
 <p>Immutable deployments can prevent issues caused by partially completed rolling deployments. The original instances remain untouched in case of any failure.</p>
 </li>
+<li>
+<p>Amazon Rekognition can store information about detected faces in server-side containers known as collections. You can use the facial information that's stored in a collection to search for known faces in images, stored videos and streaming videos. Amazon Rekognition supports the IndexFaces operation. This can be used to detect faces in an image and persist information about facial features that are detected in a collection.</p>
+</li>
 </ul>
 <h2 id="security"><a class="header" href="#security">Security</a></h2>
 <ul>
@@ -2235,6 +2550,10 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <li>
 <p>Unlike an Internet Gateway (IGW) which allows both inbound and outbound IPv4 traffic, an egress-only Internet Gateway allows only outbound IPv6 traffic.</p>
 <p>A VPC can have only 1 IGW attached at any given time.</p>
+</li>
+<li>
+<p>With AWS Service Catalog, cloud resources can be centrally managed to achieve infrastructure as code (IaC) template governance at scale, whether written in CloudFormation or Terraform. Template constraints can be applied when limiting end-users' options during product launch. This ensures that the organisation's compliance requirements are not breached.</p>
+<p>A product must be present within a Service Catalog portfolio to apply template constraints. A template constraint includes rules that narrow the allowable values for parameters in the underlying AWS CloudFormation template of the product.</p>
 </li>
 </ul>
 <h2 id="monitoring-and-logging-1"><a class="header" href="#monitoring-and-logging-1">Monitoring and Logging</a></h2>
@@ -2275,6 +2594,10 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <li>
 <p>CodeGuru Reviewer uses program analysis and ML to detect potential defects and issues in the code. It also provides guidelines for best practices in Java and Python code.</p>
 <p>CodeGuru Reviewer should be associated with a Git repo and is not integrated with CodeBuild.</p>
+</li>
+<li>
+<p>CodeGuru Reviewer Secrets Detector is an automated tool that helps developers detect secrets in source code or configuration files such as passwords, API keys, SSH keys and access tokens. The detector uses machine learning to identify hardcoded secrets as part of the code review process.</p>
+<p>CodeGuru Reviewer suggests remediation steps to secure secrets with AWS Secrets Manager.</p>
 </li>
 <li>
 <p>EventBridge can monitor AWS service events such as EC2 instance state changes. A rule in EventBridge can be set up that matches specific EC2 state changes, matching events can then be routed to a Lambda function.</p>
@@ -2331,24 +2654,6 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Patches can be installed by scheduling them to run as a Systems Manager maintenance window task. Patches can be installed individually or to large groups of instances by using EC2 tags.</p>
 </li>
 <li>
-<p>With AWS Config, you can:</p>
-<ul>
-<li>Evaluate AWS resource configurations for desired settings</li>
-<li>Get a snapshot of current configurations</li>
-<li>Retrieve historical configurations of 1 or more resources</li>
-<li>Receive a notification whenever a resource is created, modified or deleted</li>
-<li>View relationships between resources</li>
-</ul>
-</li>
-<li>
-<p>An aggregator is an AWS Config resource type that collects AWS Config configuration and compliance data from:</p>
-<ul>
-<li>multiple accounts and multiple regions</li>
-<li>single account and multiple regions</li>
-<li>an organisation in AWS Organizations and all the accounts in that organisation</li>
-</ul>
-</li>
-<li>
 <p>AWS Application Discovery Service helps you plan your migration to the AWS cloud by collecting usage and configuration data about your on-prem servers. Application Discovery Service is integrated with AWS Migration Hub.</p>
 <p>Application Discovery Service offers 2 ways of performing discovery and collecting data about your on-prem servers:</p>
 <ul>
@@ -2360,6 +2665,16 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Agent-based discovery: done by deploying the AWS Application Discovery Agent on each VM and physical server.</p>
 </li>
 </ul>
+</li>
+</ul>
+<h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
+<ul>
+<li>
+<p>You can use a NAT (Network Address Translation) gateway to enable instances in a private subnet to connect to the internet or other AWS services but prevent the internet from initiating a connection with those instances.</p>
+<p>Unlike an Internet Gateway (IGW) which is bi-directional (inbound and outbound), a NAT Gateway is unidirectional (outbound only).</p>
+<p>To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside. You must also specify an Elastic IP address to associate with the NAT gateway when you create it. The Elastic IP address cannot be changed once you associate it with the NAT Gateway.</p>
+<p>After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point internet-bound traffic to the NAT gateway. This enables instances in your private subnets to communicate with the internet.</p>
+<p>Each NAT gateway is created in a specific AZ and implemented with redundancy in that zone.</p>
 </li>
 </ul>
 

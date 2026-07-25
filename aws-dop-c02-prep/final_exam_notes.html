@@ -268,6 +268,28 @@
 <li>
 <p>CodePipeline can only have one source stage. To trigger CodePipeline when code is pushed in more than 1 repo, an EventBridge rule can be created for each repo that can trigger the same CodePipeline.</p>
 </li>
+<li>
+<p>AWS CodePipeline includes a number of actions that help you configure build, test, and deploy resources for your automated release process. If your release process includes activities that are not included in the default actions, such as an internally developed build process or a test suite, you can create a custom action for that purpose and include it in your pipeline.</p>
+<p>You can create custom actions for the following AWS CodePipeline action categories:</p>
+<ul>
+<li>
+<p>A custom build action that builds or transforms the items</p>
+</li>
+<li>
+<p>A custom deploy action that deploys items to one or more servers, websites, or repositories</p>
+</li>
+<li>
+<p>A custom test action that configures and runs automated tests</p>
+</li>
+<li>
+<p>A custom invoke action that runs functions</p>
+</li>
+</ul>
+<p>When you create a custom action, you must also create a job worker that will poll CodePipeline for job requests for this custom action, execute the job, and return the status result to CodePipeline. This job worker can be located on any computer or resource as long as it has access to the public endpoint for CodePipeline. To easily manage access and security, you can host your job worker on an Amazon EC2 instance.</p>
+</li>
+<li>
+<p>If you define a CodePipeline structure using a JSON file, the default <code>runOrder</code> value for an action is 1 for sequential execution. To specify parallel actions, use the same integer/value for every action you want to run in parallel.</p>
+</li>
 </ul>
 <h3 id="iac"><a class="header" href="#iac">IaC</a></h3>
 <ul>
@@ -288,6 +310,14 @@
 </li>
 <li>
 <p>During IaC migration, the Terraform <code>import</code> command lets you bring manually created or existing AWS resources under Terraform management without recreating or destroying them.</p>
+</li>
+<li>
+<p>To specify how CloudFormation handles updating an ASG, you can add an <code>UpdatePolicy</code> attribute in the YAML or JSON. This attribute contains the <code>AutoScalingReplacingUpdate</code> policy which enables you to specify whether AWS CloudFormation replaces the ASG with a new one or replaces only the instances in the ASG.</p>
+<pre><code class="language-YAML">UpdatePolicy:
+    AutoScalingReplacingUpdate:
+        WillReplace: true
+</code></pre>
+<p>This configuration in the CFN YAML will allow it to retain the old group until it finishes creating the new one. If the update fails CFN can roll back to the old ASG and delete the new one.</p>
 </li>
 </ul>
 <h2 id="lambda"><a class="header" href="#lambda">Lambda</a></h2>
@@ -335,9 +365,6 @@
 <p>Amazon ECR supports image scanning via Amazon Inspector or other integrated tools to detect known vulnerabilities in containers before deployment.</p>
 </li>
 <li>
-<p>A conformance pack is a collection of AWS Config rules and remediation actions that can be deployed as a single entity in an account, region or across an organisation. They can ensure that all deployed infrastructure meets compliance and security standards automatically.</p>
-</li>
-<li>
 <p>EC2 Auto Recovery monitors health and recovers the instance in the same AZ. It ensures quick recovery without manual intervention.</p>
 </li>
 <li>
@@ -348,12 +375,6 @@
 </li>
 <li>
 <p>Route53 health checks with latency routing provide automated failover and route users to the nearest healthy region.</p>
-</li>
-<li>
-<p>Note that AWS Config evaluates periodically and not in real-time. It continuously evaluates resources against rules. It triggers automatic remediation using an SSM Automation document.</p>
-</li>
-<li>
-<p>AWS Config can not be used to perform emergency maintenance on instances.</p>
 </li>
 <li>
 <p>To ensure that an application does not experience downtime during database credentials rotation, a multi-user rotation strategy is used where the Secrets Manager creates 2 database users and alternates between them during rotation.</p>
@@ -382,6 +403,9 @@
 <p>Immutable launches a new set of instances running the new version of the application in a separate ASG alongside the instances running the old version.</p>
 <p>Immutable deployments can prevent issues caused by partially completed rolling deployments. The original instances remain untouched in case of any failure.</p>
 </li>
+<li>
+<p>Amazon Rekognition can store information about detected faces in server-side containers known as collections. You can use the facial information that's stored in a collection to search for known faces in images, stored videos and streaming videos. Amazon Rekognition supports the IndexFaces operation. This can be used to detect faces in an image and persist information about facial features that are detected in a collection.</p>
+</li>
 </ul>
 <h2 id="security"><a class="header" href="#security">Security</a></h2>
 <ul>
@@ -391,6 +415,10 @@
 <li>
 <p>Unlike an Internet Gateway (IGW) which allows both inbound and outbound IPv4 traffic, an egress-only Internet Gateway allows only outbound IPv6 traffic.</p>
 <p>A VPC can have only 1 IGW attached at any given time.</p>
+</li>
+<li>
+<p>With AWS Service Catalog, cloud resources can be centrally managed to achieve infrastructure as code (IaC) template governance at scale, whether written in CloudFormation or Terraform. Template constraints can be applied when limiting end-users' options during product launch. This ensures that the organisation's compliance requirements are not breached.</p>
+<p>A product must be present within a Service Catalog portfolio to apply template constraints. A template constraint includes rules that narrow the allowable values for parameters in the underlying AWS CloudFormation template of the product.</p>
 </li>
 </ul>
 <h2 id="monitoring-and-logging"><a class="header" href="#monitoring-and-logging">Monitoring and Logging</a></h2>
@@ -431,6 +459,10 @@
 <li>
 <p>CodeGuru Reviewer uses program analysis and ML to detect potential defects and issues in the code. It also provides guidelines for best practices in Java and Python code.</p>
 <p>CodeGuru Reviewer should be associated with a Git repo and is not integrated with CodeBuild.</p>
+</li>
+<li>
+<p>CodeGuru Reviewer Secrets Detector is an automated tool that helps developers detect secrets in source code or configuration files such as passwords, API keys, SSH keys and access tokens. The detector uses machine learning to identify hardcoded secrets as part of the code review process.</p>
+<p>CodeGuru Reviewer suggests remediation steps to secure secrets with AWS Secrets Manager.</p>
 </li>
 <li>
 <p>EventBridge can monitor AWS service events such as EC2 instance state changes. A rule in EventBridge can be set up that matches specific EC2 state changes, matching events can then be routed to a Lambda function.</p>
@@ -487,24 +519,6 @@
 <p>Patches can be installed by scheduling them to run as a Systems Manager maintenance window task. Patches can be installed individually or to large groups of instances by using EC2 tags.</p>
 </li>
 <li>
-<p>With AWS Config, you can:</p>
-<ul>
-<li>Evaluate AWS resource configurations for desired settings</li>
-<li>Get a snapshot of current configurations</li>
-<li>Retrieve historical configurations of 1 or more resources</li>
-<li>Receive a notification whenever a resource is created, modified or deleted</li>
-<li>View relationships between resources</li>
-</ul>
-</li>
-<li>
-<p>An aggregator is an AWS Config resource type that collects AWS Config configuration and compliance data from:</p>
-<ul>
-<li>multiple accounts and multiple regions</li>
-<li>single account and multiple regions</li>
-<li>an organisation in AWS Organizations and all the accounts in that organisation</li>
-</ul>
-</li>
-<li>
 <p>AWS Application Discovery Service helps you plan your migration to the AWS cloud by collecting usage and configuration data about your on-prem servers. Application Discovery Service is integrated with AWS Migration Hub.</p>
 <p>Application Discovery Service offers 2 ways of performing discovery and collecting data about your on-prem servers:</p>
 <ul>
@@ -516,6 +530,16 @@
 <p>Agent-based discovery: done by deploying the AWS Application Discovery Agent on each VM and physical server.</p>
 </li>
 </ul>
+</li>
+</ul>
+<h2 id="networking"><a class="header" href="#networking">Networking</a></h2>
+<ul>
+<li>
+<p>You can use a NAT (Network Address Translation) gateway to enable instances in a private subnet to connect to the internet or other AWS services but prevent the internet from initiating a connection with those instances.</p>
+<p>Unlike an Internet Gateway (IGW) which is bi-directional (inbound and outbound), a NAT Gateway is unidirectional (outbound only).</p>
+<p>To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside. You must also specify an Elastic IP address to associate with the NAT gateway when you create it. The Elastic IP address cannot be changed once you associate it with the NAT Gateway.</p>
+<p>After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point internet-bound traffic to the NAT gateway. This enables instances in your private subnets to communicate with the internet.</p>
+<p>Each NAT gateway is created in a specific AZ and implemented with redundancy in that zone.</p>
 </li>
 </ul>
 
