@@ -30,6 +30,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -230,15 +231,14 @@
 <li><a href="./security_misc.html">Security practices and automation</a></li>
 <li><a href="./storage.html">AWS Storage</a>
 <ul>
-<li><a href="./elastic_block_storage.html">Elastic Block Storage</a></li>
-<li><a href="./efs.html">Elastic File System</a></li>
+<li><a href="./storage_types.html">Storage types</a></li>
 <li><a href="./s3_misc.html">S3 Object Storage</a></li>
 <li><a href="./dynamodb.html">DynamoDB</a></li>
 <li><a href="./elasticache.html">ElastiCache</a></li>
 </ul>
 </li>
 <li><a href="./sns_and_sqs.html">SNS and SQS</a></li>
-<li><a href="./cloudwatch.html">CloudWatch</a></li>
+<li><a href="./logging.html">Logging</a></li>
 <li><a href="./kinesis.html">Kinesis</a></li>
 <li><a href="./config.html">AWS Config</a></li>
 <li><a href="./dr.html">Disaster Recovery</a></li>
@@ -1053,14 +1053,14 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 </ul>
 </li>
 </ul>
-<p>The <code>AWS::AutoScaling::AutoScalingGroup</code> resource uses the UpdatePolicy attribute to define how an Auto Scaling group resource is updated when the AWS CloudFormation stack is updated. This policy supports several configuration options amongst which are:</p>
+<p>The <code>AWS::AutoScaling::AutoScalingGroup</code> resource uses the <code>UpdatePolicy</code> attribute to define how an Auto Scaling group resource is updated when the AWS CloudFormation stack is updated. This policy supports several configuration options amongst which are:</p>
 <ul>
-<li><code>WaitOnResourceSignals</code> and <code>PauseTime</code>: when CloudFormation waits to receive a success signal until the maximum time specified by PauseTime value. If a signal is not received, CloudFormation cancels the update and rolls back the stack.</li>
+<li><code>WaitOnResourceSignals</code> and <code>PauseTime</code>: when CloudFormation waits to receive a success signal until the maximum time specified by <code>PauseTime</code> value. If a signal is not received, CloudFormation cancels the update and rolls back the stack.</li>
 <li><code>MinSuccessfulInstancesPercent</code>: prevents CloudFormation from rolling back the entire stack if only a single instance fails to launch</li>
 </ul>
 <h2 id="instance-lifecycle"><a class="header" href="#instance-lifecycle">Instance lifecycle</a></h2>
 <p>When EC2 Auto Scaling responds to a scale out event, it launches one or more instances. These instances start in the <code>Pending</code> state. If a lifecycle hook <code>autoscaling:EC2_INSTANCE_LAUNCHING</code> is added to the Auto Scaling group, the instance will move from the <code>Pending</code> state to the <code>Pending:Wait</code> state. After the lifecycle action is complete, the instance will enter the <code>Pending:Proceed</code> state. When fully configured and attached, the instance will enter the <code>InService</code> state.</p>
-<p>Similary on a scale in event, the instance is detached form the Auto Scaling group and enters the <code>Terminating</code> state. Upon adding a <code>autoscaling:EC2_INSTANCE_TERMINATING</code> lifecycle hook, the instance will move from <code>Terminating</code> to <code>Terminating:Wait</code> state. After the hook is complete, the instance will enter the <code>Terminating:Proceed</code> state and eventually <code>Terminated</code>.</p>
+<p>Similary on a scale in event, the instance is detached from the Auto Scaling group and enters the <code>Terminating</code> state. Upon adding a <code>autoscaling:EC2_INSTANCE_TERMINATING</code> lifecycle hook, the instance will move from <code>Terminating</code> to <code>Terminating:Wait</code> state. After the hook is complete, the instance will enter the <code>Terminating:Proceed</code> state and eventually <code>Terminated</code>.</p>
 <h2 id="single-ec2-instance-fault-tolerance"><a class="header" href="#single-ec2-instance-fault-tolerance">Single EC2 instance fault tolerance</a></h2>
 <p>You can create an Amazon CloudWatch alarm that monitors an Amazon EC2 instance and automatically recovers the instance if it becomes impaired due to underlying hardware failure or other.</p>
 <p>The built-in instance recovery failure feature for Amazon EC2 does not apply to instances using store volumes.</p>
@@ -1133,7 +1133,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p><strong>1. EC2 mode</strong></p>
 <ul>
 <li>There is some overhead but allows for flexibility.</li>
-<li>It required manual component management for eg. scheduling, orchestration, cluster management and PlacementEngine.</li>
+<li>It requires manual component management for eg. scheduling, orchestration, cluster management and PlacementEngine.</li>
 <li>EC2 is used to run containers with ASG (Auto Scaling Group).</li>
 <li>You would manage the container host, capacity and availability.</li>
 </ul>
@@ -1151,10 +1151,10 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>ECR offers replication of container images that can be cross-region or cross-account.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-kubernetes-service"><a class="header" href="#elastic-kubernetes-service">Elastic Kubernetes Service</a></h1>
 <p>Is a fully managed service that simplifies running, securing and scaling Kubernetes applications on AWS without needing to install or maintain your own control plane. It eliminates operational overhead by automatically managing and scaling the Kubernetes master nodes.</p>
-<p>The control plance is distibuted and managed across multiple AZs for high availability. Compute options include running workloads using EC2, Fargate or with EKS Auto Mode.</p>
+<p>The control plane is distibuted and managed across multiple AZs for high availability. Compute options include running workloads using EC2, Fargate or with EKS Auto Mode.</p>
 <h2 id="storage-permissions"><a class="header" href="#storage-permissions">Storage permissions</a></h2>
 <p>In EKS, persistent storage is often provisioned using Elastic Block Store (EBS) volumes. The EBS Container Storage Interface (CSI) driver is responsible for integrating Kubernetes with EBS enabling dynamic provisioning and management of volumes as per application requirements.</p>
-<p>The EBS CSI driver requires appropriate permissions to dynamically provision and manage EBS volumes. These permissions are managed using an IAM role often attached to the driver itself. AWS recommends assigning an IAM role to the EBS CSI driver with the necessary permissions to provision and manager EBS volumes. This ensures that the driver can perform operations such as creating volumes, attaching them to nodes and managing lifecycle events.</p>
+<p>The EBS CSI driver requires appropriate permissions to dynamically provision and manage EBS volumes. These permissions are managed using an IAM role often attached to the driver itself. AWS recommends assigning an IAM role to the EBS CSI driver with the necessary permissions to provision and manage EBS volumes. This ensures that the driver can perform operations such as creating volumes, attaching them to nodes and managing lifecycle events.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="routing-balancing-and-dns"><a class="header" href="#routing-balancing-and-dns">Routing, balancing and DNS</a></h1>
 <ul>
 <li><a href="./load_balancers.html">Elastic Load Balancing</a></li>
@@ -1323,7 +1323,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
     <img src="./images/private_hosted_zone.png" alt="cloud services" width="500" />
 </div>
 <h2 id="cname-vs-alias"><a class="header" href="#cname-vs-alias">CNAME vs. ALIAS</a></h2>
-<p>An A record maps a name to a v4 IP address. A CNAME maps a name to another name eg. www.mydomain.io =&gt; mydomain.io</p>
+<p>An A record maps a name to a v4 IP address. CNAME maps a name to another name eg. www.mydomain.io =&gt; mydomain.io</p>
 <p>CNAME can not use a naked domain (apex domain) eg. mydomain.io to point at another name.</p>
 <p>An ALIAS record is implemented by AWS and maps a name to an AWS resource. ALIAS can use apex domains.</p>
 <h2 id="route53-health-checks"><a class="header" href="#route53-health-checks">Route53 health checks</a></h2>
@@ -1561,10 +1561,10 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>Execution role (in the target accounts): is the <code>AWS-SystemsManager-AutomationExecutionRole</code> role which would have permissions to perform actions like patching or terminating instances.</p>
 </li>
 </ul>
-<h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
+<h2 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h2>
 <p>SSM allows managing instances at scale without the need for bastions, SSH or remote sessions. Session Manager is an alternative to traditional SSH or RDP.</p>
 <p>By default, AWS Systems Manager does not have permission to perform actions on your instances. You must grant access by using IAM. An instance profile that contains the AWS managed policy <code>AmazonSSMManagedInstanceCore</code> is needed to be attached to the EC2 instance for the Session Manager to work.</p>
-<h3 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h3>
+<h2 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h2>
 <p>Enables configuration management such that EC2 instances or on-prem instances are consistently configrued. It focusses on monitoring OS settings, installed applications and other software on a server.</p>
 <p>State Manager requires an SSM agent to be running inside the EC2 instance or the on-prem server.</p>
 <p>An example for using the State Manager is:</p>
@@ -1579,7 +1579,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>in case the instance drifts from the defined configuration, the State Manager automatically re-runs the configuration to render the instance compliant.</p>
 </li>
 </ol>
-<h3 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h3>
+<h2 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h2>
 <p>Allows applying OS or software patches to a large group of EC2 or on-prem instances.</p>
 <ul>
 <li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>
@@ -1607,11 +1607,11 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>When created, KMS provides a plaintext version of the key as well as a Ciphertext version.</p>
 <p>The way this is used is that the plaintext version is used to encrypt data. The plaintext version is then discarded and the encrypted data is stored along with the Ciphertext version.</p>
 <h2 id="key-policy"><a class="header" href="#key-policy">Key policy</a></h2>
-<p>Every key has a key policy because you have to explicitly declare that the key trusts the identity using it.</p>
+<p>Every key has a key policy because you have to explicitly declare that the key trusts the identity that uses it.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="security-practices-and-automation"><a class="header" href="#security-practices-and-automation">Security practices and automation</a></h1>
 <h2 id="amazon-inspector"><a class="header" href="#amazon-inspector">Amazon Inspector</a></h2>
 <p>Is an automated security assessment service that scans EC2 instance and container images for vulnerabilities and deviations from best practices. After performing an assessment, Amazon Inspector produces a detailed list of security findings prioritised by level of severity.</p>
-<p>Amazon Inspector security assessment helps check for unintended network accessibility of EC2 instances and for vulnerabilities on those EC2 instances. Assessments are offered as pre-defined rules packages mapped to common security best practices and vulnerability definitions. Examples of built-in rules include checking for access to EC2 instances from the internet, remote root login being enabled, or vulnerable software versions installed.</p>
+<p>Amazon Inspector security assessment helps check for unintended network accessibility of EC2 instances and for vulnerabilities on those EC2 instances. Assessments are offered as pre-defined rule packages mapped to common security best practices and vulnerability definitions. Examples of built-in rules include checking for access to EC2 instances from the internet, remote root login being enabled, or vulnerable software versions installed.</p>
 <h2 id="aws-shield"><a class="header" href="#aws-shield">AWS Shield</a></h2>
 <p>Is a service suited for preventing DDoS attacks on AWS resources. It is available in 2 tiers: Standard and Advanced. AWS Shield Standard is included automatically and transparently in your Elastic Load Balancing load balancers, CloudFront and Route 53 at no additional costs.</p>
 <h2 id="amazon-macie"><a class="header" href="#amazon-macie">Amazon Macie</a></h2>
@@ -1680,18 +1680,29 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>This option has medium operational overhead and cost depending on throughput. Firehose also allows data manipulation before ingestion. Tools used to query the logs include Splunk and Datadog.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="storage"><a class="header" href="#storage">Storage</a></h1>
 <ul>
-<li><a href="./elastic_block_storage.html">Elastic Block Storage</a></li>
-<li><a href="./efs.html">Elastic File System</a></li>
+<li><a href="./storage_types.html">Storage types</a></li>
 <li><a href="./s3_misc.html">S3 Object Storage</a></li>
 <li><a href="./dynamodb.html">DynamoDB</a></li>
 <li><a href="./elasticache.html">ElastiCache</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ebs-elastic-block-storage"><a class="header" href="#ebs-elastic-block-storage">EBS (Elastic Block Storage)</a></h1>
+<h2 id="storage-comparison"><a class="header" href="#storage-comparison">Storage comparison</a></h2>
+<div class="wide-table">
+<div class="table-wrapper"><table><thead><tr><th></th><th><strong>EBS</strong></th><th><strong>Instance Store</strong></th><th><strong>EFS</strong></th><th><strong>S3</strong></th><th><strong>Storage Gateway</strong></th></tr></thead><tbody>
+<tr><td>Type</td><td>Block storage</td><td>Block storage (ephemeral)</td><td>File storage (NFS)</td><td>Object storage</td><td>Hybrid storage service (bridges on-prem to AWS)</td></tr>
+<tr><td>Attaches to</td><td>1 EC2 instance (unless Multi-Attach)</td><td>1 EC2 instance (physically attached to host)</td><td>Many instances concurrently</td><td>N/A — accessed via API/HTTP</td><td>On-prem servers/apps via NFS/SMB (File), iSCSI (Volume), or VTL (Tape)</td></tr>
+<tr><td>Scope</td><td>Single AZ</td><td>Single instance/host — data lost on stop, terminate, or hardware failure</td><td>Regional (multi-AZ via mount targets)</td><td>Regional, replicated across ≥3 AZs (Standard)</td><td>On-premises, backed by S3/EBS/Glacier in AWS</td></tr>
+<tr><td>OS support</td><td>Linux &amp; Windows</td><td>Linux &amp; Windows</td><td>Linux only (NFSv4)</td><td>Any (HTTP API)</td><td>Any (protocol-based: NFS/SMB/iSCSI)</td></tr>
+<tr><td>Scaling</td><td>Manual resize</td><td>Fixed size, determined by instance type</td><td>Elastic, automatic</td><td>Effectively unlimited</td><td>Effectively unlimited (backed by S3)</td></tr>
+<tr><td>Speed</td><td>Lowest latency (local block device, especially io2/gp3)</td><td>Highest — directly attached NVMe SSD, no network overhead</td><td>Higher latency than EBS (network file system overhead)</td><td>Higher latency, but high throughput/parallelism for many objects</td><td>Depends on local cache + link speed to AWS</td></tr>
+<tr><td>Cost</td><td>Pay for provisioned capacity (GB/month), regardless of usage</td><td>Included in EC2 instance price, no separate storage cost</td><td>Pay for storage used (GB/month), no pre-provisioning; pricier per GB than EBS</td><td>Cheapest per GB, especially with lifecycle tiers (IA, Glacier)</td><td>Pay for storage used in AWS + local gateway appliance/cache</td></tr>
+</tbody></table>
+</div></div>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="1-ebs-elastic-block-storage"><a class="header" href="#1-ebs-elastic-block-storage">1. EBS (Elastic Block Storage)</a></h2>
 <p>Is a service that provides block storage. Allocates raw physical disk as a volume. Volumes can be unencrypted or encrypted using KMS.</p>
 <p>Storage is provisioned in 1 AZ where it is isolated and resilient. An EC2 instance in 1 AZ can not attach to a volume in another AZ.</p>
 <p>A volume can be snapshotted into S3. It can be used to create volumes in different AZ and regions.</p>
 <p>A volume is usually attached to 1 EC2 instance but you can use a multi-attach service to attach it to more than 1 instance at the same time.</p>
-<h2 id="ebs-volume-types"><a class="header" href="#ebs-volume-types">EBS volume types</a></h2>
+<h3 id="ebs-volume-types"><a class="header" href="#ebs-volume-types">EBS volume types</a></h3>
 <h3 id="1-ssd-based"><a class="header" href="#1-ssd-based">1. SSD-based</a></h3>
 <p>Where it uses flash memory chips (no moving parts).</p>
 <p><strong>1.1 GP2 (General Purpose SSD)</strong></p>
@@ -1724,12 +1735,12 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p>Used to store data without the focus on performance.</p>
 <p>Max of 250 IOPs (1MB IO size). Max 250 MB/s.</p>
 <p>Range from 125 GB to 16 TB in size.</p>
-<h2 id="instance-store-volumes"><a class="header" href="#instance-store-volumes">Instance Store volumes</a></h2>
+<h2 id="2-instance-store-volumes"><a class="header" href="#2-instance-store-volumes">2. Instance Store volumes</a></h2>
 <p>They have higher performance than EBS volumes where they offer the highest storage performace in AWS because they are locally attached.</p>
 <p>They provide temporary block storage devices which are raw volumes that can be attached to instances to be used as a basis for a filesystem. They are local and are not presented over the network.</p>
 <p>They are ephemeral and should not be used when persistence is requried. Data is lost if the volume moves, is resized or if there is hardware failure.</p>
 <p>They physically connect to 1 EC2 host. Instances on that host can access those volumes. An instance can use more than 1 volume. They are only attached at launch time.</p>
-<h2 id="storage-gateway"><a class="header" href="#storage-gateway">Storage Gateway</a></h2>
+<h2 id="3-storage-gateway"><a class="header" href="#3-storage-gateway">3. Storage Gateway</a></h2>
 <p>Runs as a virtual machine on premises, it enables hybrid storage between on-prem and AWS. It connects on-prem applications to unlimited cloud storage.</p>
 <p>It works by installing the storage appliance in your local data centre, it then handles data transfer, encryption and caching. The storage appliance connects to local applications via LAN and to AWS via internet or Direct Connect.</p>
 <h3 id="types-of-storage-gateway"><a class="header" href="#types-of-storage-gateway">Types of Storage Gateway</a></h3>
@@ -1745,7 +1756,7 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <p><strong>4. Tape Gateway</strong></p>
 <p>Makes it easier to handle backup operations i.e. instead of using physical tapes, you can use virtual tapes. Virtual Tape Library (VTL) stored in S3 buckets.</p>
 <p>Tape Shelf (VTS) stored in Glacier and is generally used for archives when they are not frequently accessed.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="elastic-file-system-efs"><a class="header" href="#elastic-file-system-efs">Elastic File System (EFS)</a></h1>
+<h2 id="4-elastic-file-system-efs"><a class="header" href="#4-elastic-file-system-efs">4. Elastic File System (EFS)</a></h2>
 <p>Provides network-based filesystems that can be mounted within Linux EC2 instances and can be shared by multiple instances at once. This helps the EC2 instances be more stateless.</p>
 <p>EFS is an AWS implementation of a common file storage standard called NFS (version 4) network filesystem. It runs inside a VPC.</p>
 <p>Filesystems created in EFS are POSIX-based.</p>
@@ -1756,11 +1767,11 @@ To add permissions, create an inline policy in the IAM role used by the CodeBuil
 <li>It has 2 throughput modes: Bursting and Provisioned</li>
 <li>It has 2 storage classes: Standard and Infrequent Access (IA)</li>
 </ul>
-<h2 id="fsx-for-windows-file-server"><a class="header" href="#fsx-for-windows-file-server">FSx for Windows File Server</a></h2>
+<h3 id="fsx-for-windows-file-server"><a class="header" href="#fsx-for-windows-file-server">FSx for Windows File Server</a></h3>
 <p>Is a shared filesystem product that handles the implementation in a different way than EFS. It supports Windows environments on AWS.</p>
 <p>It integrates with Directory Service or Self-Managed Active Directory.</p>
 <p>It can be Single or Multi-AZ within a VPC.</p>
-<h2 id="fsx-for-lustre"><a class="header" href="#fsx-for-lustre">FSx for Lustre</a></h2>
+<h3 id="fsx-for-lustre"><a class="header" href="#fsx-for-lustre">FSx for Lustre</a></h3>
 <p>It is a managed implementation of the Lustre filesystem designed for high-performance computing (HPC) workloads. It supports both Linux and POSIX-based filesystems.</p>
 <p>FSx is available over VPN or Direct Connect.</p>
 <p>Can be provisioned via 2 modes:</p>
@@ -1856,19 +1867,21 @@ You pay for object retrieval and they are stored in the S3 Standard class on a t
 <p>You can create lifecycle rules on S3 buckets which can automatically transition or expire objects in the bucket.</p>
 <p>Lifecycle configuration is a set of rules that consist of actions which apply based on criteria i.e. do X if Y. They can be applied on a bucket or a group of objects in that bucket defined by prefix or tags.</p>
 <p>Actions can be of 2 types:</p>
-<ul>
-<li>Transition actions: they can change the storage class of an object eg. from S3 Standard to S3 Standard-IA.</li>
-</ul>
+<ol>
+<li>
+<p>Transition actions: they can change the storage class of an object eg. from S3 Standard to S3 Standard-IA.</p>
 <p>Note this exception: objects in S3 One Zone-IA can transition into S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive but not S3 Glacier Instant Retrieval.</p>
-<div align="center">
-    <img src="./images/s3-storage-class-transition.png" alt="s3 storage class transition" width="500" />
-</div>
+ <div align="center">
+     <img src="./images/s3-storage-class-transition.png" alt="s3 storage class transition" width="500" />
+ </div>
 <p>Transition can not happen in an upward direction, only downward.</p>
 <p>Note that if an object is stored in S3 Standard, it requires to have been there for a minimum of 30 days before transitioning to an infrequent access tier like S3 Standard-IA or S3 One Zone-IA.</p>
 <p>A duration of 30 days is required if objects were to transition further from IA tiers to Glacier classes.</p>
-<ul>
-<li>Expiration actions: they can delete objects or object versions.</li>
-</ul>
+</li>
+<li>
+<p>Expiration actions: they can delete objects or object versions.</p>
+</li>
+</ol>
 <h2 id="s3-replication"><a class="header" href="#s3-replication">S3 Replication</a></h2>
 <p>Replicating objects between a source and destination S3 bucket. 2 types of replication are supported by S3:</p>
 <h3 id="cross-region-replication-crr"><a class="header" href="#cross-region-replication-crr">Cross-Region Replication (CRR)</a></h3>
@@ -1954,6 +1967,7 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>A primary key can be simple (Partition) aka <code>pk</code> or composite which is a combination of the <code>pk</code> and the <code>sk</code> (Sort key).</p>
 <h2 id="dynamodb-global-tables"><a class="header" href="#dynamodb-global-tables">DynamoDB global tables</a></h2>
 <p>This is a fully managed solution for deploying a multi-region, multi-active database without having to build and maintain your own replication solution. You can specify the AWS regions where you want the tables to be available and DynamoDB will propagate ongoing data changes to all of them.</p>
+<p>Global tables provide multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
 <h2 id="point-in-time-recovery-pitr"><a class="header" href="#point-in-time-recovery-pitr">Point-in-time Recovery (PITR)</a></h2>
 <p>Provides continuous backups with per-second recovery precision. It is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35-day recovery window.</p>
 <p>Enabling PITR does not consume any table provisioned throughput (RCUs/WCUs) and has zero impact on application performance.</p>
@@ -2018,8 +2032,6 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 </li>
 </ul>
 <p>The interaction with the DynamoDB database is handled by the DAX SDK rather than the user application itself.</p>
-<h2 id="global-tables"><a class="header" href="#global-tables">Global Tables</a></h2>
-<p>Provides a multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
 <h2 id="ttl"><a class="header" href="#ttl">TTL</a></h2>
 <p>Used to set a timestamp for automatic delete of items. Useful for items that lose relevance after a period of time.</p>
 <h2 id="exam-notes-1"><a class="header" href="#exam-notes-1">Exam notes</a></h2>
@@ -2104,6 +2116,14 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>Are a feature of CloudWatch Logs that allow you to distribute log data from one log group to other AWS services or destinations such as Data Firehose or AWS Lambda but not directly with S3.</p>
 <h1 id="eventbridge"><a class="header" href="#eventbridge">EventBridge</a></h1>
 <p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events. It is used to monitor AWS resources and the applications running on AWS to detect and react to changes based on rules you create that EventBridge can invoke eg. sending notifications, taking a corrective action or other.</p>
+<p>You can select the following types of targets when using EventBridge as part of the Trusted Advisor workflow:</p>
+<ul>
+<li>Lambda functions</li>
+<li>Kinesis streams</li>
+<li>Simple Queue Service (SQS)</li>
+<li>CloudWatch alarms</li>
+<li>Simple Notification Service (SNS) topics</li>
+</ul>
 <p>It makes it easier to connect applications such that events can be ingested, filtered, transformed and delivered without writing custom code.</p>
 <h1 id="cloudtrail"><a class="header" href="#cloudtrail">CloudTrail</a></h1>
 <p>This product logs API calls or account activities as CloudTrail Events that are either management events or data events. By default, stores 90 day management event history. Data events need to be enabled and they come at an extra cost.</p>
@@ -2129,7 +2149,7 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>EMR runs in 1 AZ in a VPC and uses EC2 for compute. It can load input data from S3 into HDFS (Hadoop filesystem) and store output data in back to S3.</p>
 <p>The EMR cluster architecture consists of:</p>
 <ul>
-<li>The HDFS which runs alongside the cluster and is ephemeral i.e. linked to the lifetime of the cluster</li>
+<li>the HDFS which runs alongside the cluster and is ephemeral i.e. linked to the lifetime of the cluster</li>
 <li>a master node which manages the cluster and can be ssh-ed to</li>
 <li>a number of core nodes that act as data nodes for HDFS and can run or track tasks</li>
 <li>task nodes that are optional and have no HDFS involvement, they just run tasks</li>
@@ -2212,7 +2232,7 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>RDS offers cross-region read replicas but this places a load on the RDS instances since replication is not done at the storage layer.</p>
 <p>Amazon RDS uses the Amazon SNS (Simple Notification Service) to provide notification when an Amazon RDS event occurs via email, text message or a call to an HTTP endpoint.</p>
 <p><strong>RDS snapshots</strong></p>
-<p>The first copy is a full snapshot copy which contains all of the data and metadata required to restore the DB instance. After this first snapshot, incremental snapshots can be taken of the DB instance where only data that has changed after the most recent snapshot gets copied.</p>
+<p>The first copy is a full snapshot copy which contains all of the data and metadata required to restore the DB instance. After this first snapshot, incremental snapshots of the DB instance can be taken where only data that has changed after the most recent snapshot gets copied.</p>
 <p>Incremental snapshot copying is faster and results in lower storage costs than full snapshot copying.</p>
 <h3 id="4-aurora"><a class="header" href="#4-aurora">4. Aurora</a></h3>
 <p>Aurora is not limited to primary and standby instances, it can have 1 or more replicas in every AZ. This makes it's availability subject to the number of AZs in the region.</p>
@@ -2491,7 +2511,7 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <h2 id="automation"><a class="header" href="#automation">Automation</a></h2>
 <ul>
 <li>
-<p>To manage security patches for EC2 instances and on-prem servers, install the AWS Systems Manager agent and create a Hybrid Activation.</p>
+<p>To manage security patches for EC2 instances and on-prem servers, install the AWS Systems Manager agent and create a Hybrid Activation. In the console, the IDs of the hybrid instances are distinguished from EC2 instance with the prefix <code>mi-</code>. The EC2 instances use the prefix <code>i-</code>.</p>
 </li>
 <li>
 <p>State Manager allows adminstrators to apply and maintain consistent configurations using pre-defined or custom SSM documents ensuring automated and continuous compliance across accounts.</p>
@@ -2637,6 +2657,10 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>The ability to search and filter the log data arriving at CloudWatch Logs is achieved by creating one or more metric filters.</p>
 <p>Metric filters define the terms and patterns to look for in log data as it is sent to CloudWatch Logs.</p>
 </li>
+<li>
+<p>Elastic Load Balancing provides access logs that capture detailed information about requests sent to the load balancer. Each log contains information such as time the request was received, the client's IP address, latencies, request path and server response.</p>
+<p>Access logging is an optional feature of Elastic Load Balancing that is disabled by default. After enabling it, the logs are stored in a specified S3 bucket as compressed files. Encryption and decryption of the log files is done automatically.</p>
+</li>
 </ul>
 <h2 id="disaster-recovery-1"><a class="header" href="#disaster-recovery-1">Disaster recovery</a></h2>
 <ul>
@@ -2645,6 +2669,9 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>ARC integrates with services like Route53 and Elastic Load Balancing.</p>
 <p>Zonal shift is a feature in Route53 ARC that can temporarily shift traffic from an impaired AZ to a healthy one.</p>
 <p>Disabling cross-zone load balancing on an ALB means that each load balancer node in an AZ routes requests only to targets within the same AZ.</p>
+</li>
+<li>
+<p>You can call the EBS Create Snapshot directly as a target from Amazon EventBridge. You can also configure Amazon EventBridge rules to create automated snapshots of an existing Amazon Elastic Block Store (Amazon EBS) volume on a schedule. EventBridge allows you to specify a fixed rate for creating snapshots at regular intervals or use a cron expression to schedule snapshots at specific times of the day.</p>
 </li>
 </ul>
 <h2 id="configuration-management"><a class="header" href="#configuration-management">Configuration management</a></h2>
@@ -2675,6 +2702,9 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 <p>To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside. You must also specify an Elastic IP address to associate with the NAT gateway when you create it. The Elastic IP address cannot be changed once you associate it with the NAT Gateway.</p>
 <p>After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point internet-bound traffic to the NAT gateway. This enables instances in your private subnets to communicate with the internet.</p>
 <p>Each NAT gateway is created in a specific AZ and implemented with redundancy in that zone.</p>
+</li>
+<li>
+<p>A transit gateway acts as a regional virtual router for traffic flowing between your virtual private clouds (VPCs) and on-premises networks. It enables attaching VPCs and VPN connections and it can route traffic between them.</p>
 </li>
 </ul>
 

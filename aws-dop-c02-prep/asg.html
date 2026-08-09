@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -196,14 +197,14 @@
 </ul>
 </li>
 </ul>
-<p>The <code>AWS::AutoScaling::AutoScalingGroup</code> resource uses the UpdatePolicy attribute to define how an Auto Scaling group resource is updated when the AWS CloudFormation stack is updated. This policy supports several configuration options amongst which are:</p>
+<p>The <code>AWS::AutoScaling::AutoScalingGroup</code> resource uses the <code>UpdatePolicy</code> attribute to define how an Auto Scaling group resource is updated when the AWS CloudFormation stack is updated. This policy supports several configuration options amongst which are:</p>
 <ul>
-<li><code>WaitOnResourceSignals</code> and <code>PauseTime</code>: when CloudFormation waits to receive a success signal until the maximum time specified by PauseTime value. If a signal is not received, CloudFormation cancels the update and rolls back the stack.</li>
+<li><code>WaitOnResourceSignals</code> and <code>PauseTime</code>: when CloudFormation waits to receive a success signal until the maximum time specified by <code>PauseTime</code> value. If a signal is not received, CloudFormation cancels the update and rolls back the stack.</li>
 <li><code>MinSuccessfulInstancesPercent</code>: prevents CloudFormation from rolling back the entire stack if only a single instance fails to launch</li>
 </ul>
 <h2 id="instance-lifecycle"><a class="header" href="#instance-lifecycle">Instance lifecycle</a></h2>
 <p>When EC2 Auto Scaling responds to a scale out event, it launches one or more instances. These instances start in the <code>Pending</code> state. If a lifecycle hook <code>autoscaling:EC2_INSTANCE_LAUNCHING</code> is added to the Auto Scaling group, the instance will move from the <code>Pending</code> state to the <code>Pending:Wait</code> state. After the lifecycle action is complete, the instance will enter the <code>Pending:Proceed</code> state. When fully configured and attached, the instance will enter the <code>InService</code> state.</p>
-<p>Similary on a scale in event, the instance is detached form the Auto Scaling group and enters the <code>Terminating</code> state. Upon adding a <code>autoscaling:EC2_INSTANCE_TERMINATING</code> lifecycle hook, the instance will move from <code>Terminating</code> to <code>Terminating:Wait</code> state. After the hook is complete, the instance will enter the <code>Terminating:Proceed</code> state and eventually <code>Terminated</code>.</p>
+<p>Similary on a scale in event, the instance is detached from the Auto Scaling group and enters the <code>Terminating</code> state. Upon adding a <code>autoscaling:EC2_INSTANCE_TERMINATING</code> lifecycle hook, the instance will move from <code>Terminating</code> to <code>Terminating:Wait</code> state. After the hook is complete, the instance will enter the <code>Terminating:Proceed</code> state and eventually <code>Terminated</code>.</p>
 <h2 id="single-ec2-instance-fault-tolerance"><a class="header" href="#single-ec2-instance-fault-tolerance">Single EC2 instance fault tolerance</a></h2>
 <p>You can create an Amazon CloudWatch alarm that monitors an Amazon EC2 instance and automatically recovers the instance if it becomes impaired due to underlying hardware failure or other.</p>
 <p>The built-in instance recovery failure feature for Amazon EC2 does not apply to instances using store volumes.</p>

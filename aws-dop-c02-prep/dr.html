@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -209,7 +210,7 @@
 <p>RDS offers cross-region read replicas but this places a load on the RDS instances since replication is not done at the storage layer.</p>
 <p>Amazon RDS uses the Amazon SNS (Simple Notification Service) to provide notification when an Amazon RDS event occurs via email, text message or a call to an HTTP endpoint.</p>
 <p><strong>RDS snapshots</strong></p>
-<p>The first copy is a full snapshot copy which contains all of the data and metadata required to restore the DB instance. After this first snapshot, incremental snapshots can be taken of the DB instance where only data that has changed after the most recent snapshot gets copied.</p>
+<p>The first copy is a full snapshot copy which contains all of the data and metadata required to restore the DB instance. After this first snapshot, incremental snapshots of the DB instance can be taken where only data that has changed after the most recent snapshot gets copied.</p>
 <p>Incremental snapshot copying is faster and results in lower storage costs than full snapshot copying.</p>
 <h3 id="4-aurora"><a class="header" href="#4-aurora">4. Aurora</a></h3>
 <p>Aurora is not limited to primary and standby instances, it can have 1 or more replicas in every AZ. This makes it's availability subject to the number of AZs in the region.</p>

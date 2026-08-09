@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -177,10 +178,10 @@
                     <main>
                         <h1 id="elastic-kubernetes-service"><a class="header" href="#elastic-kubernetes-service">Elastic Kubernetes Service</a></h1>
 <p>Is a fully managed service that simplifies running, securing and scaling Kubernetes applications on AWS without needing to install or maintain your own control plane. It eliminates operational overhead by automatically managing and scaling the Kubernetes master nodes.</p>
-<p>The control plance is distibuted and managed across multiple AZs for high availability. Compute options include running workloads using EC2, Fargate or with EKS Auto Mode.</p>
+<p>The control plane is distibuted and managed across multiple AZs for high availability. Compute options include running workloads using EC2, Fargate or with EKS Auto Mode.</p>
 <h2 id="storage-permissions"><a class="header" href="#storage-permissions">Storage permissions</a></h2>
 <p>In EKS, persistent storage is often provisioned using Elastic Block Store (EBS) volumes. The EBS Container Storage Interface (CSI) driver is responsible for integrating Kubernetes with EBS enabling dynamic provisioning and management of volumes as per application requirements.</p>
-<p>The EBS CSI driver requires appropriate permissions to dynamically provision and manage EBS volumes. These permissions are managed using an IAM role often attached to the driver itself. AWS recommends assigning an IAM role to the EBS CSI driver with the necessary permissions to provision and manager EBS volumes. This ensures that the driver can perform operations such as creating volumes, attaching them to nodes and managing lifecycle events.</p>
+<p>The EBS CSI driver requires appropriate permissions to dynamically provision and manage EBS volumes. These permissions are managed using an IAM role often attached to the driver itself. AWS recommends assigning an IAM role to the EBS CSI driver with the necessary permissions to provision and manage EBS volumes. This ensures that the driver can perform operations such as creating volumes, attaching them to nodes and managing lifecycle events.</p>
 
                     </main>
 

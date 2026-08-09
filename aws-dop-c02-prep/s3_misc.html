@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -263,19 +264,21 @@ You pay for object retrieval and they are stored in the S3 Standard class on a t
 <p>You can create lifecycle rules on S3 buckets which can automatically transition or expire objects in the bucket.</p>
 <p>Lifecycle configuration is a set of rules that consist of actions which apply based on criteria i.e. do X if Y. They can be applied on a bucket or a group of objects in that bucket defined by prefix or tags.</p>
 <p>Actions can be of 2 types:</p>
-<ul>
-<li>Transition actions: they can change the storage class of an object eg. from S3 Standard to S3 Standard-IA.</li>
-</ul>
+<ol>
+<li>
+<p>Transition actions: they can change the storage class of an object eg. from S3 Standard to S3 Standard-IA.</p>
 <p>Note this exception: objects in S3 One Zone-IA can transition into S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive but not S3 Glacier Instant Retrieval.</p>
-<div align="center">
-    <img src="./images/s3-storage-class-transition.png" alt="s3 storage class transition" width="500" />
-</div>
+ <div align="center">
+     <img src="./images/s3-storage-class-transition.png" alt="s3 storage class transition" width="500" />
+ </div>
 <p>Transition can not happen in an upward direction, only downward.</p>
 <p>Note that if an object is stored in S3 Standard, it requires to have been there for a minimum of 30 days before transitioning to an infrequent access tier like S3 Standard-IA or S3 One Zone-IA.</p>
 <p>A duration of 30 days is required if objects were to transition further from IA tiers to Glacier classes.</p>
-<ul>
-<li>Expiration actions: they can delete objects or object versions.</li>
-</ul>
+</li>
+<li>
+<p>Expiration actions: they can delete objects or object versions.</p>
+</li>
+</ol>
 <h2 id="s3-replication"><a class="header" href="#s3-replication">S3 Replication</a></h2>
 <p>Replicating objects between a source and destination S3 bucket. 2 types of replication are supported by S3:</p>
 <h3 id="cross-region-replication-crr"><a class="header" href="#cross-region-replication-crr">Cross-Region Replication (CRR)</a></h3>
@@ -358,7 +361,7 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="efs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="storage_types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -372,7 +375,7 @@ The unauthenticated user using the pre-signed URL interacts with the object as t
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="efs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="storage_types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

@@ -1,0 +1,17 @@
+/* Widen wide-table pages on larger screens only; on narrow/mobile screens,
+   fall back to mdBook's default table behavior (horizontal scroll via
+   .table-wrapper) instead of squeezing all columns into a tiny viewport. */
+@media (min-width: 768px) {
+    .content main:has(.wide-table) {
+        max-width: min(1200px, 95vw);
+    }
+
+    .wide-table table {
+        width: 100%;
+        table-layout: fixed;
+    }
+    .wide-table td,
+    .wide-table th {
+        word-wrap: break-word;
+    }
+}

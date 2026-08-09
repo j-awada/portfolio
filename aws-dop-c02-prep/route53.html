@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -224,7 +225,7 @@
     <img src="./images/private_hosted_zone.png" alt="cloud services" width="500" />
 </div>
 <h2 id="cname-vs-alias"><a class="header" href="#cname-vs-alias">CNAME vs. ALIAS</a></h2>
-<p>An A record maps a name to a v4 IP address. A CNAME maps a name to another name eg. www.mydomain.io =&gt; mydomain.io</p>
+<p>An A record maps a name to a v4 IP address. CNAME maps a name to another name eg. www.mydomain.io =&gt; mydomain.io</p>
 <p>CNAME can not use a naked domain (apex domain) eg. mydomain.io to point at another name.</p>
 <p>An ALIAS record is implemented by AWS and maps a name to an AWS resource. ALIAS can use apex domains.</p>
 <h2 id="route53-health-checks"><a class="header" href="#route53-health-checks">Route53 health checks</a></h2>

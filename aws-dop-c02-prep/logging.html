@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Elastic Block Storage - AWS Professional DevOps Certificate Material</title>
+        <title>Logging - AWS Professional DevOps Certificate Material</title>
 
 
         <!-- Custom HTML head -->
@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -175,75 +176,52 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ebs-elastic-block-storage"><a class="header" href="#ebs-elastic-block-storage">EBS (Elastic Block Storage)</a></h1>
-<p>Is a service that provides block storage. Allocates raw physical disk as a volume. Volumes can be unencrypted or encrypted using KMS.</p>
-<p>Storage is provisioned in 1 AZ where it is isolated and resilient. An EC2 instance in 1 AZ can not attach to a volume in another AZ.</p>
-<p>A volume can be snapshotted into S3. It can be used to create volumes in different AZ and regions.</p>
-<p>A volume is usually attached to 1 EC2 instance but you can use a multi-attach service to attach it to more than 1 instance at the same time.</p>
-<h2 id="ebs-volume-types"><a class="header" href="#ebs-volume-types">EBS volume types</a></h2>
-<h3 id="1-ssd-based"><a class="header" href="#1-ssd-based">1. SSD-based</a></h3>
-<p>Where it uses flash memory chips (no moving parts).</p>
-<p><strong>1.1 GP2 (General Purpose SSD)</strong></p>
-<p>Is good for boot volumes, low-latency interactive applications and dev/test environemnts.</p>
-<p>A newly created volume can be as small as 1GB or as large as 16TB. It is created with an IO credit allocation.</p>
+                        <h1 id="cloudwatch"><a class="header" href="#cloudwatch">CloudWatch</a></h1>
+<p>Is a public service to ingest, store and manage logging data. It supports native ingests of logs from AWS services. The CloudWatch agent can be installed to bring in logs from systems or custom applications.</p>
+<p>Note that the CloudWatch Dashboard is primarily used to monitor AWS resources and not AWS configuration.</p>
+<h2 id="alarms"><a class="header" href="#alarms">Alarms</a></h2>
+<p>The ability to search and filter log data arriving at CloudWatch Logs is achieved by creating 1 or more <strong>metric filters</strong>.</p>
+<p>Metric filters define the terms and patterns to look for in log data as it is sent to CloudWatch Logs. CloudWatch Logs uses these metric filters to turn log data into numerical CloudWatch metrics that you can graph or set an alarm on.</p>
+<p>A CloudWatch alarm can be created and used in <code>CodeDeploy</code> operations. The alarm watches a single metric over time and performs 1 or more actions based on the value of the metric relative to the given threshold over time. With <code>CodeDeploy</code>, you can configure a deployment group to stop when the alarm gets activated.</p>
+<h2 id="log-event"><a class="header" href="#log-event">Log event</a></h2>
+<p>A log event consists of 2 parts: the timestamp and a raw message.</p>
+<h2 id="log-stream"><a class="header" href="#log-stream">Log stream</a></h2>
+<p>Is a sequence of log events that share the same source.</p>
+<h2 id="log-group"><a class="header" href="#log-group">Log group</a></h2>
+<p>Contains several log streams and represents the thing being monitored eg. <code>var/log/messages</code>.</p>
+<p>Retention, access permissions and encryption are set on the log group level.</p>
+<p>A metric filter can also be defined on a log group and it looks for patterns in the log streams eg. a failed login attempt or an application crash. This allows creating metrics to that specific filter eg. the total failed login attempts which can trigger an alarm that can send notifications etc.</p>
+<h2 id="subscription-filters"><a class="header" href="#subscription-filters">Subscription Filters</a></h2>
+<p>Are a feature of CloudWatch Logs that allow you to distribute log data from one log group to other AWS services or destinations such as Data Firehose or AWS Lambda but not directly with S3.</p>
+<h1 id="eventbridge"><a class="header" href="#eventbridge">EventBridge</a></h1>
+<p>Is a serverless, fully managed and scalable event bus that enables integrations between AWS services and other applications. EventBridge was formerly called CloudWatch Events. It is used to monitor AWS resources and the applications running on AWS to detect and react to changes based on rules you create that EventBridge can invoke eg. sending notifications, taking a corrective action or other.</p>
+<p>You can select the following types of targets when using EventBridge as part of the Trusted Advisor workflow:</p>
 <ul>
-<li>IO is 1 input/output operation</li>
-<li>An IO credit is a 16Kb chunk of data</li>
-<li>1 IOP is 1 IO (16Kb) in 1 second</li>
+<li>Lambda functions</li>
+<li>Kinesis streams</li>
+<li>Simple Queue Service (SQS)</li>
+<li>CloudWatch alarms</li>
+<li>Simple Notification Service (SNS) topics</li>
 </ul>
-<p>An IO credit bucket has a capacity of 5.4 million IO credits and fills at the baseline performance rate of the volume.</p>
-<p><strong>1.2 GP3</strong></p>
-<p>Is also SSD-based but removes the credit/bucket architecture used in GP2 for something simpler.</p>
-<p>Use case is similar to GP2 i.e. virtual desktops, medium sized single instance databases, low-latency apps, dev/test environments and bootable volumes.</p>
-<p>Every GP3 volume regardless of size starts with 3000 IOPs and 125 MiB transfer per second. More specs come at a higher cost.</p>
-<p><strong>1.3 IO2 BlockExpress</strong></p>
-<p>Designed for super high performance situation for consistency and low latency.</p>
-<p>Can achieve 256,000 IOPs per volume and 4,000 MB/s throughput.</p>
-<div align="center">
-    <img src="./images/storage.png" alt="cloud services" width="500" />
-</div>
-<h3 id="2-hdd-based-hard-disk-drive"><a class="header" href="#2-hdd-based-hard-disk-drive">2. HDD-based (Hard Disk Drive)</a></h3>
-<p>Uses spinning magnetic disks with read/write heads and is cheaper than SSD volumes.</p>
-<p><strong>2.1. st1 (throughput optimised)</strong></p>
-<p>Is cheap and designed for data that is sequentially accessed.</p>
-<p>Range from 125 GB to 16 TB in size.</p>
-<p>IO is measured as 1MB block and st1 is capable of max 500 IOPs i.e. 500 MB/s.</p>
-<p><strong>2.2 sc1 (cold HDD)</strong></p>
-<p>Is cheaper, lowest cost of EBS volume available.</p>
-<p>Used to store data without the focus on performance.</p>
-<p>Max of 250 IOPs (1MB IO size). Max 250 MB/s.</p>
-<p>Range from 125 GB to 16 TB in size.</p>
-<h2 id="instance-store-volumes"><a class="header" href="#instance-store-volumes">Instance Store volumes</a></h2>
-<p>They have higher performance than EBS volumes where they offer the highest storage performace in AWS because they are locally attached.</p>
-<p>They provide temporary block storage devices which are raw volumes that can be attached to instances to be used as a basis for a filesystem. They are local and are not presented over the network.</p>
-<p>They are ephemeral and should not be used when persistence is requried. Data is lost if the volume moves, is resized or if there is hardware failure.</p>
-<p>They physically connect to 1 EC2 host. Instances on that host can access those volumes. An instance can use more than 1 volume. They are only attached at launch time.</p>
-<h2 id="storage-gateway"><a class="header" href="#storage-gateway">Storage Gateway</a></h2>
-<p>Runs as a virtual machine on premises, it enables hybrid storage between on-prem and AWS. It connects on-prem applications to unlimited cloud storage.</p>
-<p>It works by installing the storage appliance in your local data centre, it then handles data transfer, encryption and caching. The storage appliance connects to local applications via LAN and to AWS via internet or Direct Connect.</p>
-<h3 id="types-of-storage-gateway"><a class="header" href="#types-of-storage-gateway">Types of Storage Gateway</a></h3>
-<p><strong>1. S3 File Gateway</strong></p>
-<p>This is best used for object storage, storing unstructured data (images, logs, etc.) in S3. It links on-prem file storage and S3.</p>
-<p>Mount points are created locally and are available via 2 protocols NFS (Linux) or SMB (Windows). It allows 10 bucket shares pre File Gateway.</p>
-<p>File Gateway does not support object locking in the case of multiple file share to a bucket.</p>
-<p>The <code>RefreshCache</code> command refreshes the cached inventory of objects for the specified file share. This operation finds objects in the Amazon S3 bucket that were added, removed or replaced since the gateway last listed the bucket's contents and cached the results.</p>
-<p><strong>2. FSx File Gateway</strong></p>
-<p>Used for configuration or file data. Offers low overhead for accessing files.</p>
-<p><strong>3. Volume Gateway</strong></p>
-<p>Provides block storage. It provides raw disks over iSCSI connection.</p>
-<p><strong>4. Tape Gateway</strong></p>
-<p>Makes it easier to handle backup operations i.e. instead of using physical tapes, you can use virtual tapes. Virtual Tape Library (VTL) stored in S3 buckets.</p>
-<p>Tape Shelf (VTS) stored in Glacier and is generally used for archives when they are not frequently accessed.</p>
+<p>It makes it easier to connect applications such that events can be ingested, filtered, transformed and delivered without writing custom code.</p>
+<h1 id="cloudtrail"><a class="header" href="#cloudtrail">CloudTrail</a></h1>
+<p>This product logs API calls or account activities as CloudTrail Events that are either management events or data events. By default, stores 90 day management event history. Data events need to be enabled and they come at an extra cost.</p>
+<p>You can create a trail and configure it to be stored in S3 or CLoudWatch logs.</p>
+<p>CloudTrail offers a log file integrity validation feature where any tampering of the log files gets detected. When this feature is enabled, CloudTrail creates a hash for every log file that it delivers. Every hour, CloudTrail also creates and delivers a file that references the log files for the last hour and contains a hash of each. This file is called a digest file. CloudTrail signs each digest file using the private key of a public and private key pair. The public key can be used to validate the digest file.</p>
+<p>CloudTrail is not used for realtime logging, it has a 15 mins delay.</p>
+<h2 id="cloudtrail-log-file-integrity-validation"><a class="header" href="#cloudtrail-log-file-integrity-validation">CloudTrail log file integrity validation</a></h2>
+<p>The validation feature can be enabled on a trail which can direct CloudTrail to create and sign digest files.</p>
+<p>Digest files are found in a different folder and they contain a hash of every log file delivered in the last hour plus the signature of the log file before it. This ensures the integrity of the log files.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="storage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="sns_and_sqs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="efs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="kinesis.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -253,11 +231,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="storage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="sns_and_sqs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="efs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="kinesis.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

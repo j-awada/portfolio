@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -183,6 +184,7 @@
 <p>A primary key can be simple (Partition) aka <code>pk</code> or composite which is a combination of the <code>pk</code> and the <code>sk</code> (Sort key).</p>
 <h2 id="dynamodb-global-tables"><a class="header" href="#dynamodb-global-tables">DynamoDB global tables</a></h2>
 <p>This is a fully managed solution for deploying a multi-region, multi-active database without having to build and maintain your own replication solution. You can specify the AWS regions where you want the tables to be available and DynamoDB will propagate ongoing data changes to all of them.</p>
+<p>Global tables provide multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
 <h2 id="point-in-time-recovery-pitr"><a class="header" href="#point-in-time-recovery-pitr">Point-in-time Recovery (PITR)</a></h2>
 <p>Provides continuous backups with per-second recovery precision. It is disabled by default and needs to be enabled on a table-by-table basis. It allows for a 35-day recovery window.</p>
 <p>Enabling PITR does not consume any table provisioned throughput (RCUs/WCUs) and has zero impact on application performance.</p>
@@ -247,8 +249,6 @@
 </li>
 </ul>
 <p>The interaction with the DynamoDB database is handled by the DAX SDK rather than the user application itself.</p>
-<h2 id="global-tables"><a class="header" href="#global-tables">Global Tables</a></h2>
-<p>Provides a multi-master cross-region replication. Tables are created in multiple regions and added to the same global table becoming a replica table.</p>
 <h2 id="ttl"><a class="header" href="#ttl">TTL</a></h2>
 <p>Used to set a timestamp for automatic delete of items. Useful for items that lose relevance after a period of time.</p>
 <h2 id="exam-notes"><a class="header" href="#exam-notes">Exam notes</a></h2>

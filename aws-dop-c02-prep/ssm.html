@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -189,10 +190,10 @@
 <p>Execution role (in the target accounts): is the <code>AWS-SystemsManager-AutomationExecutionRole</code> role which would have permissions to perform actions like patching or terminating instances.</p>
 </li>
 </ul>
-<h3 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h3>
+<h2 id="session-manager"><a class="header" href="#session-manager">Session Manager</a></h2>
 <p>SSM allows managing instances at scale without the need for bastions, SSH or remote sessions. Session Manager is an alternative to traditional SSH or RDP.</p>
 <p>By default, AWS Systems Manager does not have permission to perform actions on your instances. You must grant access by using IAM. An instance profile that contains the AWS managed policy <code>AmazonSSMManagedInstanceCore</code> is needed to be attached to the EC2 instance for the Session Manager to work.</p>
-<h3 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h3>
+<h2 id="state-manager"><a class="header" href="#state-manager">State Manager</a></h2>
 <p>Enables configuration management such that EC2 instances or on-prem instances are consistently configrued. It focusses on monitoring OS settings, installed applications and other software on a server.</p>
 <p>State Manager requires an SSM agent to be running inside the EC2 instance or the on-prem server.</p>
 <p>An example for using the State Manager is:</p>
@@ -207,7 +208,7 @@
 <p>in case the instance drifts from the defined configuration, the State Manager automatically re-runs the configuration to render the instance compliant.</p>
 </li>
 </ol>
-<h3 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h3>
+<h2 id="patch-manager"><a class="header" href="#patch-manager">Patch manager</a></h2>
 <p>Allows applying OS or software patches to a large group of EC2 or on-prem instances.</p>
 <ul>
 <li>Patch Baseline: defines what patches get installed according to operating system and distribution.</li>

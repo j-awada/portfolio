@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -356,7 +357,7 @@
 <h2 id="automation"><a class="header" href="#automation">Automation</a></h2>
 <ul>
 <li>
-<p>To manage security patches for EC2 instances and on-prem servers, install the AWS Systems Manager agent and create a Hybrid Activation.</p>
+<p>To manage security patches for EC2 instances and on-prem servers, install the AWS Systems Manager agent and create a Hybrid Activation. In the console, the IDs of the hybrid instances are distinguished from EC2 instance with the prefix <code>mi-</code>. The EC2 instances use the prefix <code>i-</code>.</p>
 </li>
 <li>
 <p>State Manager allows adminstrators to apply and maintain consistent configurations using pre-defined or custom SSM documents ensuring automated and continuous compliance across accounts.</p>
@@ -502,6 +503,10 @@
 <p>The ability to search and filter the log data arriving at CloudWatch Logs is achieved by creating one or more metric filters.</p>
 <p>Metric filters define the terms and patterns to look for in log data as it is sent to CloudWatch Logs.</p>
 </li>
+<li>
+<p>Elastic Load Balancing provides access logs that capture detailed information about requests sent to the load balancer. Each log contains information such as time the request was received, the client's IP address, latencies, request path and server response.</p>
+<p>Access logging is an optional feature of Elastic Load Balancing that is disabled by default. After enabling it, the logs are stored in a specified S3 bucket as compressed files. Encryption and decryption of the log files is done automatically.</p>
+</li>
 </ul>
 <h2 id="disaster-recovery"><a class="header" href="#disaster-recovery">Disaster recovery</a></h2>
 <ul>
@@ -510,6 +515,9 @@
 <p>ARC integrates with services like Route53 and Elastic Load Balancing.</p>
 <p>Zonal shift is a feature in Route53 ARC that can temporarily shift traffic from an impaired AZ to a healthy one.</p>
 <p>Disabling cross-zone load balancing on an ALB means that each load balancer node in an AZ routes requests only to targets within the same AZ.</p>
+</li>
+<li>
+<p>You can call the EBS Create Snapshot directly as a target from Amazon EventBridge. You can also configure Amazon EventBridge rules to create automated snapshots of an existing Amazon Elastic Block Store (Amazon EBS) volume on a schedule. EventBridge allows you to specify a fixed rate for creating snapshots at regular intervals or use a cron expression to schedule snapshots at specific times of the day.</p>
 </li>
 </ul>
 <h2 id="configuration-management"><a class="header" href="#configuration-management">Configuration management</a></h2>
@@ -540,6 +548,9 @@
 <p>To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside. You must also specify an Elastic IP address to associate with the NAT gateway when you create it. The Elastic IP address cannot be changed once you associate it with the NAT Gateway.</p>
 <p>After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point internet-bound traffic to the NAT gateway. This enables instances in your private subnets to communicate with the internet.</p>
 <p>Each NAT gateway is created in a specific AZ and implemented with redundancy in that zone.</p>
+</li>
+<li>
+<p>A transit gateway acts as a regional virtual router for traffic flowing between your virtual private clouds (VPCs) and on-premises networks. It enables attaching VPCs and VPN connections and it can route traffic between them.</p>
 </li>
 </ul>
 

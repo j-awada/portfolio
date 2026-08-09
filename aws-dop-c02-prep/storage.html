@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -177,12 +178,23 @@
                     <main>
                         <h1 id="storage"><a class="header" href="#storage">Storage</a></h1>
 <ul>
-<li><a href="./elastic_block_storage.html">Elastic Block Storage</a></li>
-<li><a href="./efs.html">Elastic File System</a></li>
+<li><a href="./storage_types.html">Storage types</a></li>
 <li><a href="./s3_misc.html">S3 Object Storage</a></li>
 <li><a href="./dynamodb.html">DynamoDB</a></li>
 <li><a href="./elasticache.html">ElastiCache</a></li>
 </ul>
+<h2 id="storage-comparison"><a class="header" href="#storage-comparison">Storage comparison</a></h2>
+<div class="wide-table">
+<div class="table-wrapper"><table><thead><tr><th></th><th><strong>EBS</strong></th><th><strong>Instance Store</strong></th><th><strong>EFS</strong></th><th><strong>S3</strong></th><th><strong>Storage Gateway</strong></th></tr></thead><tbody>
+<tr><td>Type</td><td>Block storage</td><td>Block storage (ephemeral)</td><td>File storage (NFS)</td><td>Object storage</td><td>Hybrid storage service (bridges on-prem to AWS)</td></tr>
+<tr><td>Attaches to</td><td>1 EC2 instance (unless Multi-Attach)</td><td>1 EC2 instance (physically attached to host)</td><td>Many instances concurrently</td><td>N/A — accessed via API/HTTP</td><td>On-prem servers/apps via NFS/SMB (File), iSCSI (Volume), or VTL (Tape)</td></tr>
+<tr><td>Scope</td><td>Single AZ</td><td>Single instance/host — data lost on stop, terminate, or hardware failure</td><td>Regional (multi-AZ via mount targets)</td><td>Regional, replicated across ≥3 AZs (Standard)</td><td>On-premises, backed by S3/EBS/Glacier in AWS</td></tr>
+<tr><td>OS support</td><td>Linux &amp; Windows</td><td>Linux &amp; Windows</td><td>Linux only (NFSv4)</td><td>Any (HTTP API)</td><td>Any (protocol-based: NFS/SMB/iSCSI)</td></tr>
+<tr><td>Scaling</td><td>Manual resize</td><td>Fixed size, determined by instance type</td><td>Elastic, automatic</td><td>Effectively unlimited</td><td>Effectively unlimited (backed by S3)</td></tr>
+<tr><td>Speed</td><td>Lowest latency (local block device, especially io2/gp3)</td><td>Highest — directly attached NVMe SSD, no network overhead</td><td>Higher latency than EBS (network file system overhead)</td><td>Higher latency, but high throughput/parallelism for many objects</td><td>Depends on local cache + link speed to AWS</td></tr>
+<tr><td>Cost</td><td>Pay for provisioned capacity (GB/month), regardless of usage</td><td>Included in EC2 instance price, no separate storage cost</td><td>Pay for storage used (GB/month), no pre-provisioning; pricier per GB than EBS</td><td>Cheapest per GB, especially with lifecycle tiers (IA, Glacier)</td><td>Pay for storage used in AWS + local gateway appliance/cache</td></tr>
+</tbody></table>
+</div></div>
 
                     </main>
 
@@ -192,7 +204,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="elastic_block_storage.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="storage_types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -206,7 +218,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="elastic_block_storage.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="storage_types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
